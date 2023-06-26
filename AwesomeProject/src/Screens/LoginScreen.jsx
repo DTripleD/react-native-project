@@ -7,9 +7,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Button,
   Alert,
 } from "react-native";
 

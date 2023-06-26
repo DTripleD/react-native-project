@@ -8,8 +8,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
   Alert,
 } from "react-native";
 
