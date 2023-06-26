@@ -24,7 +24,7 @@ const RegistrationScreen = ({ setIsRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(true);
-
+  const [first, setfirst] = useState("second");
   const onRegister = () => {
     console.log(`Login: ${login}`, `Email:${email}`, `Password: ${password}`);
     Alert.alert(`Login: ${login}`, `Email:${email}\nPassword: ${password}`);
