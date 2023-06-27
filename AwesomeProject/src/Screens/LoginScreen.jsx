@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -8,9 +9,12 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
-const LoginScreen = ({ setIsRegister }) => {
+const LoginScreen = () => {
   const [inputColorEmail, setInputColorEmail] = useState("#F6F6F6");
   const [borderColorEmail, setBorderColorEmail] = useState("#E8E8E8");
   const [inputColorPassword, setInputColorPassword] = useState("#F6F6F6");
@@ -18,6 +22,8 @@ const LoginScreen = ({ setIsRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(true);
+
+  const navigation = useNavigation();
 
   const onLogin = () => {
     console.log(`Email:${email}`, `Password: ${password}`);
@@ -49,81 +55,98 @@ const LoginScreen = ({ setIsRegister }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Увійти</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ImageBackground
+        source={require("../images/bg-photo.png")}
+        style={styles.backImg}
+      >
+        <View style={styles.container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
+            <View style={styles.formContainer}>
+              <Text style={styles.title}>Увійти</Text>
 
-        <TextInput
-          style={[
-            styles.inputMailPassw,
-            {
-              backgroundColor: inputColorEmail,
-              borderColor: borderColorEmail,
-            },
-          ]}
-          placeholder="Адреса електронної пошти"
-          inputMode="email"
-          onBlur={onBlurEmail}
-          onFocus={onFocusEmail}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={[
-            styles.inputMailPassw,
-            {
-              backgroundColor: inputColorPassword,
-              borderColor: borderColorPassword,
-            },
-          ]}
-          placeholder="Пароль"
-          secureTextEntry={isShown}
-          onBlur={onBlurPassword}
-          onFocus={onFocusPassword}
-          onChangeText={setPassword}
-        />
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  {
+                    backgroundColor: inputColorEmail,
+                    borderColor: borderColorEmail,
+                  },
+                ]}
+                placeholder="Адреса електронної пошти"
+                inputMode="email"
+                onBlur={onBlurEmail}
+                onFocus={onFocusEmail}
+                onChangeText={setEmail}
+                value={email}
+              />
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  {
+                    backgroundColor: inputColorPassword,
+                    borderColor: borderColorPassword,
+                  },
+                ]}
+                placeholder="Пароль"
+                secureTextEntry={isShown}
+                onBlur={onBlurPassword}
+                onFocus={onFocusPassword}
+                onChangeText={setPassword}
+                value={password}
+              />
 
-        <TouchableOpacity
-          style={styles.passwShow}
-          activeOpacity={0.5}
-          onPress={() => setIsShown(isShown === true ? false : true)}
-        >
-          <Text style={styles.passwShowText}>Показати</Text>
-        </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.passwShow}
+                activeOpacity={0.5}
+                onPress={() => setIsShown(isShown === true ? false : true)}
+              >
+                <Text style={styles.passwShowText}>Показати</Text>
+              </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.registerButton}
-          activeOpacity={0.5}
-          onPress={onLogin}
-        >
-          <Text style={styles.registerButtonText}>Увійти</Text>
-        </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.registerButton}
+                activeOpacity={0.5}
+                onPress={onLogin}
+              >
+                <Text style={styles.registerButtonText}>Увійти</Text>
+              </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.loginLink}
-          activeOpacity={0.5}
-          onPress={wasRegistered}
-        >
-          <Text style={styles.loginLinkText}>
-            Немає акаунту?{" "}
-            <Text style={styles.underlingText}>Зареєструватися</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+              <TouchableOpacity
+                style={styles.loginLink}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate("RegistrationScreen")}
+              >
+                <Text style={styles.loginLinkText}>
+                  Немає акаунту?{" "}
+                  <Text style={styles.underlingText}>Зареєструватися</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </View>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  formContainer: {
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     paddingBottom: 30,
   },
-  containerKeyB: {},
   addbutton: {
     marginTop: "65%",
     left: "90%",
@@ -198,6 +221,11 @@ const styles = StyleSheet.create({
     color: "#1B4371",
   },
   underlingText: { textDecorationLine: "underline" },
+  backImg: {
+    flex: 1,
+    justifyContent: "flex-end",
+    width: "100%",
+  },
 });
 
 export default LoginScreen;

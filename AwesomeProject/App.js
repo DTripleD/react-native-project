@@ -1,33 +1,32 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  ImageBackground,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+
+import { StyleSheet } from "react-native";
 import RegistrationScreen from "./src/Screens/RegistrationScreen";
 import LoginScreen from "./src/Screens/LoginScreen";
-import { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import PostScreen from "./src/Screens/PostsScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./src/Screens/Home";
 
 export default function App() {
-  const [isRegister, setIsRegister] = useState(false);
+  // const [isRegister, setIsRegister] = useState(false);
+
+  const MainStack = createStackNavigator();
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.mainContainer}>
-        <ImageBackground
-          source={require("./src/images/bg-photo.png")}
-          style={styles.backImg}
-        >
-          {isRegister ? (
-            <LoginScreen setIsRegister={setIsRegister} />
-          ) : (
-            <RegistrationScreen setIsRegister={setIsRegister} />
-          )}
-        </ImageBackground>
-        <StatusBar style="auto" />
-      </View>
-    </TouchableWithoutFeedback>
+    <Home />
+    // <NavigationContainer>
+    //   <MainStack.Navigator initialRouteName="LoginScreen">
+    //     <MainStack.Screen
+    //       name="RegistrationScreen"
+    //       component={RegistrationScreen}
+    //     />
+    //     <MainStack.Screen name="LoginScreen" component={LoginScreen} />
+    //     <MainStack.Screen name="PostScreen" component={PostScreen} />
+    //     <MainStack.Screen name="Home" component={Home} />
+    //     {/* <StatusBar style="auto" /> */}
+    //   </MainStack.Navigator>
+    // </NavigationContainer>
   );
 }
 

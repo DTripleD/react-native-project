@@ -1,11 +1,11 @@
 import { Text, View } from "react-native";
 
-function PostsScreen() {
+function Profile() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Створити публікацію</Text>
+      <Text>Profile!</Text>
     </View>
   );
 }
 
-export default PostsScreen;
+export default Profile;

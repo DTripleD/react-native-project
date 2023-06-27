@@ -9,9 +9,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ImageBackground,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const RegistrationScreen = ({ setIsRegister }) => {
+const RegistrationScreen = () => {
+  const navigation = useNavigation();
   const [inputColorLogin, setInputColorLogin] = useState("#F6F6F6");
   const [borderColorLogin, setBorderColorLogin] = useState("#E8E8E8");
   const [inputColorEmail, setInputColorEmail] = useState("#F6F6F6");
@@ -62,93 +67,112 @@ const RegistrationScreen = ({ setIsRegister }) => {
     setIsRegister(true);
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      <View style={styles.container}>
-        <View style={styles.photoContainer}>
-          <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
-            <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
-          </TouchableOpacity>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ImageBackground
+        source={require("../images/bg-photo.png")}
+        style={styles.backImg}
+      >
+        <View style={styles.container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
+            <View style={styles.formContainer}>
+              <View style={styles.photoContainer}>
+                <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
+                  <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.title}>Реєстрація</Text>
+
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  {
+                    backgroundColor: inputColorLogin,
+                    borderColor: borderColorLogin,
+                  },
+                ]}
+                placeholder="Логін"
+                inputMode="text"
+                onBlur={onBlurLogin}
+                onFocus={onFocusLogin}
+                onChangeText={setLogin}
+                value={login}
+              />
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  {
+                    backgroundColor: inputColorEmail,
+
+                    borderColor: borderColorEmail,
+                  },
+                ]}
+                placeholder="Адреса електронної пошти"
+                inputMode="email"
+                onBlur={onBlurEmail}
+                onFocus={onFocusEmail}
+                onChangeText={setEmail}
+                value={email}
+              />
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  {
+                    backgroundColor: inputColorPassword,
+                    borderColor: borderColorPassword,
+                  },
+                ]}
+                placeholder="Пароль"
+                secureTextEntry={isShown}
+                onBlur={onBlurPassword}
+                onFocus={onFocusPassword}
+                onChangeText={setPassword}
+                value={password}
+              />
+
+              <TouchableOpacity
+                style={styles.passwShow}
+                activeOpacity={0.5}
+                onPress={() => setIsShown(isShown === true ? false : true)}
+              >
+                <Text style={styles.passwShowText}>Показати</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.registerButton}
+                activeOpacity={0.5}
+                onPress={onRegister}
+              >
+                <Text style={styles.registerButtonText}>Зареєстуватися</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.loginLink}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate("LoginScreen")}
+              >
+                <Text style={styles.loginLinkText}>
+                  Вже є акаунт? <Text style={styles.underlingText}>Увійти</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
         </View>
-        <Text style={styles.title}>Реєстрація</Text>
-
-        <TextInput
-          style={[
-            styles.inputMailPassw,
-            {
-              backgroundColor: inputColorLogin,
-              borderColor: borderColorLogin,
-            },
-          ]}
-          placeholder="Логін"
-          inputMode="text"
-          onBlur={onBlurLogin}
-          onFocus={onFocusLogin}
-          onChangeText={setLogin}
-        />
-        <TextInput
-          style={[
-            styles.inputMailPassw,
-            {
-              backgroundColor: inputColorEmail,
-
-              borderColor: borderColorEmail,
-            },
-          ]}
-          placeholder="Адреса електронної пошти"
-          inputMode="email"
-          onBlur={onBlurEmail}
-          onFocus={onFocusEmail}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={[
-            styles.inputMailPassw,
-            {
-              backgroundColor: inputColorPassword,
-              borderColor: borderColorPassword,
-            },
-          ]}
-          placeholder="Пароль"
-          secureTextEntry={isShown}
-          onBlur={onBlurPassword}
-          onFocus={onFocusPassword}
-          onChangeText={setPassword}
-        />
-
-        <TouchableOpacity
-          style={styles.passwShow}
-          activeOpacity={0.5}
-          onPress={() => setIsShown(isShown === true ? false : true)}
-        >
-          <Text style={styles.passwShowText}>Показати</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.registerButton}
-          activeOpacity={0.5}
-          onPress={onRegister}
-        >
-          <Text style={styles.registerButtonText}>Зареєстуватися</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.loginLink}
-          activeOpacity={0.5}
-          onPress={wasRegistered}
-        >
-          <Text style={styles.loginLinkText}>
-            Вже є акаунт? <Text style={styles.underlingText}>Увійти</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  formContainer: {
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     borderTopRightRadius: 25,
@@ -237,6 +261,11 @@ const styles = StyleSheet.create({
     color: "#1B4371",
   },
   underlingText: { textDecorationLine: "underline" },
+  backImg: {
+    flex: 1,
+    justifyContent: "flex-end",
+    width: "100%",
+  },
 });
 
 export default RegistrationScreen;
