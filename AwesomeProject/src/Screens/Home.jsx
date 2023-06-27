@@ -1,14 +1,17 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import PostsScreen from "./PostsScreen";
 import CreatePostScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 
 const Home = () => {
+  const navigation = useNavigation();
   return (
     <Tabs.Navigator
       screenOptions={({ route }) => ({
@@ -40,9 +43,52 @@ const Home = () => {
         activeTintColor: "#FFFFFF",
       }}
     >
-      <Tabs.Screen name="PostsScreen" component={PostsScreen} />
-      <Tabs.Screen name="CreatePostsScreen" component={CreatePostScreen} />
-      <Tabs.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Tabs.Screen
+        name="PostsScreen"
+        component={PostsScreen}
+        options={{
+          headerRight: () => (
+            <TouchableOpacity
+              style={{
+                paddingRight: 16,
+              }}
+              onPress={() => navigation.navigate("LoginScreen")}
+            >
+              <Ionicons name="log-in-outline" size={24} color="#BDBDBD" />
+            </TouchableOpacity>
+          ),
+          title: "Публікації",
+          headerTitleAlign: "center",
+          headerStyle: {
+            borderBottomColor: "#BDBDBD",
+            borderWidth: 1,
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="CreatePostsScreen"
+        component={CreatePostScreen}
+        options={{
+          title: "Створити публікацію",
+          headerTitleAlign: "center",
+          headerStyle: {
+            borderBottomColor: "#BDBDBD",
+            borderWidth: 1,
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          title: "Профіль",
+          headerTitleAlign: "center",
+          headerStyle: {
+            borderBottomColor: "#BDBDBD",
+            borderWidth: 1,
+          },
+        }}
+      />
     </Tabs.Navigator>
   );
 };

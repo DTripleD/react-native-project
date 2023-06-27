@@ -1,5 +1,4 @@
 import {
-  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -11,8 +10,6 @@ import { Ionicons } from "@expo/vector-icons";
 function CreatePostScreen() {
   return (
     <View style={styles.container}>
-      {/* <Image source={require("../images/createPostImage.png")} /> */}
-
       <View style={styles.ovalContainer}>
         <TouchableOpacity style={styles.oval}>
           <Ionicons
@@ -26,11 +23,7 @@ function CreatePostScreen() {
 
       <Text style={styles.photoText}>Завантажте фото</Text>
 
-      <TextInput
-        placeholder="Назва..."
-        inputMode="text"
-        style={styles.inputName}
-      />
+      <TextInput placeholder="Назва..." style={styles.inputName} />
 
       <View style={styles.searchSection}>
         <Ionicons
@@ -44,6 +37,9 @@ function CreatePostScreen() {
 
       <TouchableOpacity style={styles.registerButton} activeOpacity={0.5}>
         <Text style={styles.registerButtonText}>Опубліковати</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.deleteButton} activeOpacity={0.5}>
+        <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
       </TouchableOpacity>
     </View>
   );
@@ -68,6 +64,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#E8E8E8",
     borderRadius: 8,
+    marginTop: 32,
   },
   oval: {
     height: 60,
@@ -122,6 +119,16 @@ const styles = StyleSheet.create({
   registerButtonText: {
     color: "#fff",
     fontWeight: "400",
+  },
+  deleteButton: {
+    backgroundColor: "#F6F6F6",
+    height: 50,
+    paddingLeft: 23,
+    paddingRight: 23,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 100,
+    marginTop: "auto",
   },
 });
 

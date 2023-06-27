@@ -15,43 +15,16 @@ import {
 } from "react-native";
 
 const LoginScreen = () => {
-  const [inputColorEmail, setInputColorEmail] = useState("#F6F6F6");
-  const [borderColorEmail, setBorderColorEmail] = useState("#E8E8E8");
-  const [inputColorPassword, setInputColorPassword] = useState("#F6F6F6");
-  const [borderColorPassword, setBorderColorPassword] = useState("#E8E8E8");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(true);
+  const [isActive, setIsActive] = useState("");
 
   const navigation = useNavigation();
 
   const onLogin = () => {
     console.log(`Email:${email}`, `Password: ${password}`);
     Alert.alert(`Email:${email}`, `Password: ${password}`);
-  };
-
-  const wasRegistered = () => {
-    setIsRegister(false);
-  };
-
-  const onFocusEmail = () => {
-    setInputColorEmail("#FFFFFF");
-    setBorderColorEmail("#FF6C00");
-  };
-
-  const onBlurEmail = () => {
-    setInputColorEmail("#F6F6F6");
-    setBorderColorEmail("#E8E8E8");
-  };
-
-  const onFocusPassword = () => {
-    setInputColorPassword("#FFFFFF");
-    setBorderColorPassword("#FF6C00");
-  };
-
-  const onBlurPassword = () => {
-    setInputColorPassword("#F6F6F6");
-    setBorderColorPassword("#E8E8E8");
   };
 
   return (
@@ -70,46 +43,45 @@ const LoginScreen = () => {
               <TextInput
                 style={[
                   styles.inputMailPassw,
-                  {
-                    backgroundColor: inputColorEmail,
-                    borderColor: borderColorEmail,
-                  },
+                  isActive === "email" && styles.inputMailPasswa,
                 ]}
                 placeholder="Адреса електронної пошти"
                 inputMode="email"
-                onBlur={onBlurEmail}
-                onFocus={onFocusEmail}
+                onBlur={() => setIsActive("")}
+                onFocus={() => setIsActive("email")}
                 onChangeText={setEmail}
                 value={email}
+                name="email"
               />
               <TextInput
                 style={[
                   styles.inputMailPassw,
-                  {
-                    backgroundColor: inputColorPassword,
-                    borderColor: borderColorPassword,
-                  },
+                  isActive === "password" && styles.inputMailPasswa,
                 ]}
                 placeholder="Пароль"
                 secureTextEntry={isShown}
-                onBlur={onBlurPassword}
-                onFocus={onFocusPassword}
+                onBlur={() => setIsActive("")}
+                onFocus={() => setIsActive("password")}
                 onChangeText={setPassword}
                 value={password}
+                name="password"
               />
 
               <TouchableOpacity
                 style={styles.passwShow}
                 activeOpacity={0.5}
-                onPress={() => setIsShown(isShown === true ? false : true)}
+                onPress={() => setIsShown(!isShown)}
               >
-                <Text style={styles.passwShowText}>Показати</Text>
+                <Text style={styles.passwShowText}>
+                  {isShown ? "Показати" : "Сховати"}
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.registerButton}
                 activeOpacity={0.5}
-                onPress={onLogin}
+                // onPress={onLogin}
+                onPress={() => navigation.navigate("Home")}
               >
                 <Text style={styles.registerButtonText}>Увійти</Text>
               </TouchableOpacity>
@@ -184,6 +156,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     position: "relative",
     borderWidth: 1,
+    backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
+  },
+  inputMailPasswa: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FF6C00",
   },
   passwShowText: {
     fontStyle: "normal",

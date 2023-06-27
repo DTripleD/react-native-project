@@ -14,19 +14,23 @@ export default function App() {
 
   const MainStack = createStackNavigator();
   return (
-    <Home />
-    // <NavigationContainer>
-    //   <MainStack.Navigator initialRouteName="LoginScreen">
-    //     <MainStack.Screen
-    //       name="RegistrationScreen"
-    //       component={RegistrationScreen}
-    //     />
-    //     <MainStack.Screen name="LoginScreen" component={LoginScreen} />
-    //     <MainStack.Screen name="PostScreen" component={PostScreen} />
-    //     <MainStack.Screen name="Home" component={Home} />
-    //     {/* <StatusBar style="auto" /> */}
-    //   </MainStack.Navigator>
-    // </NavigationContainer>
+    <NavigationContainer>
+      <MainStack.Navigator
+        initialRouteName="LoginScreen"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <MainStack.Screen
+          name="RegistrationScreen"
+          component={RegistrationScreen}
+        />
+        <MainStack.Screen name="LoginScreen" component={LoginScreen} />
+        <MainStack.Screen name="PostScreen" component={PostScreen} />
+        <MainStack.Screen name="Home" component={Home} />
+        {/* <StatusBar style="auto" /> */}
+      </MainStack.Navigator>
+    </NavigationContainer>
   );
 }
 
