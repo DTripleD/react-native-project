@@ -32,7 +32,7 @@ const LoginScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={-170}
-        style={{ flex: 1, width: "100%", justifyContent: "flex-end" }}
+        style={styles.kav}
       >
         <ImageBackground
           source={require("../images/bg-photo.png")}
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     justifyContent: "flex-end",
   },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
 
   formContainer: {
     position: "relative",

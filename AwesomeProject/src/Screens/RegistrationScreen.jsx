@@ -34,7 +34,7 @@ const RegistrationScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={-170}
-        style={{ flex: 1, width: "100%", justifyContent: "flex-end" }}
+        style={styles.kav}
       >
         <ImageBackground
           source={require("../images/bg-photo.png")}
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
   formContainer: {
     backgroundColor: "#FFFFFF",
     alignItems: "center",
