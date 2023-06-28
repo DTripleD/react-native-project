@@ -14,33 +14,10 @@ const Home = () => {
   const navigation = useNavigation();
   return (
     <Tabs.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "ProfileScreen") {
-            iconName = "person-outline";
-          } else if (route.name === "CreatePostsScreen") {
-            iconName = "add-sharp";
-          } else if (route.name === "PostsScreen") {
-            iconName = "grid-outline";
-          }
-          return (
-            <View
-              style={[
-                styles.iconContainer,
-                focused && styles.iconContainerActive,
-              ]}
-            >
-              <Ionicons name={iconName} size={size} color={color} />
-            </View>
-          );
+      screenOptions={{
+        tabBarLabelStyle: {
+          display: "none",
         },
-      })}
-      tabBarOptions={{
-        inactiveTintColor: "#212121",
-        showLabel: false,
-        activeTintColor: "#FFFFFF",
       }}
     >
       <Tabs.Screen
@@ -58,6 +35,11 @@ const Home = () => {
             </TouchableOpacity>
           ),
           title: "Публікації",
+          tabBarIcon: ({ color, size }) => (
+            <View style={[styles.iconContainer]}>
+              <Ionicons name="grid-outline" size={24} color="#212121" />
+            </View>
+          ),
           headerTitleAlign: "center",
           headerStyle: {
             borderBottomColor: "#BDBDBD",
@@ -83,6 +65,12 @@ const Home = () => {
               </TouchableOpacity>
             );
           },
+          tabBarIcon: ({ color, size }) => (
+            <View style={[styles.iconAddContainer]}>
+              <Ionicons name="add-sharp" size={24} color="#FFFFFF" />
+            </View>
+          ),
+
           headerTitleAlign: "center",
           headerStyle: {
             borderBottomColor: "#BDBDBD",
@@ -95,6 +83,11 @@ const Home = () => {
         component={ProfileScreen}
         options={{
           title: "Профіль",
+          tabBarIcon: ({ color, size }) => (
+            <View style={[styles.iconContainer]}>
+              <Ionicons name="person-outline" size={24} color="#212121" />
+            </View>
+          ),
           headerTitleAlign: "center",
           headerStyle: {
             borderBottomColor: "#BDBDBD",
@@ -115,8 +108,12 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
+    width: 70,
+    height: 40,
   },
-  iconContainerActive: {
+  iconAddContainer: {
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#FF6C00",
     borderRadius: 50,
     width: 70,
