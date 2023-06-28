@@ -17,9 +17,7 @@ export default function App() {
     <NavigationContainer>
       <MainStack.Navigator
         initialRouteName="LoginScreen"
-        screenOptions={{
-          headerShown: false,
-        }}
+        screenOptions={{ headerTitleAlign: "center", headerShown: false }}
       >
         <MainStack.Screen
           name="RegistrationScreen"
@@ -28,6 +26,16 @@ export default function App() {
         <MainStack.Screen name="LoginScreen" component={LoginScreen} />
         <MainStack.Screen name="PostScreen" component={PostScreen} />
         <MainStack.Screen name="Home" component={Home} />
+        {/* <MainStack.Screen
+          name="CommentsScreen"
+          component={CommentsScree}
+          options={{ headerShown: true }}
+        /> */}
+        {/* <MainStack.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={{ headerShown: true }}
+        /> */}
         {/* <StatusBar style="auto" /> */}
       </MainStack.Navigator>
     </NavigationContainer>

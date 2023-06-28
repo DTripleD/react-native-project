@@ -1,4 +1,5 @@
 import {
+  Keyboard,
   StyleSheet,
   Text,
   TextInput,
@@ -6,9 +7,11 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 function CreatePostScreen() {
   return (
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
       <View style={styles.ovalContainer}>
         <TouchableOpacity style={styles.oval}>
@@ -42,6 +45,7 @@ function CreatePostScreen() {
         <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
       </TouchableOpacity>
     </View>
+    // </TouchableWithoutFeedback>
   );
 }
 

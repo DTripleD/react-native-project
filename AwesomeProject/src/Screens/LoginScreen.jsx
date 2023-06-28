@@ -28,79 +28,78 @@ const LoginScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ImageBackground
-        source={require("../images/bg-photo.png")}
-        style={styles.backImg}
-      >
-        <View style={styles.container}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <View style={styles.formContainer}>
-              <Text style={styles.title}>Увійти</Text>
+    <ImageBackground
+      source={require("../images/bg-photo.png")}
+      style={styles.backImg}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={-80}
+        >
+          <View style={styles.form}>
+            <Text style={styles.title}>Увійти</Text>
 
-              <TextInput
-                style={[
-                  styles.inputMailPassw,
-                  isActive === "email" && styles.inputMailPasswa,
-                ]}
-                placeholder="Адреса електронної пошти"
-                inputMode="email"
-                onBlur={() => setIsActive("")}
-                onFocus={() => setIsActive("email")}
-                onChangeText={setEmail}
-                value={email}
-                name="email"
-              />
-              <TextInput
-                style={[
-                  styles.inputMailPassw,
-                  isActive === "password" && styles.inputMailPasswa,
-                ]}
-                placeholder="Пароль"
-                secureTextEntry={isShown}
-                onBlur={() => setIsActive("")}
-                onFocus={() => setIsActive("password")}
-                onChangeText={setPassword}
-                value={password}
-                name="password"
-              />
+            <TextInput
+              style={[
+                styles.inputMailPassw,
+                isActive === "email" && styles.inputMailPasswa,
+              ]}
+              placeholder="Адреса електронної пошти"
+              inputMode="email"
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("email")}
+              onChangeText={setEmail}
+              value={email}
+              name="email"
+            />
+            <TextInput
+              style={[
+                styles.inputMailPassw,
+                isActive === "password" && styles.inputMailPasswa,
+              ]}
+              placeholder="Пароль"
+              secureTextEntry={isShown}
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("password")}
+              onChangeText={setPassword}
+              value={password}
+              name="password"
+            />
 
-              <TouchableOpacity
-                style={styles.passwShow}
-                activeOpacity={0.5}
-                onPress={() => setIsShown(!isShown)}
-              >
-                <Text style={styles.passwShowText}>
-                  {isShown ? "Показати" : "Сховати"}
-                </Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.passwShow}
+              activeOpacity={0.5}
+              onPress={() => setIsShown(!isShown)}
+            >
+              <Text style={styles.passwShowText}>
+                {isShown ? "Показати" : "Сховати"}
+              </Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.registerButton}
-                activeOpacity={0.5}
-                // onPress={onLogin}
-                onPress={() => navigation.navigate("Home")}
-              >
-                <Text style={styles.registerButtonText}>Увійти</Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.registerButton}
+              activeOpacity={0.5}
+              // onPress={onLogin}
+              onPress={() => navigation.navigate("Home")}
+            >
+              <Text style={styles.registerButtonText}>Увійти</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.loginLink}
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate("RegistrationScreen")}
-              >
-                <Text style={styles.loginLinkText}>
-                  Немає акаунту?{" "}
-                  <Text style={styles.underlingText}>Зареєструватися</Text>
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
-        </View>
-      </ImageBackground>
-    </TouchableWithoutFeedback>
+            <TouchableOpacity
+              style={styles.loginLink}
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("RegistrationScreen")}
+            >
+              <Text style={styles.loginLinkText}>
+                Немає акаунту?{" "}
+                <Text style={styles.underlingText}>Зареєструватися</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
   );
 };
 
@@ -111,13 +110,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+    justifyContent: "flex-end",
   },
+
   formContainer: {
-    backgroundColor: "#FFFFFF",
+    position: "relative",
+    backgroundColor: "#fff",
     alignItems: "center",
-    borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
-    paddingBottom: 30,
+    borderTopRightRadius: 25,
+    paddingTop: 32,
+    // paddingBottom: 144,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   addbutton: {
     marginTop: "65%",
@@ -201,8 +206,21 @@ const styles = StyleSheet.create({
   underlingText: { textDecorationLine: "underline" },
   backImg: {
     flex: 1,
-    justifyContent: "flex-end",
+    resizeMode: "cover",
     width: "100%",
+    justifyContent: "flex-end",
+  },
+  screenWrapper: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  form: {
+    position: "relative",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingTop: 32,
+    // paddingBottom: 144,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 });
 
