@@ -28,78 +28,81 @@ const LoginScreen = () => {
   };
 
   return (
-    <ImageBackground
-      source={require("../images/bg-photo.png")}
-      style={styles.backImg}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={-60}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.pageWrapper}>
+        <ImageBackground
+          source={require("../images/bg-photo.png")}
+          style={styles.backImg}
+          onPress={Keyboard.dismiss}
         >
-          <View style={styles.form}>
-            <Text style={styles.title}>Увійти</Text>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={-90}
+          >
+            <View style={styles.form}>
+              <Text style={styles.title}>Увійти</Text>
 
-            <TextInput
-              style={[
-                styles.inputMailPassw,
-                isActive === "email" && styles.inputMailPasswa,
-              ]}
-              placeholder="Адреса електронної пошти"
-              inputMode="email"
-              onBlur={() => setIsActive("")}
-              onFocus={() => setIsActive("email")}
-              onChangeText={setEmail}
-              value={email}
-              name="email"
-            />
-            <TextInput
-              style={[
-                styles.inputMailPassw,
-                isActive === "password" && styles.inputMailPasswa,
-              ]}
-              placeholder="Пароль"
-              secureTextEntry={isShown}
-              onBlur={() => setIsActive("")}
-              onFocus={() => setIsActive("password")}
-              onChangeText={setPassword}
-              value={password}
-              name="password"
-            />
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  isActive === "email" && styles.inputMailPasswa,
+                ]}
+                placeholder="Адреса електронної пошти"
+                inputMode="email"
+                onBlur={() => setIsActive("")}
+                onFocus={() => setIsActive("email")}
+                onChangeText={setEmail}
+                value={email}
+                name="email"
+              />
+              <TextInput
+                style={[
+                  styles.inputMailPassw,
+                  isActive === "password" && styles.inputMailPasswa,
+                ]}
+                placeholder="Пароль"
+                secureTextEntry={isShown}
+                onBlur={() => setIsActive("")}
+                onFocus={() => setIsActive("password")}
+                onChangeText={setPassword}
+                value={password}
+                name="password"
+              />
 
-            <TouchableOpacity
-              style={styles.passwShow}
-              activeOpacity={0.5}
-              onPress={() => setIsShown(!isShown)}
-            >
-              <Text style={styles.passwShowText}>
-                {isShown ? "Показати" : "Сховати"}
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.passwShow}
+                activeOpacity={0.5}
+                onPress={() => setIsShown(!isShown)}
+              >
+                <Text style={styles.passwShowText}>
+                  {isShown ? "Показати" : "Сховати"}
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.registerButton}
-              activeOpacity={0.5}
-              // onPress={onLogin}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <Text style={styles.registerButtonText}>Увійти</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.registerButton}
+                activeOpacity={0.5}
+                // onPress={onLogin}
+                onPress={() => navigation.navigate("Home")}
+              >
+                <Text style={styles.registerButtonText}>Увійти</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.loginLink}
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate("RegistrationScreen")}
-            >
-              <Text style={styles.loginLinkText}>
-                Немає акаунту?{" "}
-                <Text style={styles.underlingText}>Зареєструватися</Text>
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
-    </ImageBackground>
+              <TouchableOpacity
+                style={styles.loginLink}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate("RegistrationScreen")}
+              >
+                <Text style={styles.loginLinkText}>
+                  Немає акаунту?{" "}
+                  <Text style={styles.underlingText}>Зареєструватися</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -210,9 +213,11 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
   },
-  screenWrapper: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  pageWrapper: {
+    flex: 1,
+  },
   form: {
-    position: "relative",
+    // position: "relative",
     backgroundColor: "#fff",
     alignItems: "center",
     borderTopLeftRadius: 25,

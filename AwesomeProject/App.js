@@ -8,6 +8,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import PostScreen from "./src/Screens/PostsScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/Screens/Home";
+import CommentsScreen from "./src/Screens/CommentsScreen";
+import MapScreen from "./src/Screens/MapScreen";
 
 export default function App() {
   // const [isRegister, setIsRegister] = useState(false);
@@ -26,16 +28,16 @@ export default function App() {
         <MainStack.Screen name="LoginScreen" component={LoginScreen} />
         <MainStack.Screen name="PostScreen" component={PostScreen} />
         <MainStack.Screen name="Home" component={Home} />
-        {/* <MainStack.Screen
-          name="CommentsScreen"
-          component={CommentsScree}
+        <MainStack.Screen
+          name="Comments"
+          component={CommentsScreen}
           options={{ headerShown: true }}
-        /> */}
-        {/* <MainStack.Screen
-          name="MapScreen"
+        />
+        <MainStack.Screen
+          name="Map"
           component={MapScreen}
           options={{ headerShown: true }}
-        /> */}
+        />
         {/* <StatusBar style="auto" /> */}
       </MainStack.Navigator>
     </NavigationContainer>

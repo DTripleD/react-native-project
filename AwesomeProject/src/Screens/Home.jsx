@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import PostsScreen from "./PostsScreen";
@@ -70,6 +70,19 @@ const Home = () => {
         component={CreatePostScreen}
         options={{
           title: "Створити публікацію",
+          tabBarStyle: { display: "none" },
+          headerLeft: () => {
+            return (
+              <TouchableOpacity
+                style={{
+                  paddingLeft: 16,
+                }}
+                onPress={() => navigation.navigate("PostsScreen")}
+              >
+                <Ionicons name="arrow-back-sharp" size={24} color="#212121CC" />
+              </TouchableOpacity>
+            );
+          },
           headerTitleAlign: "center",
           headerStyle: {
             borderBottomColor: "#BDBDBD",

@@ -1,5 +1,6 @@
 import {
   Keyboard,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -11,51 +12,60 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 function CreatePostScreen() {
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
-      <View style={styles.ovalContainer}>
-        <TouchableOpacity style={styles.oval}>
-          <Ionicons
-            name={"camera-sharp"}
-            size={24}
-            color={"#BDBDBD"}
-            style={styles.searchIcon}
-          />
-        </TouchableOpacity>
-      </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={-60}
+      >
+        <View style={styles.container}>
+          <View style={styles.ovalContainer}>
+            <TouchableOpacity style={styles.oval}>
+              <Ionicons
+                name={"camera-sharp"}
+                size={24}
+                color={"#BDBDBD"}
+                style={styles.searchIcon}
+              />
+            </TouchableOpacity>
+          </View>
 
-      <Text style={styles.photoText}>Завантажте фото</Text>
+          <Text style={styles.photoText}>Завантажте фото</Text>
 
-      <TextInput placeholder="Назва..." style={styles.inputName} />
+          <TextInput placeholder="Назва..." style={styles.inputName} />
 
-      <View style={styles.searchSection}>
-        <Ionicons
-          name={"location-outline"}
-          size={24}
-          color={"#BDBDBD"}
-          style={styles.searchIcon}
-        />
-        <TextInput style={styles.inputPlace} placeholder="Місцевість..." />
-      </View>
+          <View style={styles.searchSection}>
+            <Ionicons
+              name={"location-outline"}
+              size={24}
+              color={"#BDBDBD"}
+              style={styles.searchIcon}
+            />
+            <TextInput style={styles.inputPlace} placeholder="Місцевість..." />
+          </View>
 
-      <TouchableOpacity style={styles.registerButton} activeOpacity={0.5}>
-        <Text style={styles.registerButtonText}>Опубліковати</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} activeOpacity={0.5}>
-        <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
-      </TouchableOpacity>
-    </View>
-    // </TouchableWithoutFeedback>
+          <TouchableOpacity style={styles.registerButton} activeOpacity={0.5}>
+            <Text style={styles.registerButtonText}>Опубліковати</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.deleteButton} activeOpacity={0.5}>
+            <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   photoText: { alignSelf: "flex-start", color: "#BDBDBD" },
   container: {
-    flex: 1,
+    padding: 16,
+    flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    padding: 16,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    justifyContent: "flex-end",
+    height: "100%",
   },
   ovalContainer: {
     // position: "absolute",
@@ -134,6 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginTop: "auto",
   },
+  screenWrapper: { flex: 1, width: "100%", justifyContent: "flex-end" },
 });
 
 export default CreatePostScreen;
