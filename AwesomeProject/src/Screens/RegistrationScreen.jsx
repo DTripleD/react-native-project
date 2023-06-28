@@ -31,95 +31,96 @@ const RegistrationScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.pageWrapper}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={-170}
+        style={{ flex: 1, width: "100%", justifyContent: "flex-end" }}
+      >
         <ImageBackground
           source={require("../images/bg-photo.png")}
           style={styles.backImg}
           onPress={Keyboard.dismiss}
         >
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={-90}
-          >
-            <View style={styles.form}>
-              <View style={styles.photoContainer}>
-                <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
-                  <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
-                </TouchableOpacity>
-              </View>
-              <Text style={styles.title}>Реєстрація</Text>
-
-              <TextInput
-                style={[
-                  styles.inputMailPassw,
-                  isActive === "login" && styles.inputMailPasswa,
-                ]}
-                placeholder="Логін"
-                onBlur={() => setIsActive("")}
-                onFocus={() => setIsActive("login")}
-                onChangeText={setLogin}
-                value={login}
-                name="login"
-              />
-              <TextInput
-                style={[
-                  styles.inputMailPassw,
-                  isActive === "email" && styles.inputMailPasswa,
-                ]}
-                placeholder="Адреса електронної пошти"
-                inputMode="email"
-                onBlur={() => setIsActive("")}
-                onFocus={() => setIsActive("email")}
-                onChangeText={setEmail}
-                value={email}
-                name="email"
-              />
-              <TextInput
-                style={[
-                  styles.inputMailPassw,
-                  isActive === "password" && styles.inputMailPasswa,
-                ]}
-                placeholder="Пароль"
-                secureTextEntry={isShown}
-                onBlur={() => setIsActive("")}
-                onFocus={() => setIsActive("password")}
-                onChangeText={setPassword}
-                value={password}
-                name="password"
-              />
-
-              <TouchableOpacity
-                style={styles.passwShow}
-                activeOpacity={0.5}
-                onPress={() => setIsShown(!isShown)}
-              >
-                <Text style={styles.passwShowText}>
-                  {isShown ? "Показати" : "Сховати"}
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.registerButton}
-                activeOpacity={0.5}
-                // onPress={onRegister}
-                onPress={() => navigation.navigate("Home")}
-              >
-                <Text style={styles.registerButtonText}>Зареєстуватися</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.loginLink}
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate("LoginScreen")}
-              >
-                <Text style={styles.loginLinkText}>
-                  Вже є акаунт? <Text style={styles.underlingText}>Увійти</Text>
-                </Text>
+          <View style={styles.form}>
+            <View style={styles.photoContainer}>
+              <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
+                <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
               </TouchableOpacity>
             </View>
-          </KeyboardAvoidingView>
+            <Text style={styles.title}>Реєстрація</Text>
+
+            <TextInput
+              style={[
+                styles.inputMailPassw,
+                isActive === "login" && styles.inputMailPasswa,
+              ]}
+              placeholder="Логін"
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("login")}
+              onChangeText={setLogin}
+              value={login}
+              name="login"
+            />
+            <TextInput
+              style={[
+                styles.inputMailPassw,
+                isActive === "email" && styles.inputMailPasswa,
+              ]}
+              placeholder="Адреса електронної пошти"
+              inputMode="email"
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("email")}
+              onChangeText={setEmail}
+              value={email}
+              name="email"
+            />
+            <TextInput
+              style={[
+                styles.inputMailPassw,
+                isActive === "password" && styles.inputMailPasswa,
+              ]}
+              placeholder="Пароль"
+              secureTextEntry={isShown}
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("password")}
+              onChangeText={setPassword}
+              value={password}
+              name="password"
+            />
+
+            <TouchableOpacity
+              style={styles.passwShow}
+              activeOpacity={0.5}
+              onPress={() => setIsShown(!isShown)}
+            >
+              <Text style={styles.passwShowText}>
+                {isShown ? "Показати" : "Сховати"}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.registerButton}
+              activeOpacity={0.5}
+              // onPress={onRegister}
+              onPress={() => navigation.navigate("Home")}
+            >
+              <Text style={styles.registerButtonText}>Зареєстуватися</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.loginLink}
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("LoginScreen")}
+            >
+              <Text style={styles.loginLinkText}>
+                Вже є акаунт? <Text style={styles.underlingText}>Увійти</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
         </ImageBackground>
-      </View>
+      </KeyboardAvoidingView>
+
+      {/* </View> */}
     </TouchableWithoutFeedback>
   );
 };
