@@ -37,7 +37,7 @@ const RegistrationScreen = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={-80}
+          keyboardVerticalOffset={-60}
         >
           <View style={styles.form}>
             <View style={styles.photoContainer}>

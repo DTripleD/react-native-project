@@ -35,7 +35,7 @@ const LoginScreen = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={-80}
+          keyboardVerticalOffset={-60}
         >
           <View style={styles.form}>
             <Text style={styles.title}>Увійти</Text>
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   inputMailPassw: {
     backgroundColor: "#F6F6F6",
-    width: 343,
+    width: "100%",
     height: 50,
     borderRadius: 8,
     padding: 16,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   registerButton: {
     backgroundColor: "#FF6C00",
     height: 50,
-    width: 343,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
