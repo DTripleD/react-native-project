@@ -2,22 +2,50 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import PostsScreen from "./PostsScreen";
-import CreatePostScreen from "./CreatePostsScreen";
-import ProfileScreen from "./ProfileScreen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import PostsScreen from "../Screens/PostsScreen";
+import CreatePostScreen from "../Screens/CreatePostsScreen";
+import ProfileScreen from "../Screens/ProfileScreen";
 
 const Tabs = createBottomTabNavigator();
 
-const Home = () => {
+const BottomNavigation = () => {
   const navigation = useNavigation();
   return (
     <Tabs.Navigator
-      screenOptions={{
-        tabBarLabelStyle: {
-          display: "none",
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "ProfileScreen") {
+            iconName = "person-outline";
+          } else if (route.name === "CreatePostsScreen") {
+            iconName = "add-sharp";
+          } else if (route.name === "PostsScreen") {
+            iconName = "grid-outline";
+          }
+          return (
+            <View
+              style={[
+                styles.iconContainer,
+                focused && styles.iconContainerActive,
+              ]}
+            >
+              <Ionicons name={iconName} size={size} color={color} />
+            </View>
+          );
         },
+        headerTitleAlign: "center",
+        headerStyle: {
+          borderBottomColor: "#BDBDBD",
+          borderBottomWidth: 1,
+        },
+      })}
+      tabBarOptions={{
+        inactiveTintColor: "#212121",
+        showLabel: false,
+        activeTintColor: "#FFFFFF",
       }}
     >
       <Tabs.Screen
@@ -35,16 +63,6 @@ const Home = () => {
             </TouchableOpacity>
           ),
           title: "Публікації",
-          tabBarIcon: ({ color, size }) => (
-            <View style={[styles.iconContainer]}>
-              <Ionicons name="grid-outline" size={24} color="#212121" />
-            </View>
-          ),
-          headerTitleAlign: "center",
-          headerStyle: {
-            borderBottomColor: "#BDBDBD",
-            borderWidth: 1,
-          },
         }}
       />
       <Tabs.Screen
@@ -65,17 +83,6 @@ const Home = () => {
               </TouchableOpacity>
             );
           },
-          tabBarIcon: ({ color, size }) => (
-            <View style={[styles.iconAddContainer]}>
-              <Ionicons name="add-sharp" size={24} color="#FFFFFF" />
-            </View>
-          ),
-
-          headerTitleAlign: "center",
-          headerStyle: {
-            borderBottomColor: "#BDBDBD",
-            borderWidth: 1,
-          },
         }}
       />
       <Tabs.Screen
@@ -83,16 +90,6 @@ const Home = () => {
         component={ProfileScreen}
         options={{
           title: "Профіль",
-          tabBarIcon: ({ color, size }) => (
-            <View style={[styles.iconContainer]}>
-              <Ionicons name="person-outline" size={24} color="#212121" />
-            </View>
-          ),
-          headerTitleAlign: "center",
-          headerStyle: {
-            borderBottomColor: "#BDBDBD",
-            borderWidth: 1,
-          },
         }}
       />
     </Tabs.Navigator>
@@ -110,16 +107,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 70,
     height: 40,
-  },
-  iconAddContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF6C00",
-    borderRadius: 50,
-    width: 70,
-    height: 40,
     borderRadius: 20,
+  },
+  iconContainerActive: {
+    backgroundColor: "#FF6C00",
   },
 });
 
-export default Home;
+export default BottomNavigation;

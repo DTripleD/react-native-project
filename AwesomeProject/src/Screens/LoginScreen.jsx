@@ -83,7 +83,7 @@ const LoginScreen = () => {
               style={styles.registerButton}
               activeOpacity={0.5}
               // onPress={onLogin}
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("BottomNavigation")}
             >
               <Text style={styles.registerButtonText}>Увійти</Text>
             </TouchableOpacity>
