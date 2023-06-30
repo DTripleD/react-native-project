@@ -32,14 +32,21 @@ export default function MainNavigator() {
           component={BottomNavigation}
         />
         <MainStack.Screen
-          name="Comments"
+          name="CommentsScreen"
           component={CommentsScreen}
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+            title: "Коментарі",
+            headerStyle: {
+              borderBottomColor: "#BDBDBD",
+              borderBottomWidth: 1,
+            },
+          }}
         />
         <MainStack.Screen
-          name="Map"
+          name="MapScreen"
           component={MapScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: true, title: "Мапа" }}
         />
       </MainStack.Navigator>
     </NavigationContainer>

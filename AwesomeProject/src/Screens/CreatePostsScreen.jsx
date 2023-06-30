@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     left: "50%",
-    transform: [{ translateY: -10 }, { translateX: -12 }],
+    transform: [{ translateY: -13 }, { translateX: -12 }],
   },
   actionDescription: {
     fontSize: 16,

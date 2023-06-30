@@ -1,8 +1,10 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-// import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const PostsScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.userWrapper}>
@@ -23,16 +25,33 @@ const PostsScreen = () => {
         />
         <Text style={styles.postTitle}>Ліс</Text>
         <View style={styles.locationWrapper}>
-          <View style={styles.locationInfo}>
-            <Ionicons name="location-outline" size={24} color="#BDBDBD" />
+          <TouchableOpacity
+            style={styles.locationInfo}
+            activeOpacity={0.5}
+            onPress={() =>
+              navigation.navigate("CommentsScreen", {
+                photo: "../images/postImage.png",
+              })
+            }
+          >
+            <Ionicons name="chatbubble-outline" size={24} color="#BDBDBD" />
             <Text style={styles.commentsCount}>0</Text>
-          </View>
-          <View style={styles.locationInfo}>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.locationInfo}
+            activeOpacity={0.5}
+            onPress={() =>
+              navigation.navigate("MapScreen", {
+                photo: "../images/postImage.png",
+              })
+            }
+          >
             <Ionicons name="location-outline" size={24} color="#BDBDBD" />
             <Text style={styles.location}>
               Ivano-Frankivs'k Region, Ukraine
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
