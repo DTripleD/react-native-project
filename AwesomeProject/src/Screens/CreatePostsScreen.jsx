@@ -25,6 +25,7 @@ const CreatePostScreen = () => {
   const [photoUri, setPhotoUri] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [type] = useState(Camera.Constants.Type.back);
+  const [loading, setLoading] = useState(false);
   const cameraRef = useRef();
 
   const [isActive, setIsActive] = useState("");
@@ -69,10 +70,6 @@ const CreatePostScreen = () => {
     return handleReset;
   }, []);
 
-  if (!hasPermission) {
-    return <Text>No access to camera</Text>;
-  }
-
   const handleSubmit = async () => {
     if (!photoUri) {
       setPhotoUri("");
@@ -80,6 +77,7 @@ const CreatePostScreen = () => {
     }
     if (!postLocation) {
       try {
+        console.log(postLocation);
       } catch (error) {
         console.log(error);
       }
@@ -102,33 +100,52 @@ const CreatePostScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={-60}
+        keyboardVerticalOffset={-100}
       >
         <View style={styles.container}>
           <View style={styles.loadImage}>
-            <Camera type={type} ref={cameraRef} style={{ flex: 1 }}>
-              <ImageBackground src={photoUri} style={styles.postImage}>
-                <TouchableOpacity
-                  onPress={async () => {
-                    setPhotoUri(null);
-                    if (cameraRef) {
-                      const { uri } =
-                        await cameraRef.current.takePictureAsync();
-                      await MediaLibrary.createAssetAsync(uri);
-                      setPhotoUri(uri);
-                    }
-                  }}
-                  style={styles.cameraIconWrapper}
-                >
-                  <Ionicons
-                    name={"camera-sharp"}
-                    size={24}
-                    color={"#BDBDBD"}
-                    style={styles.cameraIcon}
-                  />
-                </TouchableOpacity>
-              </ImageBackground>
-            </Camera>
+            {hasPermission ? (
+              <Camera type={type} ref={cameraRef} style={{ flex: 1 }}>
+                <ImageBackground src={photoUri} style={styles.postImage}>
+                  <TouchableOpacity
+                    disabled={loading}
+                    onPress={async () => {
+                      setLoading(true);
+                      setPhotoUri(null);
+                      if (cameraRef) {
+                        const { uri } =
+                          await cameraRef.current.takePictureAsync();
+                        await MediaLibrary.createAssetAsync(uri);
+                        setPhotoUri(uri);
+                      }
+                      setLoading(false);
+                    }}
+                    style={styles.cameraIconWrapper}
+                  >
+                    <Ionicons
+                      name={"camera-sharp"}
+                      size={24}
+                      color={"#BDBDBD"}
+                      style={styles.cameraIcon}
+                    />
+                  </TouchableOpacity>
+                </ImageBackground>
+              </Camera>
+            ) : (
+              <TouchableOpacity
+                style={[
+                  styles.cameraIconWrapper,
+                  styles.cameraIconWrapperHasntPerm,
+                ]}
+              >
+                <Ionicons
+                  name={"camera-sharp"}
+                  size={24}
+                  color={"#BDBDBD"}
+                  style={styles.cameraIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
           <Text style={styles.photoText}>
             {!photoUri ? "Завантажте фото" : "Редагувати фото"}
@@ -249,6 +266,7 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "400",
     fontSize: 16,
+    width: "100%",
   },
 
   inputName: {
@@ -313,6 +331,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     transform: [{ translateY: -30 }, { translateX: -30 }],
   },
+  cameraIconWrapperHasntPerm: { backgroundColor: "#FFFFFF" },
   cameraIcon: {
     position: "absolute",
     top: "50%",

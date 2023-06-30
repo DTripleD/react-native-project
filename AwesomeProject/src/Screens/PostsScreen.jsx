@@ -28,11 +28,7 @@ const PostsScreen = () => {
           <TouchableOpacity
             style={styles.locationInfo}
             activeOpacity={0.5}
-            onPress={() =>
-              navigation.navigate("CommentsScreen", {
-                photo: "../images/postImage.png",
-              })
-            }
+            onPress={() => navigation.navigate("CommentsScreen")}
           >
             <Ionicons name="chatbubble-outline" size={24} color="#BDBDBD" />
             <Text style={styles.commentsCount}>0</Text>
@@ -41,11 +37,7 @@ const PostsScreen = () => {
           <TouchableOpacity
             style={styles.locationInfo}
             activeOpacity={0.5}
-            onPress={() =>
-              navigation.navigate("MapScreen", {
-                photo: "../images/postImage.png",
-              })
-            }
+            onPress={() => navigation.navigate("MapScreen")}
           >
             <Ionicons name="location-outline" size={24} color="#BDBDBD" />
             <Text style={styles.location}>
