@@ -20,94 +20,143 @@ const Profile = () => {
       style={styles.backImg}
     >
       {/* <ScrollView> */}
-      <View style={styles.form}>
-        <View style={styles.photoContainer}>
-          <Image
-            source={require("../images/user.png")}
-            style={{ height: "100%", width: "100%" }}
-          />
-          <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
-            <Ionicons name="add-circle-outline" size={25} color="#FF6C00" />
-          </TouchableOpacity>
+      <ScrollView>
+        <View style={{ width: "100%", height: 150 }} />
+        <View style={styles.form}>
+          <View style={styles.photoContainer}>
+            <Image
+              source={require("../images/user.png")}
+              style={{ height: "100%", width: "100%" }}
+            />
+            <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
+              <Ionicons name="add-circle" size={26} color="#E8E8E8" />
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.title}>Natali Romanova</Text>
+
+          <View style={styles.postContainer}>
+            <Image
+              source={require("../images/postImage.png")}
+              style={styles.postPhoto}
+            />
+            <Text style={styles.postTitle}>Ліс</Text>
+            <View style={styles.locationWrapper}>
+              <View style={{ flexDirection: "row", gap: 24 }}>
+                <TouchableOpacity
+                  style={styles.locationInfo}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                >
+                  <Ionicons name="chatbubble-sharp" size={24} color="#FF6C00" />
+                  <Text style={styles.commentsCount}>8</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.locationInfo}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                >
+                  <Ionicons
+                    name="thumbs-up-outline"
+                    size={24}
+                    color="#FF6C00"
+                  />
+                  <Text style={styles.commentsCount}>153</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={styles.locationInfo}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate("MapScreen")}
+              >
+                <Ionicons name="location-outline" size={24} color="#BDBDBD" />
+                <Text style={styles.location}>Ukraine</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.postContainer}>
+            <Image
+              source={require("../images/postImage2.png")}
+              style={styles.postPhoto}
+            />
+            <Text style={styles.postTitle}>Старий будиночок у Венеції</Text>
+            <View style={styles.locationWrapper}>
+              <View style={{ flexDirection: "row", gap: 24 }}>
+                <TouchableOpacity
+                  style={styles.locationInfo}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                >
+                  <Ionicons name="chatbubble-sharp" size={24} color="#FF6C00" />
+                  <Text style={styles.commentsCount}>3</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.locationInfo}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                >
+                  <Ionicons
+                    name="thumbs-up-outline"
+                    size={24}
+                    color="#FF6C00"
+                  />
+                  <Text style={styles.commentsCount}>200</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={styles.locationInfo}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate("MapScreen")}
+              >
+                <Ionicons name="location-outline" size={24} color="#BDBDBD" />
+                <Text style={styles.location}>Ukraine</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.postContainer}>
+            <Image
+              source={require("../images/postImage3.png")}
+              style={styles.postPhoto}
+            />
+            <Text style={styles.postTitle}>Старий будиночок у Венеції</Text>
+            <View style={styles.locationWrapper}>
+              <View style={{ flexDirection: "row", gap: 24 }}>
+                <TouchableOpacity
+                  style={styles.locationInfo}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                >
+                  <Ionicons name="chatbubble-sharp" size={24} color="#FF6C00" />
+                  <Text style={styles.commentsCount}>50</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.locationInfo}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                >
+                  <Ionicons
+                    name="thumbs-up-outline"
+                    size={24}
+                    color="#FF6C00"
+                  />
+                  <Text style={styles.commentsCount}>200</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={styles.locationInfo}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate("MapScreen")}
+              >
+                <Ionicons name="location-outline" size={24} color="#BDBDBD" />
+                <Text style={styles.location}>Italy</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-
-        <Text style={styles.title}>Natali Romanova</Text>
-
-        <ScrollView>
-          <View style={styles.postContainer}>
-            <Image
-              source={require("../images/postImage.png")}
-              style={styles.postPhoto}
-            />
-            <Text style={styles.postTitle}>Ліс</Text>
-            <View style={styles.locationWrapper}>
-              <TouchableOpacity
-                style={styles.locationInfo}
-                activeOpacity={0.5}
-                onPress={() =>
-                  navigation.navigate("CommentsScreen", {
-                    photo: "../images/postImage.png",
-                  })
-                }
-              >
-                <Ionicons name="chatbubble-outline" size={24} color="#BDBDBD" />
-                <Text style={styles.commentsCount}>0</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.locationInfo}
-                activeOpacity={0.5}
-                onPress={() =>
-                  navigation.navigate("MapScreen", {
-                    photo: "../images/postImage.png",
-                  })
-                }
-              >
-                <Ionicons name="location-outline" size={24} color="#BDBDBD" />
-                <Text style={styles.location}>
-                  Ivano-Frankivs'k Region, Ukraine
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.postContainer}>
-            <Image
-              source={require("../images/postImage.png")}
-              style={styles.postPhoto}
-            />
-            <Text style={styles.postTitle}>Ліс</Text>
-            <View style={styles.locationWrapper}>
-              <TouchableOpacity
-                style={styles.locationInfo}
-                activeOpacity={0.5}
-                onPress={() =>
-                  navigation.navigate("CommentsScreen", {
-                    photo: "../images/postImage.png",
-                  })
-                }
-              >
-                <Ionicons name="chatbubble-outline" size={24} color="#BDBDBD" />
-                <Text style={styles.commentsCount}>0</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.locationInfo}
-                activeOpacity={0.5}
-                onPress={() =>
-                  navigation.navigate("MapScreen", {
-                    photo: "../images/postImage.png",
-                  })
-                }
-              >
-                <Ionicons name="location-outline" size={24} color="#BDBDBD" />
-                <Text style={styles.location}>
-                  Ivano-Frankivs'k Region, Ukraine
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
+      </ScrollView>
 
       {/* </ScrollView> */}
     </ImageBackground>
@@ -136,7 +185,15 @@ const styles = StyleSheet.create({
     left: "90%",
     height: 25,
     width: 25,
-    pointerEvents: "auto",
+    transform: [{ rotate: "45deg" }],
+    // pointerEvents: "auto",
+    // backgroundColor: "#FFFFFF",
+    // borderWidth: 1,
+    // borderColor: "#BDBDBD",
+    // borderRadius: 50,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // alignContent: "center",
   },
   title: {
     fontWeight: "500",
@@ -161,7 +218,7 @@ const styles = StyleSheet.create({
     // marginBottom: 144,
     paddingLeft: 16,
     paddingRight: 16,
-    height: "80%",
+    paddingBottom: 43,
   },
 
   postPhoto: { borderRadius: 8 },
@@ -171,7 +228,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 8,
   },
-  locationInfo: { flexDirection: "row" },
+  locationInfo: { flexDirection: "row", alignItems: "center", gap: 6 },
   commentsCount: {
     fontWeight: 400,
     fontSize: 16,

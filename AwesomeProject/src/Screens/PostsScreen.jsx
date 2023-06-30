@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   postTitle: { fontWeight: 500, fontSize: 16, color: "#212121", marginTop: 8 },
-  locationInfo: { flexDirection: "row" },
+  locationInfo: { flexDirection: "row", alignItems: "center", gap: 6 },
   commentsCount: {
     fontWeight: 400,
     fontSize: 16,

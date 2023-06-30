@@ -27,6 +27,8 @@ const CreatePostScreen = () => {
   const [type] = useState(Camera.Constants.Type.back);
   const cameraRef = useRef();
 
+  const [isActive, setIsActive] = useState("");
+
   useEffect(() => {
     (async () => {
       try {
@@ -133,16 +135,26 @@ const CreatePostScreen = () => {
           </Text>
 
           <TextInput
-            style={styles.inputName}
+            style={[
+              styles.inputName,
+              isActive === "name" && styles.searchSectionActive,
+            ]}
             placeholder="Назва..."
             onChangeText={setPostName}
             value={postName}
+            onBlur={() => setIsActive("")}
+            onFocus={() => setIsActive("name")}
           />
-          <View style={styles.searchSection}>
+          <View
+            style={[
+              styles.searchSection,
+              isActive === "place" && styles.searchSectionActive,
+            ]}
+          >
             <Ionicons
               name={"location-outline"}
               size={24}
-              color={"#BDBDBD"}
+              color={isActive === "place" ? "#FF6C00" : "#BDBDBD"}
               style={styles.searchIcon}
             />
 
@@ -151,6 +163,8 @@ const CreatePostScreen = () => {
               placeholder="Місцевість..."
               onChangeText={setLocationTitle}
               value={locationTitle}
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("place")}
             />
           </View>
           <TouchableOpacity
@@ -223,6 +237,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E8E8E8",
     marginTop: 16,
   },
+  searchSectionActive: {
+    borderBottomColor: "#FF6C00",
+  },
   searchIcon: {
     // padding: 10,
   },
@@ -233,6 +250,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
   },
+
   inputName: {
     width: "100%",
     height: 50,

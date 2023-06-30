@@ -32,7 +32,11 @@ const BottomNavigation = () => {
                 focused && styles.iconContainerActive,
               ]}
             >
-              <Ionicons name={iconName} size={size} color={color} />
+              <Ionicons
+                name={iconName}
+                size={size}
+                color={focused ? "#FFFFFF" : "#212121CC"}
+              />
             </View>
           );
         },
@@ -41,12 +45,10 @@ const BottomNavigation = () => {
           borderBottomColor: "#BDBDBD",
           borderBottomWidth: 1,
         },
+        tabBarLabelStyle: {
+          display: "none",
+        },
       })}
-      tabBarOptions={{
-        inactiveTintColor: "#212121",
-        showLabel: false,
-        activeTintColor: "#FFFFFF",
-      }}
     >
       <Tabs.Screen
         name="PostsScreen"

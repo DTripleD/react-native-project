@@ -19,17 +19,39 @@ export default function MainNavigator() {
     <NavigationContainer>
       <MainStack.Navigator
         initialRouteName="LoginScreen"
-        screenOptions={{ headerTitleAlign: "center", headerShown: false }}
+        screenOptions={{
+          headerTitleAlign: "center",
+          headerShown: false,
+          gestureEnabled: false,
+        }}
       >
         <MainStack.Screen
           name="RegistrationScreen"
           component={RegistrationScreen}
+          options={{
+            gestureEnabled: false,
+          }}
         />
-        <MainStack.Screen name="LoginScreen" component={LoginScreen} />
-        <MainStack.Screen name="PostScreen" component={PostScreen} />
+        <MainStack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <MainStack.Screen
+          name="PostScreen"
+          component={PostScreen}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
         <MainStack.Screen
           name="BottomNavigation"
           component={BottomNavigation}
+          options={{
+            gestureEnabled: false,
+          }}
         />
         <MainStack.Screen
           name="CommentsScreen"
@@ -37,6 +59,9 @@ export default function MainNavigator() {
           options={{
             headerShown: true,
             title: "Коментарі",
+
+            gestureEnabled: false,
+
             headerStyle: {
               borderBottomColor: "#BDBDBD",
               borderBottomWidth: 1,
