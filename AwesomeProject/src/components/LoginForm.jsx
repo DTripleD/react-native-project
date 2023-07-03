@@ -19,9 +19,10 @@ const initialState = {
   password: "",
 };
 
-// import { authSignIn } from "../redux/auth/authOperations";
 import { validateEmail, validationPassword } from "../services";
 import { useDispatch } from "react-redux";
+import { authSignIn } from "../redux/auth/authoperations";
+import { ErrorText } from "../components//ReUseComponents/ErrorText/ErrorText";
 
 const reducerInput = (state, actions) => {
   switch (actions.type) {
@@ -56,11 +57,12 @@ const LoginForm = () => {
   const handleLogin = () => {
     if (isValidEmail && isValidPassword && input.email) {
       Keyboard.dismiss();
-      setIsShowKeyboard(false);
 
       dispatch(authSignIn(input));
 
       setInput(() => initialState);
+
+      navigation.navigate("BottomNavigation");
     } else {
       console.log("Empty fields");
     }
@@ -93,7 +95,7 @@ const LoginForm = () => {
           setInput((prev) => ({ ...prev, email: value }));
         }}
       />
-      {!isValidEmail ? <Text>Email invalid!</Text> : ""}
+      {!isValidEmail ? <ErrorText text="Email invalid!" /> : ""}
       <TextInput
         style={[
           styles.inputMailPassw,
@@ -117,7 +119,7 @@ const LoginForm = () => {
         }}
       />
       {!isValidPassword ? (
-        <Text>Password should be example (Xx2$xxxx) at 8 character!</Text>
+        <ErrorText text="Password should be example (Xx2$xxxx) at 8 character!" />
       ) : (
         ""
       )}
@@ -137,7 +139,7 @@ const LoginForm = () => {
         activeOpacity={0.5}
         // onPress={onLogin}
         disabled={!isValidPassword}
-        onPress={() => navigation.navigate("BottomNavigation")}
+        onPress={handleLogin}
       >
         <Text style={styles.registerButtonText}>Увійти</Text>
       </TouchableOpacity>
