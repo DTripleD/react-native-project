@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,13 +14,57 @@ import {
   Keyboard,
 } from "react-native";
 
+const initialState = {
+  email: "",
+  password: "",
+};
+
+// import { authSignIn } from "../redux/auth/authOperations";
+import { validateEmail, validationPassword } from "../services";
+import { useDispatch } from "react-redux";
+
+const reducerInput = (state, actions) => {
+  switch (actions.type) {
+    case "Email": {
+      return { ...state, email: actions.payload };
+    }
+    case "Password": {
+      return { ...state, password: actions.payload };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(true);
   const [isActive, setIsActive] = useState("");
 
+  const [input, setInput] = useState(initialState);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidPassword, setIsValidPassword] = useState(true);
+
   const navigation = useNavigation();
+
+  const [state, onDispatch] = useReducer(reducerInput, initialState);
+
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    if (isValidEmail && isValidPassword && input.email) {
+      Keyboard.dismiss();
+      setIsShowKeyboard(false);
+
+      dispatch(authSignIn(input));
+
+      setInput(() => initialState);
+    } else {
+      console.log("Empty fields");
+    }
+  };
 
   return (
     <View style={styles.form}>
@@ -33,12 +77,23 @@ const LoginForm = () => {
         ]}
         placeholder="Адреса електронної пошти"
         inputMode="email"
-        onBlur={() => setIsActive("")}
-        onFocus={() => setIsActive("email")}
-        onChangeText={setEmail}
-        value={email}
+        onBlur={() => {
+          setIsActive("");
+          onDispatch({ type: "Email", payload: false });
+        }}
+        onFocus={() => {
+          setIsActive("email");
+          onDispatch({ type: "Email", payload: true });
+        }}
+        // onChangeText={setEmail}
+        value={input.email}
         name="email"
+        onChangeText={(value) => {
+          validateEmail(value, setIsValidEmail);
+          setInput((prev) => ({ ...prev, email: value }));
+        }}
       />
+      {!isValidEmail ? <Text>Email invalid!</Text> : ""}
       <TextInput
         style={[
           styles.inputMailPassw,
@@ -46,12 +101,26 @@ const LoginForm = () => {
         ]}
         placeholder="Пароль"
         secureTextEntry={isShown}
-        onBlur={() => setIsActive("")}
-        onFocus={() => setIsActive("password")}
-        onChangeText={setPassword}
-        value={password}
+        onBlur={() => {
+          setIsActive("");
+          onDispatch({ type: "Password", payload: false });
+        }}
+        onFocus={() => {
+          setIsActive("password");
+          onDispatch({ type: "Password", payload: true });
+        }}
+        value={input.password}
         name="password"
+        onChangeText={(value) => {
+          validationPassword(value, setIsValidPassword);
+          setInput((prev) => ({ ...prev, password: value }));
+        }}
       />
+      {!isValidPassword ? (
+        <Text>Password should be example (Xx2$xxxx) at 8 character!</Text>
+      ) : (
+        ""
+      )}
 
       <TouchableOpacity
         style={styles.passwShow}
@@ -67,6 +136,7 @@ const LoginForm = () => {
         style={styles.registerButton}
         activeOpacity={0.5}
         // onPress={onLogin}
+        disabled={!isValidPassword}
         onPress={() => navigation.navigate("BottomNavigation")}
       >
         <Text style={styles.registerButtonText}>Увійти</Text>
