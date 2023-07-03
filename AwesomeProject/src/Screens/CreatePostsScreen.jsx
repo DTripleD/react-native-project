@@ -8,6 +8,8 @@ import {
   View,
   TouchableWithoutFeedback,
   ImageBackground,
+  ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
@@ -100,35 +102,66 @@ const CreatePostScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={-100}
+        keyboardVerticalOffset={600}
       >
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
           <View style={styles.loadImage}>
             {hasPermission ? (
               <Camera type={type} ref={cameraRef} style={{ flex: 1 }}>
                 <ImageBackground src={photoUri} style={styles.postImage}>
-                  <TouchableOpacity
-                    disabled={loading}
-                    onPress={async () => {
-                      setLoading(true);
-                      setPhotoUri(null);
-                      if (cameraRef) {
-                        const { uri } =
-                          await cameraRef.current.takePictureAsync();
-                        await MediaLibrary.createAssetAsync(uri);
-                        setPhotoUri(uri);
-                      }
-                      setLoading(false);
-                    }}
-                    style={styles.cameraIconWrapper}
-                  >
-                    <Ionicons
-                      name={"camera-sharp"}
-                      size={24}
-                      color={"#BDBDBD"}
-                      style={styles.cameraIcon}
-                    />
-                  </TouchableOpacity>
+                  {photoUri ? (
+                    <TouchableOpacity
+                      disabled={loading}
+                      onPress={async () => {
+                        setLoading(true);
+                        setPhotoUri(null);
+                        setLoading(false);
+                      }}
+                      style={[
+                        styles.cameraIconWrapper,
+                        styles.cameraIconWrapperHasntPerm,
+                      ]}
+                    >
+                      <Ionicons
+                        name={"camera-sharp"}
+                        size={24}
+                        color={"#BDBDBD"}
+                        style={styles.cameraIcon}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <>
+                      <TouchableOpacity
+                        disabled={loading}
+                        onPress={async () => {
+                          setLoading(true);
+                          setPhotoUri(null);
+                          if (cameraRef) {
+                            const { uri } =
+                              await cameraRef.current.takePictureAsync();
+                            await MediaLibrary.createAssetAsync(uri);
+                            setPhotoUri(uri);
+                          }
+                          setLoading(false);
+                        }}
+                        style={styles.cameraIconWrapper}
+                      >
+                        {loading ? (
+                          <ActivityIndicator
+                            size="large"
+                            style={styles.loader}
+                          />
+                        ) : (
+                          <Ionicons
+                            name={"camera-sharp"}
+                            size={24}
+                            color={"#BDBDBD"}
+                            style={styles.cameraIcon}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    </>
+                  )}
                 </ImageBackground>
               </Camera>
             ) : (
@@ -162,6 +195,7 @@ const CreatePostScreen = () => {
             onBlur={() => setIsActive("")}
             onFocus={() => setIsActive("name")}
           />
+
           <View
             style={[
               styles.searchSection,
@@ -209,7 +243,7 @@ const CreatePostScreen = () => {
           >
             <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -225,7 +259,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     backgroundColor: "#ffffff",
     alignItems: "center",
-    // justifyContent: "flex-end",
+    justifyContent: "flex-end",
   },
   ovalContainer: {
     alignItems: "center",
@@ -304,6 +338,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 100,
     marginTop: "auto",
+    // marginBottom: 0,
   },
   screenWrapper: { flex: 1, width: "100%", justifyContent: "flex-end" },
   loadImage: {
@@ -369,6 +404,7 @@ const styles = StyleSheet.create({
   publishButtonTextEnabled: {
     color: "#ffffff",
   },
+  loader: { height: "100%" },
 });
 
 export default CreatePostScreen;
