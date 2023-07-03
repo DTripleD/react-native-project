@@ -3,14 +3,11 @@ import { View, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 const MapScreen = () => {
-  const [location, setLocation] = useState(null);
-
   return (
     <View style={styles.container}>
       <MapView
-        style={styles.mapStyle}
         region={{
-          ...location,
+          // ...location,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -30,10 +27,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  mapStyle: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
   },
 });
 

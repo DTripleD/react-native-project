@@ -77,16 +77,14 @@ const CreatePostScreen = () => {
       setPhotoUri("");
       return;
     }
-    if (!postLocation) {
+    if (postLocation) {
       try {
         console.log(postLocation);
       } catch (error) {
         console.log(error);
       }
-      return;
     }
     navigation.navigate("PostsScreen");
-
     handleReset();
   };
 
@@ -102,148 +100,152 @@ const CreatePostScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={600}
+        keyboardVerticalOffset={-600}
+        style={styles.kav}
       >
-        <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.loadImage}>
-            {hasPermission ? (
-              <Camera type={type} ref={cameraRef} style={{ flex: 1 }}>
-                <ImageBackground src={photoUri} style={styles.postImage}>
-                  {photoUri ? (
-                    <TouchableOpacity
-                      disabled={loading}
-                      onPress={async () => {
-                        setLoading(true);
-                        setPhotoUri(null);
-                        setLoading(false);
-                      }}
-                      style={[
-                        styles.cameraIconWrapper,
-                        styles.cameraIconWrapperHasntPerm,
-                      ]}
-                    >
-                      <Ionicons
-                        name={"camera-sharp"}
-                        size={24}
-                        color={"#BDBDBD"}
-                        style={styles.cameraIcon}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <>
+        {/* <View style={styles.container}> */}
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.loadImage}>
+              {hasPermission ? (
+                <Camera type={type} ref={cameraRef} style={{ flex: 1 }}>
+                  <ImageBackground src={photoUri} style={styles.postImage}>
+                    {photoUri ? (
                       <TouchableOpacity
                         disabled={loading}
                         onPress={async () => {
                           setLoading(true);
                           setPhotoUri(null);
-                          if (cameraRef) {
-                            const { uri } =
-                              await cameraRef.current.takePictureAsync();
-                            await MediaLibrary.createAssetAsync(uri);
-                            setPhotoUri(uri);
-                          }
                           setLoading(false);
                         }}
-                        style={styles.cameraIconWrapper}
+                        style={[
+                          styles.cameraIconWrapper,
+                          styles.cameraIconWrapperHasntPerm,
+                        ]}
                       >
-                        {loading ? (
-                          <ActivityIndicator
-                            size="large"
-                            style={styles.loader}
-                          />
-                        ) : (
-                          <Ionicons
-                            name={"camera-sharp"}
-                            size={24}
-                            color={"#BDBDBD"}
-                            style={styles.cameraIcon}
-                          />
-                        )}
+                        <Ionicons
+                          name={"camera-sharp"}
+                          size={24}
+                          color={"#BDBDBD"}
+                          style={styles.cameraIcon}
+                        />
                       </TouchableOpacity>
-                    </>
-                  )}
-                </ImageBackground>
-              </Camera>
-            ) : (
-              <TouchableOpacity
-                style={[
-                  styles.cameraIconWrapper,
-                  styles.cameraIconWrapperHasntPerm,
-                ]}
-              >
-                <Ionicons
-                  name={"camera-sharp"}
-                  size={24}
-                  color={"#BDBDBD"}
-                  style={styles.cameraIcon}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          <Text style={styles.photoText}>
-            {!photoUri ? "Завантажте фото" : "Редагувати фото"}
-          </Text>
-
-          <TextInput
-            style={[
-              styles.inputName,
-              isActive === "name" && styles.searchSectionActive,
-            ]}
-            placeholder="Назва..."
-            onChangeText={setPostName}
-            value={postName}
-            onBlur={() => setIsActive("")}
-            onFocus={() => setIsActive("name")}
-          />
-
-          <View
-            style={[
-              styles.searchSection,
-              isActive === "place" && styles.searchSectionActive,
-            ]}
-          >
-            <Ionicons
-              name={"location-outline"}
-              size={24}
-              color={isActive === "place" ? "#FF6C00" : "#BDBDBD"}
-              style={styles.searchIcon}
-            />
+                    ) : (
+                      <>
+                        <TouchableOpacity
+                          disabled={loading}
+                          onPress={async () => {
+                            setLoading(true);
+                            setPhotoUri(null);
+                            if (cameraRef) {
+                              const { uri } =
+                                await cameraRef.current.takePictureAsync();
+                              await MediaLibrary.createAssetAsync(uri);
+                              setPhotoUri(uri);
+                            }
+                            setLoading(false);
+                          }}
+                          style={styles.cameraIconWrapper}
+                        >
+                          {loading ? (
+                            <ActivityIndicator
+                              size="large"
+                              style={styles.loader}
+                            />
+                          ) : (
+                            <Ionicons
+                              name={"camera-sharp"}
+                              size={24}
+                              color={"#BDBDBD"}
+                              style={styles.cameraIcon}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </>
+                    )}
+                  </ImageBackground>
+                </Camera>
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    styles.cameraIconWrapper,
+                    styles.cameraIconWrapperHasntPerm,
+                  ]}
+                >
+                  <Ionicons
+                    name={"camera-sharp"}
+                    size={24}
+                    color={"#BDBDBD"}
+                    style={styles.cameraIcon}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={styles.photoText}>
+              {!photoUri ? "Завантажте фото" : "Редагувати фото"}
+            </Text>
 
             <TextInput
-              style={styles.inputPlace}
-              placeholder="Місцевість..."
-              onChangeText={setLocationTitle}
-              value={locationTitle}
-              onBlur={() => setIsActive("")}
-              onFocus={() => setIsActive("place")}
-            />
-          </View>
-          <TouchableOpacity
-            style={[
-              styles.registerButton,
-              isButtonDisabled && styles.enabledButton,
-            ]}
-            onPress={handleSubmit}
-            disabled={!isButtonDisabled}
-            activeOpacity={0.5}
-          >
-            <Text
               style={[
-                styles.registerButtonText,
-                isButtonDisabled && styles.publishButtonTextEnabled,
+                styles.inputName,
+                isActive === "name" && styles.searchSectionActive,
+              ]}
+              placeholder="Назва..."
+              onChangeText={setPostName}
+              value={postName}
+              onBlur={() => setIsActive("")}
+              onFocus={() => setIsActive("name")}
+            />
+            <View
+              style={[
+                styles.searchSection,
+                isActive === "place" && styles.searchSectionActive,
               ]}
             >
-              Опублікувати
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.deleteButton}
-            activeOpacity={0.5}
-            onPress={handleReset}
-          >
-            <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
-          </TouchableOpacity>
+              <Ionicons
+                name={"location-outline"}
+                size={24}
+                color={isActive === "place" ? "#FF6C00" : "#BDBDBD"}
+                style={styles.searchIcon}
+              />
+
+              <TextInput
+                style={styles.inputPlace}
+                placeholder="Місцевість..."
+                onChangeText={setLocationTitle}
+                value={locationTitle}
+                onBlur={() => setIsActive("")}
+                onFocus={() => setIsActive("place")}
+              />
+            </View>
+            <TouchableOpacity
+              style={[
+                styles.registerButton,
+                isButtonDisabled && styles.enabledButton,
+              ]}
+              onPress={handleSubmit}
+              disabled={!isButtonDisabled}
+              activeOpacity={0.5}
+            >
+              <Text
+                style={[
+                  styles.registerButtonText,
+                  isButtonDisabled && styles.publishButtonTextEnabled,
+                ]}
+              >
+                Опублікувати
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              activeOpacity={0.5}
+              onPress={handleReset}
+            >
+              <Ionicons name={"trash-outline"} size={24} color={"#BDBDBD"} />
+            </TouchableOpacity>
+          </View>
         </ScrollView>
+        {/* </View> */}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -251,6 +253,8 @@ const CreatePostScreen = () => {
 
 const styles = StyleSheet.create({
   photoText: { alignSelf: "flex-start", color: "#BDBDBD" },
+
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
   container: {
     height: "100%",
     paddingTop: 32,
@@ -259,7 +263,6 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     backgroundColor: "#ffffff",
     alignItems: "center",
-    justifyContent: "flex-end",
   },
   ovalContainer: {
     alignItems: "center",
@@ -291,9 +294,6 @@ const styles = StyleSheet.create({
   searchSectionActive: {
     borderBottomColor: "#FF6C00",
   },
-  searchIcon: {
-    // padding: 10,
-  },
   inputPlace: {
     padding: 16,
     paddingLeft: 4,
@@ -301,6 +301,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     width: "100%",
+    height: 50,
   },
 
   inputName: {
@@ -324,6 +325,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 100,
     marginTop: 32,
+    marginBottom: 110,
   },
   registerButtonText: {
     color: "#BDBDBD",
@@ -331,14 +333,12 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: "#F6F6F6",
-    height: 50,
+    height: 40,
     paddingLeft: 23,
     paddingRight: 23,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
-    marginTop: "auto",
-    // marginBottom: 0,
   },
   screenWrapper: { flex: 1, width: "100%", justifyContent: "flex-end" },
   loadImage: {
@@ -396,7 +396,6 @@ const styles = StyleSheet.create({
   },
   locationInput: {
     paddingLeft: 28,
-    marginBottom: 0,
   },
   enabledButton: {
     backgroundColor: "#FF6C00",
