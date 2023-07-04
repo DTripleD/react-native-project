@@ -96,85 +96,90 @@ const RegistrationForm = () => {
         )}
       </View>
       <Text style={styles.title}>Реєстрація</Text>
+      <View style={{ width: "100%" }}>
+        <TextInput
+          style={[
+            styles.inputMailPassw,
+            isActive === "login" && styles.inputMailPasswa,
+          ]}
+          placeholder="Логін"
+          onBlur={() => {
+            setIsActive("");
+            onDispatch({ type: "username", payload: false });
+          }}
+          onFocus={() => {
+            setIsActive("login");
+            onDispatch({ type: "username", payload: true });
+          }}
+          value={input.username}
+          name="login"
+          onChangeText={(value) => {
+            validateName(value, setIsValidName);
+            setInput((prev) => ({ ...prev, username: value }));
+          }}
+        />
+        {!isValidName ? (
+          <ErrorText text="Name is required and at least 8 characters!" />
+        ) : (
+          ""
+        )}
+      </View>
+      <View style={{ width: "100%" }}>
+        <TextInput
+          style={[
+            styles.inputMailPassw,
+            isActive === "email" && styles.inputMailPasswa,
+          ]}
+          placeholder="Адреса електронної пошти"
+          inputMode="email"
+          onBlur={() => {
+            setIsActive("");
+            onDispatch({ type: "Email", payload: false });
+          }}
+          onFocus={() => {
+            setIsActive("email");
+            onDispatch({ type: "Email", payload: true });
+          }}
+          onChangeText={(value) => {
+            validateEmail(value, setIsValidEmail);
+            setInput((prev) => ({ ...prev, email: value }));
+          }}
+          value={input.email}
+          name="email"
+        />
+        {!isValidEmail ? <ErrorText text="Email invalid!" /> : ""}
+      </View>
+      <View style={{ width: "100%" }}>
+        <TextInput
+          style={[
+            styles.inputMailPassw,
+            isActive === "password" && styles.inputMailPasswa,
+          ]}
+          placeholder="Пароль"
+          secureTextEntry={isShown}
+          passwordRules={{ minlenght: 8 }}
+          onBlur={() => {
+            setIsActive("");
+            onDispatch({ type: "Password", payload: false });
+          }}
+          onFocus={() => {
+            setIsActive("password");
+            onDispatch({ type: "Password", payload: true });
+          }}
+          onChangeText={(value) => {
+            setInput((prev) => ({ ...prev, password: value }));
+            validationPassword(value, setIsValidPassword);
+          }}
+          value={input.password}
+          name="password"
+        />
 
-      <TextInput
-        style={[
-          styles.inputMailPassw,
-          isActive === "login" && styles.inputMailPasswa,
-        ]}
-        placeholder="Логін"
-        onBlur={() => {
-          setIsActive("");
-          onDispatch({ type: "username", payload: false });
-        }}
-        onFocus={() => {
-          setIsActive("login");
-          onDispatch({ type: "username", payload: true });
-        }}
-        value={input.username}
-        name="login"
-        onChangeText={(value) => {
-          validateName(value, setIsValidName);
-          setInput((prev) => ({ ...prev, username: value }));
-        }}
-      />
-      {!isValidName ? (
-        <ErrorText text="Name is required and at least 8 characters!" />
-      ) : (
-        ""
-      )}
-      <TextInput
-        style={[
-          styles.inputMailPassw,
-          isActive === "email" && styles.inputMailPasswa,
-        ]}
-        placeholder="Адреса електронної пошти"
-        inputMode="email"
-        onBlur={() => {
-          setIsActive("");
-          onDispatch({ type: "Email", payload: false });
-        }}
-        onFocus={() => {
-          setIsActive("email");
-          onDispatch({ type: "Email", payload: true });
-        }}
-        onChangeText={(value) => {
-          validateEmail(value, setIsValidEmail);
-          setInput((prev) => ({ ...prev, email: value }));
-        }}
-        value={input.email}
-        name="email"
-      />
-      {!isValidEmail ? <ErrorText text="Email invalid!" /> : ""}
-      <TextInput
-        style={[
-          styles.inputMailPassw,
-          isActive === "password" && styles.inputMailPasswa,
-        ]}
-        placeholder="Пароль"
-        secureTextEntry={isShown}
-        passwordRules={{ minlenght: 8 }}
-        onBlur={() => {
-          setIsActive("");
-          onDispatch({ type: "Password", payload: false });
-        }}
-        onFocus={() => {
-          setIsActive("password");
-          onDispatch({ type: "Password", payload: true });
-        }}
-        onChangeText={(value) => {
-          setInput((prev) => ({ ...prev, password: value }));
-          validationPassword(value, setIsValidPassword);
-        }}
-        value={input.password}
-        name="password"
-      />
-
-      {!isValidPassword ? (
-        <ErrorText text="Password should be example (Xx2$xxxx) at 8 character!" />
-      ) : (
-        ""
-      )}
+        {!isValidPassword ? (
+          <ErrorText text="Password should be example (Xx2$xxxx) at 8 character!" />
+        ) : (
+          ""
+        )}
+      </View>
 
       <TouchableOpacity
         style={styles.passwShow}
