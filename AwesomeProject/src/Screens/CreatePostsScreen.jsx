@@ -19,7 +19,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadPhonoInStorage, uploadPostOnDataBase } from "../../FireBase";
-import { isUpdate } from "../redux/post/postSlice";
+import { getPosts } from "../redux/selectors";
+import { addPost } from "../redux/post/postSlice";
 
 const CreatePostScreen = () => {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ const CreatePostScreen = () => {
 
   const [isActive, setIsActive] = useState("");
 
-  const { userId, name } = useSelector((state) => state.verify);
+  // const { userId, name } = useSelector((state) => state.verify);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -77,27 +78,45 @@ const CreatePostScreen = () => {
     return handleReset;
   }, []);
 
-  const handleSubmit = async () => {
-    dispatch(isUpdate());
+  // const posts = useSelector(getPosts);
 
-    const newPhoto = await uploadPhonoInStorage(photoUri);
-    uploadPostOnDataBase({
-      locationTitle,
-      newPhoto,
-      location: postLocation,
-      userId,
-      name,
-    });
+  // console.log(posts);
 
-    if (postLocation) {
-      try {
-        console.log(postLocation);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  const handleSubmit = () => {
+    // dispatch(isUpdate());
 
-    navigation.navigate("PostsScreen");
+    // const newPhoto = await uploadPhonoInStorage(photoUri);
+    // uploadPostOnDataBase({
+    //   locationTitle,
+    //   newPhoto,
+    //   location: postLocation,
+    //   userId,
+    //   name,
+    // });
+
+    // if (postLocation) {
+    //   try {
+    //     console.log(postLocation);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+
+    // navigation.navigate("PostsScreen");
+    // handleReset();
+
+    dispatch(
+      addPost({
+        name: postName,
+        location: postLocation,
+        comments: "dfsfd",
+        image: photoUri,
+      })
+    )
+      .unwrap()
+      .then(console.log)
+      .catch(console.log);
+
     handleReset();
   };
 
