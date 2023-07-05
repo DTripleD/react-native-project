@@ -18,7 +18,7 @@ const initialState = [
   {
     id: 0,
     name: "Learn HTML and CSS",
-    location: "Івано Франківськ",
+    location: { latitude: 37.4220936, longitude: -122.083922 },
     comments: "dfsfd",
   },
   {
@@ -57,6 +57,7 @@ const postSlice = createSlice({
     addPost(state, action) {
       state.push(action.payload);
     },
+
     deletePost(state, action) {
       const index = state.findIndex((task) => task.id === action.payload);
       state.splice(index, 1);

@@ -78,11 +78,11 @@ const CreatePostScreen = () => {
     return handleReset;
   }, []);
 
-  // const posts = useSelector(getPosts);
+  const posts = useSelector(getPosts);
 
-  // console.log(posts);
+  console.log(posts);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // dispatch(isUpdate());
 
     // const newPhoto = await uploadPhonoInStorage(photoUri);
@@ -112,11 +112,7 @@ const CreatePostScreen = () => {
         comments: "dfsfd",
         image: photoUri,
       })
-    )
-      .unwrap()
-      .then(console.log)
-      .catch(console.log);
-
+    );
     handleReset();
   };
 
