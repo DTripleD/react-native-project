@@ -17,16 +17,9 @@ import * as MediaLibrary from "expo-media-library";
 import { useRef, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { uploadPhonoInStorage, uploadPostOnDataBase } from "../../FireBase";
 import { isUpdate } from "../redux/post/postSlice";
-
-const initialState = {
-  title: "",
-  location: "",
-};
 
 const CreatePostScreen = () => {
   const navigation = useNavigation();
@@ -41,9 +34,6 @@ const CreatePostScreen = () => {
 
   const [isActive, setIsActive] = useState("");
 
-  const [input, setInput] = useState(initialState);
-  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [location, setLocation] = useState(null);
   const { userId, name } = useSelector((state) => state.verify);
   const dispatch = useDispatch();
 
@@ -88,10 +78,17 @@ const CreatePostScreen = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!photoUri) {
-      setPhotoUri("");
-      return;
-    }
+    dispatch(isUpdate());
+
+    const newPhoto = await uploadPhonoInStorage(photoUri);
+    uploadPostOnDataBase({
+      locationTitle,
+      newPhoto,
+      location: postLocation,
+      userId,
+      name,
+    });
+
     if (postLocation) {
       try {
         console.log(postLocation);
@@ -99,6 +96,7 @@ const CreatePostScreen = () => {
         console.log(error);
       }
     }
+
     navigation.navigate("PostsScreen");
     handleReset();
   };
@@ -221,7 +219,6 @@ const CreatePostScreen = () => {
                 name={"location-outline"}
                 size={24}
                 color={isActive === "place" ? "#FF6C00" : "#BDBDBD"}
-                style={styles.searchIcon}
               />
 
               <TextInput
