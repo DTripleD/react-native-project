@@ -1,17 +1,14 @@
+import React from "react";
+import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
-import MainNavigator from "./src/routes/MainNavigator";
 
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./src/redux/store";
+import { store } from "./redux/store";
+import { Main } from "./components/Main/Main";
 
-const App = () => {
+export default function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <MainNavigator />
-      </PersistGate>
+      <Main />
     </Provider>
   );
-};
-
-export default App;
+}
