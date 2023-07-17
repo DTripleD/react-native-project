@@ -1,14 +1,14 @@
-import React from "react";
-import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
 
-import { store } from "./redux/store";
-import { Main } from "./components/Main/Main";
+import { Main } from "./srcc copy/Screens/Main";
+import { store } from "./srcc copy/redux/store";
 
-export default function App() {
+export const App = () => {
   return (
     <Provider store={store}>
       <Main />
     </Provider>
   );
-}
+};
+
+export default App;

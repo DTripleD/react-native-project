@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     left: 15,
     height: closeButtonSize,
     width: closeButtonSize,
-    borderRadius: Math.floor(closeButtonSize / 2),
+    // borderRadius: Math.floor(closeButtonSize / 2),
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#c4c5c4",
@@ -192,10 +192,10 @@ const styles = StyleSheet.create({
   },
   capture: {
     backgroundColor: "#f5f6f5",
-    borderRadius: 5,
+    // borderRadius: 5,
     height: captureSize,
     width: captureSize,
-    borderRadius: Math.floor(captureSize / 2),
+    // borderRadius: Math.floor(captureSize / 2),
     marginHorizontal: 31,
   },
   recordIndicatorContainer: {
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   recordDot: {
-    borderRadius: 3,
+    // borderRadius: 3,
     height: 6,
     width: 6,
     backgroundColor: "#ff0000",

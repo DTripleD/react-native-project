@@ -43,7 +43,7 @@ const PostsItem = ({
     <View style={{ marginVertical: 16 }}>
       <ImageBackground
         style={{ ...styles.conteiner_img_post, width }}
-        borderRadius={8}
+        // borderRadius={8}
         source={{ uri: photo }}
       ></ImageBackground>
       <Text style={styles.text_title}>{info.title}</Text>
