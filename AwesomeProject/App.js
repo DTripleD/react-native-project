@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 
-import { Main } from "./srcc copy/Screens/Main";
-import { store } from "./srcc copy/redux/store";
+import { Main } from "./src/Screens/Main";
+import { store } from "./src/redux/store";
 
 export const App = () => {
   return (
