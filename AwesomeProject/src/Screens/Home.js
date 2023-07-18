@@ -5,117 +5,91 @@ import CreatePostsScreen from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
 import { attention } from "../utils/form";
 import { Ionicons } from "@expo/vector-icons";
+import { TabHeaderNavBack } from "../../components/ReUseComponents/tabHeaderNav/TabHeaderNavBack";
+import { TabHederLogOut } from "../../components/ReUseComponents/tabHeaderNav/TabHeaderNavLogOut";
+import { AntDesign } from "@expo/vector-icons";
 
 const Tabs = createBottomTabNavigator();
 
 const screenOptions = ({ navigation, route }) => ({
-  headerLeft: () => (
-    <Ionicons
-      name="ios-arrow-back"
-      size={25}
-      color={styles.headerTintColor}
-      style={{ marginLeft: 25 }}
-      onPress={() => {
-        attention(navigation, route);
-      }}
-    />
-  ),
-  tabBarIcon: ({ focused, color, size }) => {
-    let tabBarItem;
-
-    if (route.name === "PostsScreen") {
-      tabBarItem = focused ? (
-        <View style={styles.tabItemActive}>
-          <Ionicons
-            name="ios-grid"
-            size={25}
-            color={styles.tabItemActive.activeFill}
-            style={{ marginRight: 25 }}
-          />
-        </View>
-      ) : (
-        <Ionicons
-          name="ios-grid"
-          size={25}
-          color={styles.tabItemActive.inActiveFill}
-          style={{ marginRight: 25 }}
-        />
-      );
-    }
-    if (route.name === "Create") {
-      tabBarItem = focused ? (
-        <View style={styles.tabItemActive}>
-          <Ionicons
-            name="ios-add-circle"
-            size={25}
-            color={styles.tabItemActive.activeFill}
-            style={{ marginRight: 25 }}
-          />
-        </View>
-      ) : (
-        <Ionicons
-          name="ios-add-circle-outline"
-          size={25}
-          color={styles.tabItemActive.inActiveFill}
-          style={{ marginRight: 25 }}
-        />
-      );
-    }
-
-    if (route.name === "Profile") {
-      tabBarItem = focused ? (
-        <View style={styles.tabItemActive}>
-          <Ionicons
-            name="ios-person"
-            size={25}
-            color={styles.tabItemActive.activeFill}
-            style={{ marginRight: 25 }}
-          />
-        </View>
-      ) : (
-        <Ionicons
-          name="ios-person"
-          size={25}
-          color={styles.tabItemActive.inActiveFill}
-          style={{ marginRight: 25 }}
-        />
-      );
-    }
-
-    return tabBarItem;
-  },
-  ...styles,
+  headerShown: true,
+  headerTitleAlign: "center",
   tabBarShowLabel: false,
+  animationEnabled: true,
+  swipeEnabled: true,
+  tabBarHideOnKeyboard: true,
+  tabBarActiveBackgroundColor: "#FF6C00",
+  tabBarInactiveBackgroundColor: "transparent",
+  tabBarActiveTintColor: "#fff",
+  tabBarInactiveTintColor: "#000",
+  tabBarStyle: {
+    paddingBottom: 22,
+    paddingHorizontal: 40,
+    paddingTop: 10,
+    height: 60,
+  },
+  tabBarItemStyle: { borderRadius: 50, height: 40 },
 });
 
 export const Home = ({ navigation, route, options }) => {
   return (
     <Tabs.Navigator
       initialRouteName="PostsScreen"
-      screenOptions={screenOptions}
+      screenOptions={({ navigation, route }) => ({
+        headerShown: true,
+        headerTitleAlign: "center",
+        tabBarShowLabel: false,
+        animationEnabled: true,
+        swipeEnabled: true,
+        tabBarHideOnKeyboard: true,
+        tabBarActiveBackgroundColor: "#FF6C00",
+        tabBarInactiveBackgroundColor: "transparent",
+        tabBarActiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#000",
+        tabBarStyle: {
+          paddingBottom: 22,
+          paddingHorizontal: 40,
+          paddingTop: 10,
+          height: 60,
+        },
+        tabBarItemStyle: { borderRadius: 50, height: 40 },
+      })}
     >
       <Tabs.Screen
         name="PostsScreen"
         component={PostsScreen}
-        options={{
-          headerShown: false,
-        }}
+        options={() => ({
+          headerRight: () => <TabHederLogOut onLogOut={handleLogOut} />,
+          title: "Публікації",
+          headerRightContainerStyle: true,
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="appstore-o" size={24} color={color} />
+          ),
+        })}
       />
 
       <Tabs.Screen
         name="Create"
         component={CreatePostsScreen}
-        options={{
+        options={() => ({
+          headerLeft: () => <TabHeaderNavBack />,
           title: "Створити публікацію",
-          tabBarStyle: { display: "none" },
-        }}
+          tabBarIcon: ({ color }) => {
+            return <Ionicons name="md-add-outline" size={23} color={color} />;
+          },
+        })}
       />
 
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          headerShown: false,
+          header: () => {},
+          tabBarIcon: ({ color }) => {
+            return (
+              <Ionicons name="md-person-outline" size={24} color={color} />
+            );
+          },
         }}
       />
     </Tabs.Navigator>

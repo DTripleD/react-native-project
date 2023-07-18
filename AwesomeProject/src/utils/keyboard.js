@@ -70,7 +70,7 @@ export const usePasswordVisibility = (initialState, password) => {
     if (password === "") {
       setHidden("#F6F6F6");
     } else {
-      setHidden("#1B4371");
+      setHidden("#FF6C00");
     }
   }, [password]);
 

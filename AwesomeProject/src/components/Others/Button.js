@@ -14,7 +14,7 @@ export default function CustomButton({ text, width, onPress }) {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: "#2D767F",
+    backgroundColor: "#FF6C00",
     borderRadius: 100,
     paddingTop: 16,
     paddingBottom: 16,
@@ -43,7 +43,7 @@ export function UnactiveButton({ text, width, onPress }) {
 
 const style = StyleSheet.create({
   btn: {
-    backgroundColor: "#F6F6F6",
+    backgroundColor: "#FF6C00",
     borderRadius: 100,
     paddingTop: 16,
     paddingBottom: 16,

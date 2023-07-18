@@ -32,6 +32,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
+  const [isShown, setIsShown] = useState(true);
 
   const { showPassword, hidden, togglePasswordVisibility } =
     usePasswordVisibility(false, password);
@@ -63,22 +64,27 @@ export default function Login() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={-170}
+        style={styles.kav}
+      >
         <ImageBackground
           source={require("../img/Photo-BG.jpg")}
           style={styles.imageBackground}
           resizeMode="cover"
         >
-          <View
-            style={[styles.overlayContainer, { paddingBottom: keyboardHeight }]}
-          >
-            <OverlayImage top={535} />
-            <View style={styles.formContainer}>
-              <Title title={"Увійти"} top={200} />
-              <View style={{ paddingBottom: keyboardHeight }}>
-                <KeyboardAvoidingView
-                  behavior={Platform.OS == "ios" ? "padding" : "height"}
-                >
+          <View style={styles.container}>
+            <View
+              style={[
+                styles.overlayContainer,
+                { paddingBottom: keyboardHeight },
+              ]}
+            >
+              <OverlayImage top={535} />
+              <View style={styles.formContainer}>
+                <Title title={"Увійти"} top={200} />
+                <View style={{ paddingBottom: keyboardHeight }}>
                   <Input
                     inputMode="email"
                     placeholder="Адреса електронної пошти"
@@ -89,43 +95,44 @@ export default function Login() {
                   <Input
                     inputMode="text"
                     placeholder="Пароль"
-                    secureTextEntry={!showPassword}
+                    secureTextEntry={isShown}
                     value={password}
                     onChangeText={setPassword}
                     onBlur={validatePassword}
                     style={{ position: "relative" }}
                   />
                   <TouchableOpacity
-                    style={{ position: "absolute", top: 82, right: 20 }}
-                    onPress={togglePasswordVisibility}
+                    style={styles.passwShow}
+                    activeOpacity={0.5}
+                    onPress={() => setIsShown(!isShown)}
                   >
-                    <Text style={{ color: hidden }}>
-                      {showPassword ? "Сховати" : "Показати"}
+                    <Text style={styles.passwShowText}>
+                      {isShown ? "Показати" : "Сховати"}
                     </Text>
                   </TouchableOpacity>
-                </KeyboardAvoidingView>
-              </View>
+                </View>
 
-              <CustomButton
-                color="#FF6C00"
-                width={343}
-                text="Увійти"
-                onPress={handleSubmit}
-              />
-              <View style={styles.text}>
-                <Text style={styles.textColor}>Немає акаунту?</Text>
-                <CustomLink
-                  color="#1B4371"
-                  top={0}
-                  left={10}
-                  text="Зареєструватися"
-                  onPress={() => navigation.navigate("Registration")}
+                <CustomButton
+                  color="#FF6C00"
+                  width={343}
+                  text="Увійти"
+                  onPress={handleSubmit}
                 />
+                <View style={styles.text}>
+                  <Text style={styles.textColor}>Немає акаунту?</Text>
+                  <CustomLink
+                    color="#1B4371"
+                    top={0}
+                    left={10}
+                    text="Зареєструватися"
+                    onPress={() => navigation.navigate("Registration")}
+                  />
+                </View>
               </View>
             </View>
           </View>
         </ImageBackground>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
@@ -137,6 +144,9 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
+    resizeMode: "cover",
+    width: "100%",
+    justifyContent: "flex-end",
   },
   overlayContainer: {
     ...StyleSheet.absoluteFill,
@@ -160,5 +170,17 @@ const styles = StyleSheet.create({
   },
   textColor: {
     color: "#1B4371",
+  },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  passwShowText: {
+    fontStyle: "normal",
+    fontWeight: "400",
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#1B4371",
+  },
+  passwShow: {
+    top: -49,
+    left: 260,
   },
 });

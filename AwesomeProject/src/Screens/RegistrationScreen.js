@@ -33,6 +33,8 @@ import {
   useKeyboardListenerWithOpen,
   usePasswordVisibility,
 } from "../utils/keyboard";
+import { AddButtonPhoto } from "../../components/ReUseComponents/AddRemoveButtonPhoto/AddPhoto";
+import { RemoveButtonPhoto } from "../../components/ReUseComponents/AddRemoveButtonPhoto/RemovePhoto";
 
 export default function Registration() {
   const dispatch = useDispatch();
@@ -46,6 +48,8 @@ export default function Registration() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState(false);
+  const [image, setImage] = useState(null);
+  const [isShown, setIsShown] = useState(true);
 
   const { showPassword, hidden, togglePasswordVisibility } =
     usePasswordVisibility(false, password);
@@ -100,107 +104,117 @@ export default function Registration() {
     }
   };
 
-  const photoImageTop = keyboardOpen ? keyboardHeight - 210 : "38%";
-
   if (isShowLoader) {
     return <LoaderScreen />;
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={-270}
+        style={styles.kav}
+      >
         <ImageBackground
           source={require("../img/Photo-BG.jpg")}
           style={styles.imageBackground}
           resizeMode="cover"
         >
-          <View
-            style={[styles.overlayContainer, { paddingBottom: keyboardHeight }]}
-          >
-            <OverlayImage top={535} />
+          <View style={styles.container}>
+            <View style={styles.photoContainer}>
+              {!image ? (
+                <AddButtonPhoto setImage={setImage} />
+              ) : (
+                <RemoveButtonPhoto />
+              )}
 
-            {avatarRegister(avatar, photoImageTop, "48%", "20%")}
-
-            <View style={styles.formContainer}>
-              <TouchableOpacity
-                onPress={() =>
-                  handleGalleryPress(
-                    buttonPressCount,
-                    setButtonPressCount,
-                    setAvatar
-                  )
-                }
-              >
-                <Title title={"Реєстрація"} top={310} />
-              </TouchableOpacity>
-              <View style={{ paddingBottom: keyboardHeight }}>
-                <KeyboardAvoidingView
-                  behavior={Platform.OS == "ios" ? "padding" : "height"}
-                >
-                  <Input
-                    inputMode="text"
-                    placeholder="Логін"
-                    value={login}
-                    onChangeText={setLogin}
-                    onBlur={validateName}
-                  />
-                  <Input
-                    inputMode="email"
-                    placeholder="Адреса електронної пошти"
-                    value={email}
-                    onChangeText={setEmail}
-                    onBlur={validateEmail}
-                  />
-                  <Input
-                    placeholder="Пароль"
-                    inputMode="text"
-                    secureTextEntry={!showPassword}
-                    value={password}
-                    onChangeText={setPassword}
-                    onBlur={validatePassword}
-                    style={{ position: "relative" }}
-                  />
-                  <TouchableOpacity
-                    style={{ position: "absolute", top: 148, right: 20 }}
-                    onPress={togglePasswordVisibility}
-                  >
-                    <Text style={{ color: hidden }}>
-                      {showPassword ? "Сховати" : "Показати"}
-                    </Text>
-                  </TouchableOpacity>
-                </KeyboardAvoidingView>
-              </View>
-
-              <CustomButton
-                width={343}
-                text="Зареєструватися"
-                onPress={handleSubmit}
-              />
-              <View style={styles.text}>
-                <Text style={styles.textColor}>Вже є акаунт?</Text>
-                <CustomLink
-                  color="#1B4371"
-                  top={0}
-                  left={10}
-                  text="Увійти"
-                  onPress={() => navigation.navigate("Login")}
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 16,
+                  }}
                 />
-              </View>
+              )}
+            </View>
+            <Text style={styles.title}>Реєстрація</Text>
+            <View>
+              <Input
+                inputMode="text"
+                placeholder="Логін"
+                value={login}
+                onChangeText={setLogin}
+                onBlur={validateName}
+              />
+              <Input
+                inputMode="email"
+                placeholder="Адреса електронної пошти"
+                value={email}
+                onChangeText={setEmail}
+                onBlur={validateEmail}
+              />
+              <Input
+                placeholder="Пароль"
+                inputMode="text"
+                secureTextEntry={isShown}
+                value={password}
+                onChangeText={setPassword}
+                onBlur={validatePassword}
+                style={{ position: "relative" }}
+              />
+              <TouchableOpacity
+                style={styles.passwShow}
+                activeOpacity={0.5}
+                onPress={() => setIsShown(!isShown)}
+              >
+                <Text style={styles.passwShowText}>
+                  {isShown ? "Показати" : "Сховати"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <CustomButton
+              width={343}
+              text="Зареєструватися"
+              onPress={handleSubmit}
+            />
+            <View style={styles.text}>
+              <Text style={styles.textColor}>Вже є акаунт?</Text>
+              <CustomLink
+                color="#1B4371"
+                top={0}
+                left={10}
+                text="Увійти"
+                onPress={() => navigation.navigate("Login")}
+              />
             </View>
           </View>
         </ImageBackground>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    ...StyleSheet.absoluteFill,
+    // position: "relative",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingTop: 32,
+    // paddingBottom: 144,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 78,
   },
   imageBackground: {
     flex: 1,
+    resizeMode: "cover",
+    width: "100%",
+    justifyContent: "flex-end",
   },
   overlayContainer: {
     ...StyleSheet.absoluteFill,
@@ -225,5 +239,31 @@ const styles = StyleSheet.create({
   },
   textColor: {
     color: "#1B4371",
+  },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  photoContainer: {
+    marginTop: -90,
+    height: 120,
+    width: 120,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 16,
+  },
+  title: {
+    fontWeight: "500",
+    fontSize: 30,
+    marginTop: 32,
+    lineHeight: 35,
+    marginBottom: 32,
+  },
+  passwShowText: {
+    fontStyle: "normal",
+    fontWeight: "400",
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#1B4371",
+  },
+  passwShow: {
+    top: -49,
+    left: 260,
   },
 });
