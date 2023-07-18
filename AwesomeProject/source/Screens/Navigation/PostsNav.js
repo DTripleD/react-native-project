@@ -47,7 +47,7 @@ const PostsNav = ({ navigation }) => {
           headerTitleAlign: "center",
           headerTitleStyle: { paddingBottom: 5 },
         }}
-        name="Create post"
+        name="Створити публікацію"
         component={CreatePost}
       />
     </BottomTabs.Navigator>
