@@ -1,14 +1,25 @@
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import Navigation from "./source/Screens/Navigation/Navigation";
 import { Provider } from "react-redux";
+import store from "./source/Redux/store";
+import LoadingScreen from "./source/Elements/Loading";
+import AuthChack from "./source/Elements/AuthChack";
 
-import { Main } from "./src/Screens/Main";
-import { store } from "./src/redux/store";
-
-export const App = () => {
+export default function App() {
   return (
     <Provider store={store}>
-      <Main />
+      <>
+        <LoadingScreen />
+        <AuthChack>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <NavigationContainer>
+              <Navigation />
+            </NavigationContainer>
+          </TouchableWithoutFeedback>
+        </AuthChack>
+      </>
     </Provider>
   );
-};
-
-export default App;
+}
