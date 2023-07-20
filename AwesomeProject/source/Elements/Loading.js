@@ -8,11 +8,7 @@ const LoadingScreen = () => {
 
   return isLoading ? (
     <View style={styles.container}>
-      <Spinner
-        visible={isLoading}
-        textContent={"Loading..."}
-        textStyle={styles.spinnerTextStyle}
-      />
+      <Spinner visible={isLoading} textStyle={styles.spinnerTextStyle} />
     </View>
   ) : (
     <></>

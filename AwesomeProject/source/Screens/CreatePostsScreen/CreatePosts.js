@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
@@ -18,8 +20,6 @@ import { fetchUploadPhoto } from "../../Redux/storage/storageOperations";
 import { fetchAddPost } from "../../Redux/posts/postsOperations";
 import { selectUserId } from "../../Redux/auth/authSelectors";
 
-const trashImg = require("./trash.png");
-
 const CreatePost = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photoi, setPhoto] = useState(null);
@@ -27,10 +27,28 @@ const CreatePost = ({ navigation }) => {
   const [region, setRegion] = useState(null);
   const [inputRegion, setInputRegion] = useState("");
   const [title, setTitle] = useState("");
+  const [isPreview, setIsPreview] = useState(false);
+
+  const cameraRef = useRef(null);
 
   const dispatch = useDispatch();
 
   const uid = useSelector(selectUserId);
+
+  const cancelPreview = async () => {
+    await cameraRef.current.resumePreview();
+
+    setIsPreview(false);
+  };
+
+  const hanldeClearSubmit = () => {
+    setInputRegion("");
+    setTitle("");
+    setIsPreview(false);
+    setLocation(null);
+    setRegion(null);
+    setCamera(null);
+  };
 
   useEffect(() => {
     (async () => {
@@ -82,32 +100,44 @@ const CreatePost = ({ navigation }) => {
 
   return (
     <View style={styles.postContainer}>
-      <Camera style={styles.postImg} ref={setCamera}>
-        <Image
-          source={{ uri: photoi }}
-          style={{ height: 220, width: 220, marginTop: -80 }}
-        />
+      <Camera
+        ref={setCamera}
+        // type={type}
+        style={styles.conteiner_skeleton}
+      >
+        <TouchableOpacity
+          onPress={takePhoto}
+          delayLongPress={500}
+          // onLongPress={toggleCamera}
+          // disabled={!cameraReady}
+        >
+          {!isPreview && (
+            <View style={styles.conteiner_addPhoto}>
+              <MaterialIcons name="photo-camera" size={24} color="#fff" />
+            </View>
+          )}
+          {isPreview && (
+            <Ionicons
+              onPress={cancelPreview}
+              name="close-circle-sharp"
+              size={44}
+              style={{ opacity: 0.5 }}
+              color="black"
+            />
+          )}
+        </TouchableOpacity>
       </Camera>
 
-      <TouchableOpacity
-        style={styles.postImgAdd}
-        activeOpacity={0.5}
-        onPress={takePhoto}
-      >
-        <FontAwesome name="camera" size={24} color="white" />
-      </TouchableOpacity>
-
-      <Text style={styles.postImgText}>Add photo</Text>
       <View style={styles.postForm}>
         <TextInput
           style={styles.postName}
-          placeholder="Title..."
+          placeholder="Назва..."
           inputMode="text"
           onChangeText={inputTitlte}
         />
         <TextInput
           style={styles.postName}
-          placeholder="Location"
+          placeholder="Місцевість..."
           inputMode="navigation"
           value={inputRegion}
         />
@@ -116,7 +146,13 @@ const CreatePost = ({ navigation }) => {
           activeOpacity={0.5}
           onPress={hendleCreate}
         >
-          <Text style={styles.postButtonText}>Publicate</Text>
+          <Text style={styles.postButtonText}>Опубліковати</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.clear_conteiner}
+          onPress={hanldeClearSubmit}
+        >
+          <FontAwesome name="trash-o" size={24} color="#BDBDBD" />
         </TouchableOpacity>
       </View>
     </View>
@@ -191,6 +227,33 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     borderBottomColor: "#E8E8E8",
     borderBottomWidth: 2,
+  },
+  conteiner_skeleton: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    width: 343,
+    height: 250,
+  },
+  conteiner_addPhoto: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+  },
+  clear_conteiner: {
+    marginTop: 65,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 70,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: "#F6F6F6",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 });
 

@@ -33,6 +33,8 @@ const LoginScreen = ({ navigation }) => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isShown, setIsShown] = useState(true);
+
   //redux
   const dispatch = useDispatch();
 
@@ -56,66 +58,68 @@ const LoginScreen = ({ navigation }) => {
     });
   };
 
-  const passwShow = () => alert(`Your password is: ${password}`);
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.maincontainer}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.kav}
+        keyboardVerticalOffset={-170}
+      >
         <ImageBackground source={backImage} style={styles.backImg}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            style={styles.containerKeyB}
-          >
-            <View style={styles.container}>
-              <Text style={styles.title}>Login</Text>
+          <View style={styles.container}>
+            <Text style={styles.title}>Увійти</Text>
 
-              <TextInput
-                style={styles.inputMailPassw}
-                placeholder="Email address"
-                inputMode="email"
-                value={mail}
-                onChangeText={handleMail}
-              />
-              <TextInput
-                style={styles.inputMailPassw}
-                placeholder="Password"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={handlePassword}
-              />
+            <TextInput
+              style={styles.inputMailPassw}
+              placeholder="Адреса електронної пошти"
+              inputMode="email"
+              value={mail}
+              onChangeText={handleMail}
+            />
+            <TextInput
+              style={styles.inputMailPassw}
+              placeholder="Пароль"
+              secureTextEntry={isShown}
+              value={password}
+              onChangeText={handlePassword}
+            />
 
-              <TouchableOpacity
-                style={styles.passwShow}
-                activeOpacity={0.5}
-                onPress={passwShow}
-              >
-                <Text style={styles.passwShowText}>Show</Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.passwShow}
+              activeOpacity={0.5}
+              onPress={() => setIsShown(!isShown)}
+            >
+              <Text style={styles.passwShowText}>
+                {isShown ? "Показати" : "Сховати"}
+              </Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.registerButton}
-                activeOpacity={0.5}
-                onPress={() => {
-                  register();
-                }}
-              >
-                <Text style={styles.registerButtonText}>Login</Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.registerButton}
+              activeOpacity={0.5}
+              onPress={() => {
+                register();
+              }}
+            >
+              <Text style={styles.registerButtonText}>Увійти</Text>
+            </TouchableOpacity>
 
+            <View style={{ alignItems: "center", marginTop: 10 }}>
               <TouchableOpacity
                 style={styles.loginLink}
                 activeOpacity={0.5}
                 onPress={() => navigation.navigate("Registratione", {})}
               >
                 <Text style={styles.loginLinkText}>
-                  Don't have an account? Register
+                  Немає акаунту?{" "}
+                  <Text style={styles.underlingText}>Зареєструватися</Text>
                 </Text>
               </TouchableOpacity>
             </View>
-          </KeyboardAvoidingView>
+          </View>
         </ImageBackground>
         <StatusBar style="auto" />
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
@@ -190,6 +194,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 19,
+    color: "#1B4371",
   },
   passwShow: {
     top: -34,
@@ -217,7 +222,10 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 19,
+    color: "#1B4371",
   },
+  underlingText: { textDecorationLine: "underline" },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
 });
 
 export default LoginScreen;

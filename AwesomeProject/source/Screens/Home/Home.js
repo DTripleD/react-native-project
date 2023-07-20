@@ -10,8 +10,9 @@ import { useEffect } from "react";
 import { fetchLogOutUser } from "../../Redux/auth/authOperations";
 import { fetchGetAllPosts } from "../../Redux/posts/postsOperations";
 import { fetchGetAllComments } from "../../Redux/comments/commentsOperations";
+import { Ionicons } from "@expo/vector-icons";
 
-const BottomTabs = createBottomTabNavigator();
+const MainTabs = createBottomTabNavigator();
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -31,18 +32,33 @@ const Home = ({ navigation }) => {
   }, [dispatch]);
 
   return (
-    <BottomTabs.Navigator
-      initialRouteName="PostsScreen"
-      screenOptions={{
+    <MainTabs.Navigator
+      // initialRouteName="PostsScreen"
+      screenOptions={({ navigation, route }) => ({
+        headerShown: true,
+        headerTitleAlign: "center",
         tabBarShowLabel: false,
-        tabBarStyle: { height: 80 },
-      }}
+        animationEnabled: true,
+        swipeEnabled: true,
+        tabBarHideOnKeyboard: true,
+        tabBarActiveBackgroundColor: "#FF6C00",
+        tabBarInactiveBackgroundColor: "transparent",
+        tabBarActiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#000",
+        tabBarStyle: {
+          paddingBottom: 22,
+          paddingHorizontal: 40,
+          paddingTop: 10,
+          height: 60,
+        },
+        tabBarItemStyle: { borderRadius: 50, height: 40 },
+      })}
     >
       {/* GRID */}
-      <BottomTabs.Screen
+      <MainTabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => {
-            return <SimpleLineIcons name="grid" size={20} color={color} />;
+            return <AntDesign name="appstore-o" size={24} color={color} />;
           },
           headerTitleAlign: "center",
           headerRightContainerStyle: { paddingRight: 20 },
@@ -55,24 +71,29 @@ const Home = ({ navigation }) => {
               <Feather name="log-out" size={24} color="gray" />
             </TouchableOpacity>
           ),
+          title: "Публікації",
         }}
         name="PostsScreen"
         component={PostsScreen}
       />
 
       {/* ADD BUTTON */}
-      <BottomTabs.Screen
+      <MainTabs.Screen
         options={{
-          tabBarIcon: () => {
-            return (
-              <TouchableOpacity
-                style={styles.addButton}
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate("PostsNav")}
-              >
-                <Text style={styles.addButtonText}>+</Text>
+          headerLeft: () => (
+            <View
+              style={{
+                paddingLeft: 20,
+              }}
+            >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons name="arrow-back-outline" size={24} color="black" />
               </TouchableOpacity>
-            );
+            </View>
+          ),
+          title: "Створити публікацію",
+          tabBarIcon: ({ color }) => {
+            return <Ionicons name="md-add-outline" size={23} color={color} />;
           },
           headerShown: false,
           tabBarStyle: { display: "none" },
@@ -83,17 +104,19 @@ const Home = ({ navigation }) => {
       />
 
       {/* PROFILE BUTTON */}
-      <BottomTabs.Screen
+      <MainTabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => {
-            return <AntDesign name="user" size={20} color={color} />;
+            return (
+              <Ionicons name="md-person-outline" size={24} color={color} />
+            );
           },
           headerShown: false,
         }}
         name="ProfileScreen"
         component={ProfileScreen}
       />
-    </BottomTabs.Navigator>
+    </MainTabs.Navigator>
   );
 };
 

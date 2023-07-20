@@ -59,7 +59,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
         <Text style={styles.postButtonText}>Publicate</Text>
       </TouchableOpacity>
 
-      <Text style={styles.postImgText}>Add photo</Text>
+      <Text style={styles.postImgText}>Опубліковати</Text>
     </View>
   );
 };

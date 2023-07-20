@@ -13,13 +13,13 @@ import { Feather, EvilIcons } from "@expo/vector-icons";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const backImage = require("../../Source/Photo_BG.png");
-const buttonImg = require("../RegistrationScreen/add.png");
 const profilePhoto = require("../../Source/Rectangle22.png");
 
 import { useSelector } from "react-redux";
 import { selectAuthPosts } from "../../Redux/posts/postsSelectors";
 import { selectUser } from "../../Redux/auth/authSelectors";
 import { selectComments } from "../../Redux/comments/commentsSelectors";
+import { AntDesign } from "@expo/vector-icons";
 
 const BottomTabsProf = createBottomTabNavigator();
 
@@ -48,10 +48,7 @@ function ProfileScreen({ navigation }) {
                   style={{ width: "100%", height: "100%", borderRadius: 15 }}
                 ></Image>
                 <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
-                  <ImageBackground
-                    source={buttonImg}
-                    style={{ width: "100%", height: "100%" }}
-                  ></ImageBackground>
+                  <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
                 </TouchableOpacity>
               </View>
               <TouchableOpacity

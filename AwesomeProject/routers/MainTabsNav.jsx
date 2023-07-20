@@ -23,7 +23,6 @@ import { authSignOut } from "../redux/auth/authOperations";
 const MainTabs = createBottomTabNavigator();
 
 const MainTabsNav = () => {
-  const [width, setWidth] = useState(Dimensions.get("window").width);
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
