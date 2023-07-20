@@ -20,10 +20,32 @@ const PostsNav = ({ navigation }) => {
     >
       <BottomTabs.Screen
         options={{
+          tabBarIcon: () => {
+            return (
+              <TouchableOpacity
+                style={styles.trashButton}
+                activeOpacity={0.5}
+                onPress={() =>
+                  navigation.navigate("Home", { screen: "PostsScreen" })
+                }
+              >
+                <EvilIcons name="trash" size={24} color="black" />
+              </TouchableOpacity>
+            );
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() =>
+                navigation.navigate("Home", { screen: "PostsScreen" })
+              }
+            >
+              <Ionicons name="arrow-back-sharp" size={24} color="black" />
+            </TouchableOpacity>
+          ),
           headerLeftContainerStyle: { paddingLeft: 10 },
           headerTitleAlign: "center",
           headerTitleStyle: { paddingBottom: 5 },
-          tabBarStyle: { display: "none" },
         }}
         name="Створити публікацію"
         component={CreatePost}
