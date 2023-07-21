@@ -10,7 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { fetchUploadPhoto } from "../../Redux/storage/storageOperations";
+import { fetchUploadPhoto } from "../Redux/storage/storageOperations";
 
 import { Camera } from "expo-camera";
 
@@ -56,7 +56,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
         activeOpacity={0.5}
         onPress={hendleCreate}
       >
-        <Text style={styles.postButtonText}>Publicate</Text>
+        <Text style={styles.postButtonText}>Завантажити</Text>
       </TouchableOpacity>
 
       <Text style={styles.postImgText}>Опубліковати</Text>

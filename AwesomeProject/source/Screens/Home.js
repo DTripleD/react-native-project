@@ -2,14 +2,14 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign, SimpleLineIcons, Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostsNav from "../Navigation/PostsNav";
-import PostsScreen from "../PostsScreen/PostsScreen";
-import ProfileScreen from "../ProfileScreen/ProfileScreen";
+import PostsNav from "./Navigation/PostsNav";
+import PostsScreen from "./PostsScreen";
+import ProfileScreen from "./ProfileScreen";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchLogOutUser } from "../../Redux/auth/authOperations";
-import { fetchGetAllPosts } from "../../Redux/posts/postsOperations";
-import { fetchGetAllComments } from "../../Redux/comments/commentsOperations";
+import { fetchLogOutUser } from "../Redux/auth/authOperations";
+import { fetchGetAllPosts } from "../Redux/posts/postsOperations";
+import { fetchGetAllComments } from "../Redux/comments/commentsOperations";
 import { Ionicons } from "@expo/vector-icons";
 
 const MainTabs = createBottomTabNavigator();
@@ -66,7 +66,9 @@ const Home = ({ navigation }) => {
             <TouchableOpacity
               style={styles.logoutButton}
               activeOpacity={0.5}
-              onPress={handleLogOut}
+              onPress={() => {
+                handleLogOut();
+              }}
             >
               <Feather name="log-out" size={24} color="gray" />
             </TouchableOpacity>

@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import RegistrationScreen from "../RegistrationScreen/RegistrationScreen";
-import LoginScreen from "../LoginScreen/LoginScreen";
-import Home from "../Home/Home";
+import RegistrationScreen from "../RegistrationScreen";
+import LoginScreen from "../LoginScreen";
+import Home from "../Home";
 import PostsNav from "./PostsNav";
-import ProfileScreen from "../ProfileScreen/ProfileScreen";
+import ProfileScreen from "../ProfileScreen";
 import CommentsNav from "./CommentsNavigator";
-import ProfilePhotoScreen from "../ProfilePhotoScreen/ProfilePhotoScreen";
+import ProfilePhotoScreen from "../ProfilePhotoScreen";
 
 const MainStack = createStackNavigator();
 

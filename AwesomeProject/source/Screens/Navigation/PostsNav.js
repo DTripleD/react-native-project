@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
-import CreatePost from "../CreatePostsScreen/CreatePosts";
+import CreatePost from "../CreatePosts";
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -16,23 +16,11 @@ const PostsNav = ({ navigation }) => {
           borderBottomColor: "#E8E8E8",
           borderBottomWidth: 2,
         },
+        tabBarStyle: { display: "none" },
       }}
     >
       <BottomTabs.Screen
         options={{
-          tabBarIcon: () => {
-            return (
-              <TouchableOpacity
-                style={styles.trashButton}
-                activeOpacity={0.5}
-                onPress={() =>
-                  navigation.navigate("Home", { screen: "PostsScreen" })
-                }
-              >
-                <EvilIcons name="trash" size={24} color="black" />
-              </TouchableOpacity>
-            );
-          },
           headerLeft: () => (
             <TouchableOpacity
               activeOpacity={0.5}

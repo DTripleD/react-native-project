@@ -12,13 +12,12 @@ import {
 import { Feather, EvilIcons } from "@expo/vector-icons";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-const backImage = require("../../Source/Photo_BG.png");
-const profilePhoto = require("../../Source/Rectangle22.png");
+const backImage = require("../Source/Photo_BG.png");
 
 import { useSelector } from "react-redux";
-import { selectAuthPosts } from "../../Redux/posts/postsSelectors";
-import { selectUser } from "../../Redux/auth/authSelectors";
-import { selectComments } from "../../Redux/comments/commentsSelectors";
+import { selectAuthPosts } from "../Redux/posts/postsSelectors";
+import { selectUser } from "../Redux/auth/authSelectors";
+import { selectComments } from "../Redux/comments/commentsSelectors";
 import { AntDesign } from "@expo/vector-icons";
 
 const BottomTabsProf = createBottomTabNavigator();
@@ -62,7 +61,7 @@ function ProfileScreen({ navigation }) {
               </TouchableOpacity>
               <Text style={styles.title}>{name}</Text>
               <View style={{ flex: 1, justifyContent: "center" }}>
-                <FlatList
+                <View
                   data={posts}
                   keyExtractor={(item, indx) => indx.toString()}
                   renderItem={({ item }) => (
@@ -120,7 +119,7 @@ function ProfileScreen({ navigation }) {
                       </View>
                     </View>
                   )}
-                ></FlatList>
+                ></View>
               </View>
             </View>
           </View>

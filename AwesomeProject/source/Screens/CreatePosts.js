@@ -9,14 +9,17 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUploadPhoto } from "../../Redux/storage/storageOperations";
-import { fetchAddPost } from "../../Redux/posts/postsOperations";
-import { selectUserId } from "../../Redux/auth/authSelectors";
+import { fetchUploadPhoto } from "../Redux/storage/storageOperations";
+import { fetchAddPost } from "../Redux/posts/postsOperations";
+import { selectUserId } from "../Redux/auth/authSelectors";
+import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CreatePost = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
@@ -62,8 +65,10 @@ const CreatePost = ({ navigation }) => {
     setInputRegion(region[0]["country"] + ", " + region[0]["city"]);
   };
 
-  const inputTitlte = (text) => {
-    setTitle(text);
+  const clearData = () => {
+    setTitle("");
+    setPhoto(null);
+    setInputRegion("");
   };
 
   const hendleCreate = async () => {
@@ -75,53 +80,75 @@ const CreatePost = ({ navigation }) => {
     await dispatch(
       fetchAddPost({ photo: payload, title, inputRegion, location, uid })
     );
+
+    clearData();
     navigation.navigate("PostList");
   };
 
   return (
-    <View style={styles.postContainer}>
-      <Camera style={styles.postImg} ref={setCamera}>
-        <Image
-          source={{ uri: photoi }}
-          style={{ height: 220, width: 220, marginTop: -80 }}
-        />
-      </Camera>
+    <ScrollView>
+      <SafeAreaView style={styles.conteiner}>
+        <View>
+          <Camera
+            style={(styles.postImg, styles.conteiner_skeleton)}
+            ref={setCamera}
+          >
+            <Image
+              source={{ uri: photoi }}
+              style={{ height: "100%", width: "100%" }}
+            />
+          </Camera>
 
-      <TouchableOpacity
-        style={styles.postImgAdd}
-        activeOpacity={0.5}
-        onPress={takePhoto}
-      >
-        <FontAwesome name="camera" size={24} color="white" />
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.postImgAdd}
+            activeOpacity={0.5}
+            onPress={takePhoto}
+          >
+            <MaterialIcons name="photo-camera" size={24} color="#fff" />
+          </TouchableOpacity>
+          <Text style={styles.photoText}>
+            {!photoi ? "Завантажте фото" : "Редагувати фото"}
+          </Text>
+        </View>
 
-      <Text style={styles.postImgText}>Add photo</Text>
-      <View style={styles.postForm}>
-        <TextInput
-          style={styles.postName}
-          placeholder="Title..."
-          inputMode="text"
-          onChangeText={inputTitlte}
-        />
-        <TextInput
-          style={styles.postName}
-          placeholder="Location"
-          inputMode="navigation"
-          value={inputRegion}
-        />
-        <TouchableOpacity
-          style={active ? styles.postButtonActive : styles.postButton}
-          activeOpacity={0.5}
-          onPress={hendleCreate}
-        >
-          <Text style={styles.postButtonText}>Publicate</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <View style={styles.postForm}>
+          <TextInput
+            style={styles.postName}
+            placeholder="Назва..."
+            inputMode="text"
+            onChangeText={setTitle}
+            value={title}
+          />
+          <TextInput
+            style={styles.postName}
+            placeholder="Місцевість..."
+            // inputMode="navigation"
+            value={inputRegion}
+          />
+          <TouchableOpacity
+            style={active ? styles.postButtonActive : styles.postButton}
+            activeOpacity={0.5}
+            onPress={hendleCreate}
+          >
+            <Text style={styles.postButtonText}>Опубліковати</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.clear_conteiner} onPress={clearData}>
+            <FontAwesome name="trash-o" size={24} color="#BDBDBD" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  conteiner: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    // paddingTop: 32,
+  },
   postContainer: {
     flex: 1,
     justifyContent: "center",
@@ -129,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   postImg: {
-    flex: 3,
+    // flex: 3,
     width: "100%",
     height: 600,
     color: "#F6F6F6",
@@ -137,8 +164,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   postImgAdd: {
-    display: "flex",
-    marginTop: -80,
+    // display: "flex",
+    // marginTop: -80,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateY: -50 }, { translateX: -50 }],
+    // top: "-50%",
+    // right: "-35%",
     width: 50,
     height: 50,
     borderRadius: 50,
@@ -189,6 +222,32 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     borderBottomColor: "#E8E8E8",
     borderBottomWidth: 2,
+  },
+
+  clear_conteiner: {
+    marginTop: 65,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 70,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: "#F6F6F6",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: 40,
+  },
+
+  conteiner_skeleton: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    width: 343,
+    height: 250,
+  },
+  photoText: {
+    alignSelf: "flex-start",
+    color: "#BDBDBD",
   },
 });
 
