@@ -14,16 +14,18 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const backImage = require("../Source/Photo_BG.png");
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAuthPosts } from "../Redux/posts/postsSelectors";
 import { selectUser } from "../Redux/auth/authSelectors";
 import { selectComments } from "../Redux/comments/commentsSelectors";
 import { AntDesign } from "@expo/vector-icons";
+import { fetchLogOutUser } from "../Redux/auth/authOperations";
 
 const BottomTabsProf = createBottomTabNavigator();
 
 function ProfileScreen({ navigation }) {
   const allComments = useSelector(selectComments);
+  const dispatch = useDispatch();
 
   const getCommentsCount = (id) => {
     const comcount = allComments.filter((item) => item.postId === id).length;
@@ -32,6 +34,15 @@ function ProfileScreen({ navigation }) {
 
   const posts = useSelector(selectAuthPosts);
   const { name, photo } = useSelector(selectUser);
+
+  const handleLogOut = () => {
+    dispatch(fetchLogOutUser()).then((result) => {
+      result.type === "auth/fetchLogOutUser/fulfilled" &&
+        navigation.navigate("Login");
+      result.type !== "auth/fetchLogOutUser/fulfilled" &&
+        alert("Incorrect logOut!!!");
+    });
+  };
 
   return (
     <SafeAreaView>
@@ -53,9 +64,7 @@ function ProfileScreen({ navigation }) {
               <TouchableOpacity
                 style={styles.logoutButton}
                 activeOpacity={0.5}
-                onPress={() =>
-                  navigation.navigate("Home", { screen: "PostsScreen" })
-                }
+                onPress={handleLogOut}
               >
                 <Feather name="log-out" size={24} color="gray" />
               </TouchableOpacity>

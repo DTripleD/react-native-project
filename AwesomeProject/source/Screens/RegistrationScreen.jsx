@@ -19,6 +19,7 @@ import { fetchRegisterUser } from "../Redux/auth/authOperations";
 import { AntDesign } from "@expo/vector-icons";
 
 const RegistrationScreen = ({ navigation, route }) => {
+  console.log(route);
   const { photo } = route.params;
   const dispatch = useDispatch();
 

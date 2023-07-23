@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
@@ -87,56 +88,80 @@ const CreatePost = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <SafeAreaView style={styles.conteiner}>
-        <View>
-          <Camera
-            style={(styles.postImg, styles.conteiner_skeleton)}
-            ref={setCamera}
-          >
-            <Image
-              source={{ uri: photoi }}
-              style={{ height: "100%", width: "100%" }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={-140}
+        style={styles.kav}
+      >
+        <SafeAreaView style={styles.conteiner}>
+          <View>
+            <View
+              style={{
+                borderRadius: 8,
+                overflow: "hidden",
+                height: 240,
+              }}
+            >
+              <Camera
+                style={(styles.postImg, styles.conteiner_skeleton)}
+                ref={setCamera}
+              >
+                <Image
+                  source={{ uri: photoi }}
+                  style={{ height: "100%", width: "100%" }}
+                />
+              </Camera>
+            </View>
+
+            <TouchableOpacity
+              style={{
+                ...styles.postImgAdd,
+                backgroundColor: photoi ? "#FFFFFF4D" : "#FFFFFF",
+              }}
+              activeOpacity={0.5}
+              onPress={takePhoto}
+            >
+              <MaterialIcons
+                name="photo-camera"
+                size={24}
+                color={photoi ? "#FFFFFF" : "#BDBDBD"}
+              />
+            </TouchableOpacity>
+            <Text style={styles.photoText}>
+              {!photoi ? "Завантажте фото" : "Редагувати фото"}
+            </Text>
+          </View>
+
+          <View style={styles.postForm}>
+            <TextInput
+              style={styles.postName}
+              placeholder="Назва..."
+              inputMode="text"
+              onChangeText={setTitle}
+              value={title}
             />
-          </Camera>
-
-          <TouchableOpacity
-            style={styles.postImgAdd}
-            activeOpacity={0.5}
-            onPress={takePhoto}
-          >
-            <MaterialIcons name="photo-camera" size={24} color="#fff" />
-          </TouchableOpacity>
-          <Text style={styles.photoText}>
-            {!photoi ? "Завантажте фото" : "Редагувати фото"}
-          </Text>
-        </View>
-
-        <View style={styles.postForm}>
-          <TextInput
-            style={styles.postName}
-            placeholder="Назва..."
-            inputMode="text"
-            onChangeText={setTitle}
-            value={title}
-          />
-          <TextInput
-            style={styles.postName}
-            placeholder="Місцевість..."
-            // inputMode="navigation"
-            value={inputRegion}
-          />
-          <TouchableOpacity
-            style={active ? styles.postButtonActive : styles.postButton}
-            activeOpacity={0.5}
-            onPress={hendleCreate}
-          >
-            <Text style={styles.postButtonText}>Опубліковати</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.clear_conteiner} onPress={clearData}>
-            <FontAwesome name="trash-o" size={24} color="#BDBDBD" />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+            <TextInput
+              style={styles.postName}
+              placeholder="Місцевість..."
+              // inputMode="navigation"
+              value={inputRegion}
+            />
+            <TouchableOpacity
+              style={active ? styles.postButtonActive : styles.postButton}
+              activeOpacity={0.5}
+              onPress={hendleCreate}
+            >
+              <Text style={styles.postButtonText}>Опубліковати</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.clear_conteiner}
+              onPress={clearData}
+            >
+              <FontAwesome name="trash-o" size={24} color="#BDBDBD" />
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
@@ -164,19 +189,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   postImgAdd: {
-    // display: "flex",
-    // marginTop: -80,
     position: "absolute",
     top: "50%",
     left: "50%",
-    transform: [{ translateY: -50 }, { translateX: -50 }],
-    // top: "-50%",
-    // right: "-35%",
-    width: 50,
-    height: 50,
+    transform: [{ translateY: -40 }, { translateX: -50 }],
+
+    width: 60,
+    height: 60,
     borderRadius: 50,
     padding: 3,
-    borderColor: "#ffffff",
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
@@ -244,11 +265,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 343,
     height: 250,
+    borderRadius: 8,
+    overflow: "hidden",
   },
   photoText: {
     alignSelf: "flex-start",
     color: "#BDBDBD",
   },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
 });
 
 export default CreatePost;
