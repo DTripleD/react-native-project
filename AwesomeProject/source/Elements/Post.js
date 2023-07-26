@@ -16,14 +16,6 @@ const Post = ({ img, text, msgs, location, gps }) => {
     setGpsLocation(gps);
   }, []);
 
-  const clickComment = () => {
-    navigation.navigate("Comments");
-  };
-
-  const clickMap = () => {
-    navigation.navigate("Map", { location });
-  };
-
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -48,7 +40,12 @@ const Post = ({ img, text, msgs, location, gps }) => {
           <Text>0</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.info} onPress={clickMap}>
+        <TouchableOpacity
+          style={styles.info}
+          onPress={() => {
+            navigation.navigate("Map", { location });
+          }}
+        >
           <EvilIcons name="location" size={24} color="gray" />
           <Text style={styles.infolink}>{location}</Text>
         </TouchableOpacity>

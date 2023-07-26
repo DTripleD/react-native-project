@@ -22,9 +22,11 @@ import { fetchGetAllPosts } from "../Redux/posts/postsOperations";
 const LoginScreen = ({ navigation }) => {
   const logedIn = useSelector(selectIsAuth);
 
-  if (logedIn) {
-    navigation.navigate("Home", { screen: "PostsScreen" });
-  }
+  useEffect(() => {
+    if (logedIn) {
+      navigation.navigate("Home", { screen: "PostsScreen" });
+    }
+  }, []);
 
   //state
   const [mail, setMail] = useState("");
