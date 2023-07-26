@@ -24,7 +24,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const CreatePost = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
-  const [photoi, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState(null);
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState(null);
   const [inputRegion, setInputRegion] = useState("");
@@ -73,11 +73,11 @@ const CreatePost = ({ navigation }) => {
   };
 
   const hendleCreate = async () => {
-    if (!title || !location || !photoi) {
+    if (!title || !location || !photo) {
       alert("Enter all data pleace!!!");
       return;
     }
-    const { payload } = await dispatch(fetchUploadPhoto(photoi));
+    const { payload } = await dispatch(fetchUploadPhoto(photo));
     await dispatch(
       fetchAddPost({ photo: payload, title, inputRegion, location, uid })
     );
@@ -107,7 +107,7 @@ const CreatePost = ({ navigation }) => {
                 ref={setCamera}
               >
                 <Image
-                  source={{ uri: photoi }}
+                  source={{ uri: photo }}
                   style={{ height: "100%", width: "100%" }}
                 />
               </Camera>
@@ -116,7 +116,7 @@ const CreatePost = ({ navigation }) => {
             <TouchableOpacity
               style={{
                 ...styles.postImgAdd,
-                backgroundColor: photoi ? "#FFFFFF4D" : "#FFFFFF",
+                backgroundColor: photo ? "#FFFFFF4D" : "#FFFFFF",
               }}
               activeOpacity={0.5}
               onPress={takePhoto}
@@ -124,11 +124,11 @@ const CreatePost = ({ navigation }) => {
               <MaterialIcons
                 name="photo-camera"
                 size={24}
-                color={photoi ? "#FFFFFF" : "#BDBDBD"}
+                color={photo ? "#FFFFFF" : "#BDBDBD"}
               />
             </TouchableOpacity>
             <Text style={styles.photoText}>
-              {!photoi ? "Завантажте фото" : "Редагувати фото"}
+              {!photo ? "Завантажте фото" : "Редагувати фото"}
             </Text>
           </View>
 

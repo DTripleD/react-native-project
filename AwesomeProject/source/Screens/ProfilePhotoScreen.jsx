@@ -18,7 +18,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [camera, setCamera] = useState(null);
-  const [photoi, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
@@ -26,11 +26,11 @@ const ProfilePhotoScreen = ({ navigation }) => {
   };
 
   const hendleCreate = async () => {
-    if (!photoi) {
+    if (!photo) {
       alert("Take photo!!!");
       return;
     }
-    const { payload } = await dispatch(fetchUploadPhoto(photoi));
+    const { payload } = await dispatch(fetchUploadPhoto(photo));
     navigation.navigate("Registratione", { photo: payload });
   };
 
@@ -38,7 +38,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
     <View style={styles.postContainer}>
       <Camera style={styles.postImg} ref={setCamera}>
         <Image
-          source={{ uri: photoi }}
+          source={{ uri: photo }}
           style={{ height: 220, width: 220, marginTop: -80 }}
         />
       </Camera>
@@ -52,7 +52,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={photoi ? styles.postButtonActive : styles.postButton}
+        style={photo ? styles.postButtonActive : styles.postButton}
         activeOpacity={0.5}
         onPress={hendleCreate}
       >
