@@ -17,7 +17,7 @@ const NavigationPosts = () => {
     >
       <PostNavigation.Screen name="Post" component={Post} />
       <PostNavigation.Screen name="PostList" component={PostList} />
-      <PostNavigation.Screen name="Map" component={Map}></PostNavigation.Screen>
+      <PostNavigation.Screen name="Map" component={Map} />
     </PostNavigation.Navigator>
   );
 };

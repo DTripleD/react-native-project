@@ -31,7 +31,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
       return;
     }
     const { payload } = await dispatch(fetchUploadPhoto(photo));
-    navigation.navigate("Registratione", { photo: payload });
+    navigation.navigate("Registratione", { photo });
   };
 
   return (

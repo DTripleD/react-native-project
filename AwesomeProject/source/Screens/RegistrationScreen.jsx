@@ -19,7 +19,6 @@ import { fetchRegisterUser } from "../Redux/auth/authOperations";
 import { AntDesign } from "@expo/vector-icons";
 
 const RegistrationScreen = ({ navigation, route }) => {
-  console.log(route);
   const { photo } = route.params;
   const dispatch = useDispatch();
 
@@ -27,6 +26,7 @@ const RegistrationScreen = ({ navigation, route }) => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(true);
+  const [activeInput, setActiveInput] = useState(false);
 
   const handleLogin = (text) => {
     setLogin(text);
@@ -72,36 +72,55 @@ const RegistrationScreen = ({ navigation, route }) => {
               )}
             </View>
             <TouchableOpacity
-              style={styles.addbutton}
+              style={photo ? styles.deleteButton : styles.addbutton}
               activeOpacity={0.5}
               onPress={() => {
                 takePhoto();
               }}
             >
-              <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
+              <AntDesign
+                name="pluscircleo"
+                size={24}
+                color={photo ? "#BDBDBD" : "#FF6C00"}
+              />
             </TouchableOpacity>
             <Text style={styles.title}>Реєстрація</Text>
 
             <TextInput
-              style={styles.inputLogin}
+              style={[
+                styles.inputLogin,
+                activeInput === "login" && styles.inputActive,
+              ]}
               placeholder="Логін"
               inputMode="text"
               value={login}
               onChangeText={handleLogin}
+              onFocus={() => setActiveInput("login")}
+              onBlur={() => setActiveInput(false)}
             />
             <TextInput
-              style={styles.inputMailPassw}
+              style={[
+                styles.inputMailPassw,
+                activeInput === "email" && styles.inputActive,
+              ]}
               placeholder="Адреса електронної пошти"
               inputMode="email"
               value={mail}
               onChangeText={handleMail}
+              onFocus={() => setActiveInput("email")}
+              onBlur={() => setActiveInput(false)}
             />
             <TextInput
-              style={styles.inputMailPassw}
+              style={[
+                styles.inputMailPassw,
+                activeInput === "password" && styles.inputActive,
+              ]}
               placeholder="Пароль"
               secureTextEntry={isShown}
               value={password}
               onChangeText={handlePassword}
+              onFocus={() => setActiveInput("password")}
+              onBlur={() => setActiveInput(false)}
             />
 
             <TouchableOpacity
@@ -182,6 +201,17 @@ const styles = StyleSheet.create({
     left: "62%",
     top: 10,
     pointerEvents: "auto",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 50,
+  },
+  deleteButton: {
+    position: "absolute",
+    left: "62%",
+    top: 10,
+    pointerEvents: "auto",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 50,
+    transform: [{ rotate: "45deg" }],
   },
   title: {
     fontWeight: "500",
@@ -200,6 +230,8 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 19,
+    borderColor: "#E8E8E8",
+    borderWidth: 1,
   },
   inputMailPassw: {
     backgroundColor: "#F6F6F6",
@@ -212,6 +244,12 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     position: "relative",
+    borderColor: "#E8E8E8",
+    borderWidth: 1,
+  },
+  inputActive: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FF6C00",
   },
   passwShowText: {
     fontStyle: "normal",

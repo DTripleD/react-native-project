@@ -40,6 +40,7 @@ const CommentsNav = ({ navigation, route }) => {
     <CommentsTabs.Navigator
       initialRouteName="Comments"
       screenOptions={{
+        title: "Коментарі",
         tabBarShowLabel: false,
         tabBarStyle: {
           height: 90,

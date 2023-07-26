@@ -33,6 +33,7 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const [isShown, setIsShown] = useState(true);
+  const [activeInput, setActiveInput] = useState(false);
 
   //redux
   const dispatch = useDispatch();
@@ -69,18 +70,28 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.title}>Увійти</Text>
 
             <TextInput
-              style={styles.inputMailPassw}
+              style={[
+                styles.inputMailPassw,
+                activeInput === "email" && styles.inputActive,
+              ]}
               placeholder="Адреса електронної пошти"
               inputMode="email"
               value={mail}
               onChangeText={handleMail}
+              onFocus={() => setActiveInput("email")}
+              onBlur={() => setActiveInput(false)}
             />
             <TextInput
-              style={styles.inputMailPassw}
+              style={[
+                styles.inputMailPassw,
+                activeInput === "password" && styles.inputActive,
+              ]}
               placeholder="Пароль"
               secureTextEntry={isShown}
               value={password}
               onChangeText={handlePassword}
+              onFocus={() => setActiveInput("password")}
+              onBlur={() => setActiveInput(false)}
             />
 
             <TouchableOpacity
@@ -187,6 +198,12 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 16,
     position: "relative",
+    borderColor: "#E8E8E8",
+    borderWidth: 1,
+  },
+  inputActive: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FF6C00",
   },
   passwShowText: {
     fontStyle: "normal",

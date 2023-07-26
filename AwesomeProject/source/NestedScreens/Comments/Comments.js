@@ -52,7 +52,7 @@ const Comments = ({ navigation, route }) => {
               >
                 {comments.indexOf(item) % 2 == 0 ? (
                   <>
-                    <View style={{ borderRadius: "50%" }}>
+                    <View style={{ borderRadius: 50 }}>
                       <Image
                         source={{ uri: `${item.userPhoto}` }}
                         style={{
@@ -73,7 +73,7 @@ const Comments = ({ navigation, route }) => {
                     <View style={styles.commentBody}>
                       <Text>{item.postText}</Text>
                     </View>
-                    <View style={{ borderRadius: "50%" }}>
+                    <View style={{ borderRadius: 50 }}>
                       <Image
                         source={{ uri: `${item.userPhoto}` }}
                         style={{
