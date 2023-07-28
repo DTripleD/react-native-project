@@ -22,7 +22,7 @@ import {
   selectCommentsById,
   selectComments,
 } from "../../../Redux/comments/commentsSelectors";
-const img = require("../../Source/Rectangle23.png");
+const img = require("../../../Source/Rectangle23.png");
 
 const Comments = ({ navigation, route }) => {
   const { postId, postImg } = route.params;

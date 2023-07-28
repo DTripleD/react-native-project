@@ -9,8 +9,8 @@ import { useEffect } from "react";
 import {
   fetchAddComment,
   fetchGetAllComments,
-} from "../../Redux/comments/commentsOperations";
-import { selectUserId, selectUserPhoto } from "../../Redux/auth/authSelectors";
+} from "../Redux/comments/commentsOperations";
+import { selectUserId, selectUserPhoto } from "../Redux/auth/authSlice";
 
 const CommentsTabs = createBottomTabNavigator();
 

@@ -2,7 +2,7 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign, SimpleLineIcons, Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostsNav from "./Navigation/PostsNav";
+import PostsNav from "../Navigation/PostsNav";
 import PostsScreen from "./PostsScreen";
 import ProfileScreen from "./ProfileScreen";
 import { useDispatch } from "react-redux";

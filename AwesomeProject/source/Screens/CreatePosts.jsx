@@ -79,7 +79,9 @@ const CreatePost = ({ navigation }) => {
     }
     const { payload } = await dispatch(fetchUploadPhoto(photo));
     // console.log(payload);
-    await dispatch(fetchAddPost({ photo, title, inputRegion, location, uid }));
+    await dispatch(
+      fetchAddPost({ photo: payload, title, inputRegion, location, uid })
+    );
 
     clearData();
     navigation.navigate("PostList");

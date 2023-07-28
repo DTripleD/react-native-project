@@ -17,7 +17,6 @@ export const fetchUploadPhoto = createAsyncThunk(
 
       return storeLink;
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
