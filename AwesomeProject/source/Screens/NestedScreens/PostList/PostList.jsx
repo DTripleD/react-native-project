@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileElement from "../../Elements/ProfileElement";
+import ProfileElement from "../../../Elements/ProfileElement";
 import {
   Text,
   FlatList,
@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { Feather, EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-import { selectAllPosts } from "../../Redux/posts/postsSelectors";
-import { selectComments } from "../../Redux/comments/commentsSelectors";
+import { selectAllPosts } from "../../../Redux/posts/postsSelectors";
+import { selectComments } from "../../../Redux/comments/commentsSelectors";
 
 const PostList = ({ navigation }) => {
   const posts = useSelector(selectAllPosts);
@@ -24,7 +24,13 @@ const PostList = ({ navigation }) => {
 
   return (
     <>
-      <View style={{ flex: 1, justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          backgroundColor: "#FFFFFF",
+        }}
+      >
         <ProfileElement />
         <FlatList
           data={posts}
@@ -59,7 +65,7 @@ const PostList = ({ navigation }) => {
                     })
                   }
                 >
-                  <Feather name="message-circle" size={18} color="gray" />
+                  <Feather name="message-circle" size={18} color="#BDBDBD" />
                   <Text>{getCommentsCount(item.id)}</Text>
                 </TouchableOpacity>
 
@@ -69,7 +75,7 @@ const PostList = ({ navigation }) => {
                     navigation.navigate("Map", { location: item.location })
                   }
                 >
-                  <EvilIcons name="location" size={24} color="gray" />
+                  <EvilIcons name="location" size={24} color="#BDBDBD" />
                   <Text style={styles.infolink}>{item.inputRegion}</Text>
                 </TouchableOpacity>
               </View>

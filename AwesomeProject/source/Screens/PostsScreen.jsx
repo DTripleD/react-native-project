@@ -1,11 +1,13 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import PostList from "../NestedScreens/PostList/PostList";
+
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Map from "../NestedScreens/Map/Map";
+
 import Post from "../Elements/Post";
 import { fetchGetAllPosts } from "../Redux/posts/postsOperations";
+import Map from "./NestedScreens/Map/Map";
+import PostList from "./NestedScreens/PostList/PostList";
 
 const PostNavigation = createStackNavigator();
 

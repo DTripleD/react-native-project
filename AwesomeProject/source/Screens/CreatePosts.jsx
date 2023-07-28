@@ -73,11 +73,12 @@ const CreatePost = ({ navigation }) => {
   };
 
   const hendleCreate = async () => {
-    if (!title || !location || !photo) {
-      alert("Enter all data pleace!!!");
+    if (!photo) {
+      alert("Make photo");
       return;
     }
     const { payload } = await dispatch(fetchUploadPhoto(photo));
+    // console.log(payload);
     await dispatch(fetchAddPost({ photo, title, inputRegion, location, uid }));
 
     clearData();

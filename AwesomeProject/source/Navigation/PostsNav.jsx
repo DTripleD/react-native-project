@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
-import CreatePost from "../CreatePosts";
+import CreatePost from "../Screens/CreatePosts";
 
 const BottomTabs = createBottomTabNavigator();
 
