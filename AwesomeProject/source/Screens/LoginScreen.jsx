@@ -51,10 +51,13 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     dispatch(fetchLoginUser({ mail, password })).then((result) => {
-      result.type === "auth/fetchLoginUser/fulfilled" &&
+      if (result.type === "auth/fetchLoginUser/fulfilled") {
         navigation.navigate("Home", { screen: "PostsScreen" });
-      result.type !== "auth/fetchLoginUser/fulfilled" &&
+        setMail("");
+        setPassword("");
+      } else {
         alert("Incorrect login!!!");
+      }
     });
   };
 
@@ -118,7 +121,11 @@ const LoginScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.loginLink}
                 activeOpacity={0.5}
-                onPress={() => navigation.navigate("Registratione", {})}
+                onPress={() => {
+                  navigation.navigate("Registratione", {});
+                  setMail("");
+                  setPassword("");
+                }}
               >
                 <Text style={styles.loginLinkText}>
                   Немає акаунту?{" "}

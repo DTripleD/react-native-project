@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 
 import Post from "../Elements/Post";
 import { fetchGetAllPosts } from "../Redux/posts/postsOperations";
-import Map from "./NestedScreens/Map/Map";
-import PostList from "./NestedScreens/PostList/PostList";
+import Map from "./Map";
+import PostList from "./PostList";
 
 const PostNavigation = createStackNavigator();
 

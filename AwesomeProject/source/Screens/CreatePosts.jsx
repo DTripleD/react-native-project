@@ -142,7 +142,7 @@ const CreatePost = ({ navigation }) => {
             <TextInput
               style={styles.postName}
               placeholder="Місцевість..."
-              // inputMode="navigation"d
+              // inputMode="navigation"
               value={inputRegion}
               onChangeText={setInputRegion}
             />
@@ -168,6 +168,8 @@ const CreatePost = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   conteiner: {
+    paddingLeft: 16,
+    paddingRight: 16,
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
@@ -207,12 +209,13 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   postForm: {
+    width: "100%",
     flex: 3,
   },
   postButton: {
     backgroundColor: "#E8E8E8",
     height: 50,
-    width: 343,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
@@ -221,7 +224,6 @@ const styles = StyleSheet.create({
   postButtonActive: {
     backgroundColor: "#FF6C00",
     height: 50,
-    width: 343,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
@@ -232,7 +234,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   postName: {
-    width: 343,
     height: 50,
     borderRadius: 8,
     marginTop: 33,

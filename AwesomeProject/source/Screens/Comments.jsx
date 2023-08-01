@@ -15,14 +15,14 @@ import { EvilIcons, Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchGetCommentsByUid } from "../../../Redux/comments/commentsOperations";
-import { db } from "../../../Api/firebase";
+import { fetchGetCommentsByUid } from "../Redux/comments/commentsOperations";
+import { db } from "../Api/firebase";
 import { useSelector } from "react-redux";
 import {
   selectCommentsById,
   selectComments,
-} from "../../../Redux/comments/commentsSelectors";
-const img = require("../../../Source/Rectangle23.png");
+} from "../Redux/comments/commentsSelectors";
+const img = require("../Source/Rectangle23.png");
 
 const Comments = ({ navigation, route }) => {
   const { postId, postImg } = route.params;
