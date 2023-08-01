@@ -66,7 +66,7 @@ const RegistrationScreen = ({ navigation, route }) => {
       >
         <ImageBackground source={backImage} style={styles.backImg}>
           <View style={styles.container}>
-            <View style={styles.pfotoContainer}>
+            <View style={styles.photoContainer}>
               {photo && (
                 <Image source={{ uri: `${photo}` }} style={styles.photoProf} />
               )}
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   containerKeyB: {
     justifyContent: "flex-end",
   },
-  pfotoContainer: {
+  photoContainer: {
     position: "relative",
     marginTop: -60,
     height: 120,

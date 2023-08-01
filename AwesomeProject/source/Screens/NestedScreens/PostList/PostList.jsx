@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { Feather, EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -31,8 +32,59 @@ const PostList = ({ navigation }) => {
           backgroundColor: "#FFFFFF",
         }}
       >
-        <ProfileElement />
-        <FlatList
+        <ScrollView>
+          <ProfileElement />
+          {posts.map((item) => {
+            return (
+              <View
+                key={item.id}
+                style={{
+                  marginBottom: 30,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={{ uri: `${item.photo}` }}
+                  style={{ width: 380, height: 280, borderRadius: 15 }}
+                />
+                <Text style={styles.posText}>{item.title}</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "row",
+                    width: "85%",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.info}
+                    onPress={() =>
+                      navigation.navigate("CommentsNav", {
+                        postId: item.id,
+                        postImg: item.photo,
+                      })
+                    }
+                  >
+                    <Feather name="message-circle" size={18} color="#BDBDBD" />
+                    <Text>{getCommentsCount(item.id)}</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.info}
+                    onPress={() =>
+                      navigation.navigate("Map", { location: item.location })
+                    }
+                  >
+                    <EvilIcons name="location" size={24} color="#BDBDBD" />
+                    <Text style={styles.infolink}>{item.inputRegion}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            );
+          })}
+        </ScrollView>
+        {/* <FlatList
           data={posts}
           keyExtractor={(item, indx) => indx.toString()}
           renderItem={({ item }) => (
@@ -81,7 +133,7 @@ const PostList = ({ navigation }) => {
               </View>
             </View>
           )}
-        ></FlatList>
+        ></FlatList> */}
       </View>
     </>
   );

@@ -10,7 +10,7 @@ import {
   fetchAddComment,
   fetchGetAllComments,
 } from "../Redux/comments/commentsOperations";
-import { selectUserId, selectUserPhoto } from "../Redux/auth/authSlice";
+import { selectUserId, selectUserPhoto } from "../Redux/auth/authSelectors";
 
 const CommentsTabs = createBottomTabNavigator();
 
@@ -62,6 +62,7 @@ const CommentsNav = ({ navigation, route }) => {
                   onChangeText={(text) => {
                     setPostText(text);
                   }}
+                  placeholder="Коментувати..."
                 ></TextInput>
                 <TouchableOpacity
                   style={styles.addButton}

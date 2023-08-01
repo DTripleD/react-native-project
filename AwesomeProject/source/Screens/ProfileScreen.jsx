@@ -52,7 +52,7 @@ function ProfileScreen({ navigation }) {
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <View style={styles.container}>
-              <View style={styles.pfotoContainer}>
+              <View style={styles.photoContainer}>
                 <Image
                   source={{ uri: `${photo}` }}
                   style={{ width: "100%", height: "100%", borderRadius: 15 }}
@@ -69,12 +69,13 @@ function ProfileScreen({ navigation }) {
                 <Feather name="log-out" size={24} color="gray" />
               </TouchableOpacity>
               <Text style={styles.title}>{name}</Text>
-              <View style={{ flex: 1, justifyContent: "center" }}>
-                <View
-                  data={posts}
-                  keyExtractor={(item, indx) => indx.toString()}
-                  renderItem={({ item }) => (
+              <View
+                style={{ flex: 1, justifyContent: "center", width: "100%" }}
+              >
+                {posts.map((item) => {
+                  return (
                     <View
+                      key={item.id}
                       style={{
                         marginTop: 20,
                         marginBottom: 30,
@@ -127,8 +128,8 @@ function ProfileScreen({ navigation }) {
                         </TouchableOpacity>
                       </View>
                     </View>
-                  )}
-                ></View>
+                  );
+                })}
               </View>
             </View>
           </View>
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   containerKeyB: {
     justifyContent: "flex-end",
   },
-  pfotoContainer: {
+  photoContainer: {
     marginTop: -60,
     height: 120,
     width: 120,

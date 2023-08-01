@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   containerKeyB: {
     justifyContent: "flex-end",
   },
-  pfotoContainer: {
+  photoContainer: {
     marginTop: -60,
     height: 120,
     width: 120,

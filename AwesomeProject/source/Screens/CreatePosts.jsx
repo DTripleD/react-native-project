@@ -58,11 +58,9 @@ const CreatePost = ({ navigation }) => {
     })();
   }, []);
 
-  const active = title && region;
-
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
-    setPhoto(photo.uri);
+    await setPhoto(photo.uri);
     setInputRegion(region[0]["country"] + ", " + region[0]["city"]);
   };
 
@@ -144,11 +142,12 @@ const CreatePost = ({ navigation }) => {
             <TextInput
               style={styles.postName}
               placeholder="Місцевість..."
-              // inputMode="navigation"
+              // inputMode="navigation"d
               value={inputRegion}
+              onChangeText={setInputRegion}
             />
             <TouchableOpacity
-              style={active ? styles.postButtonActive : styles.postButton}
+              style={photo ? styles.postButtonActive : styles.postButton}
               activeOpacity={0.5}
               onPress={hendleCreate}
             >
