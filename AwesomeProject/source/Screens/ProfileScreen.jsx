@@ -20,10 +20,13 @@ import { selectUser } from "../Redux/auth/authSelectors";
 import { selectComments } from "../Redux/comments/commentsSelectors";
 import { AntDesign } from "@expo/vector-icons";
 import { fetchLogOutUser } from "../Redux/auth/authOperations";
+import { useState } from "react";
 
 const BottomTabsProf = createBottomTabNavigator();
 
 function ProfileScreen({ navigation }) {
+  const [like, setLike] = useState(0);
+
   const allComments = useSelector(selectComments);
   const dispatch = useDispatch();
 
@@ -96,22 +99,32 @@ function ProfileScreen({ navigation }) {
                           width: "85%",
                         }}
                       >
-                        <TouchableOpacity
-                          style={styles.info}
-                          onPress={() =>
-                            navigation.navigate("CommentsNav", {
-                              postId: item.id,
-                              postImg: item.photo,
-                            })
-                          }
-                        >
-                          <Feather
-                            name="message-circle"
-                            size={18}
-                            color="gray"
-                          />
-                          <Text>{getCommentsCount(item.id)}</Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: "row" }}>
+                          <TouchableOpacity
+                            style={styles.info}
+                            onPress={() =>
+                              navigation.navigate("CommentsNav", {
+                                postId: item.id,
+                                postImg: item.photo,
+                              })
+                            }
+                          >
+                            <Feather
+                              name="message-circle"
+                              size={18}
+                              color="gray"
+                            />
+                            <Text>{getCommentsCount(item.id)}</Text>
+                          </TouchableOpacity>
+
+                          <TouchableOpacity
+                            style={styles.info}
+                            onPress={() => setLike((prev) => prev + 1)}
+                          >
+                            <Feather name="thumbs-up" size={18} color="gray" />
+                            <Text>{like}</Text>
+                          </TouchableOpacity>
+                        </View>
 
                         <TouchableOpacity
                           style={styles.info}
@@ -262,6 +275,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 5,
     padding: 10,
+    gap: 6,
   },
   infolink: {
     textDecorationLine: "underline",

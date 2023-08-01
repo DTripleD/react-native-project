@@ -148,8 +148,7 @@ const RegistrationScreen = ({ navigation, route }) => {
                 onPress={() => navigation.navigate("Login")}
               >
                 <Text style={styles.loginLinkText}>
-                  Немає акаунту?{" "}
-                  <Text style={styles.underlingText}>Зареєструватися</Text>
+                  Вже є акаунт? <Text style={styles.underlingText}>Увійти</Text>
                 </Text>
               </TouchableOpacity>
             </View>
