@@ -8,12 +8,15 @@ const Map = ({ route, navigation }) => {
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          ...route.params.location,
+          ...route.params.params.params.location,
           latitudeDelta: 0.001,
           longitudeDelta: 0.006,
         }}
       >
-        <Marker coordinate={route.params.location} title="travel photo" />
+        <Marker
+          coordinate={route.params.params.params.location}
+          title="travel photo"
+        />
       </MapView>
     </View>
   );

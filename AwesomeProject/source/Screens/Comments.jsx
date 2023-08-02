@@ -30,8 +30,6 @@ const Comments = ({ navigation, route }) => {
   const allComments = useSelector(selectComments);
   const comments = allComments.filter((item) => item.postId === postId);
 
-  console.log(allComments);
-
   const uid = useSelector(selectUserId);
 
   return (
@@ -71,12 +69,22 @@ const Comments = ({ navigation, route }) => {
                     </View>
                     <View style={styles.commentBody}>
                       <Text>{item.postText}</Text>
+                      <Text>{item.dateConverted}</Text>
+                      <Text></Text>
                     </View>
                   </>
                 ) : (
                   <>
                     <View style={styles.commentBody}>
                       <Text>{item.postText}</Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: "#BDBDBD",
+                        }}
+                      >
+                        {item.dateConverted}
+                      </Text>
                     </View>
                     <View style={{ borderRadius: 50 }}>
                       <Image

@@ -76,7 +76,6 @@ const CreatePost = ({ navigation }) => {
       return;
     }
     const { payload } = await dispatch(fetchUploadPhoto(photo));
-    // console.log(payload);
     await dispatch(
       fetchAddPost({ photo: payload, title, inputRegion, location, uid })
     );

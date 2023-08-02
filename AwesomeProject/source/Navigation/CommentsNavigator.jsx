@@ -23,9 +23,16 @@ const CommentsNav = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
+  const timeElapsed = Date.now();
+  const date = new Date(timeElapsed);
+
+  const dateConverted = date.toUTCString();
+
   const setComment = () => {
     if (postText) {
-      dispatch(fetchAddComment({ postId, postText, uid, userPhoto }));
+      dispatch(
+        fetchAddComment({ postId, postText, uid, userPhoto, dateConverted })
+      );
       setPostText("");
       return;
     }

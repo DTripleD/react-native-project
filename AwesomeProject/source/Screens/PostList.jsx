@@ -73,7 +73,10 @@ const PostList = ({ navigation }) => {
                   <TouchableOpacity
                     style={styles.info}
                     onPress={() =>
-                      navigation.navigate("Map", { location: item.location })
+                      navigation.navigate("MapNav", {
+                        location: item.location,
+                        component: "PostList",
+                      })
                     }
                   >
                     <EvilIcons name="location" size={24} color="#BDBDBD" />

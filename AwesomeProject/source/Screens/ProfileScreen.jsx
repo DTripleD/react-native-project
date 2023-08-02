@@ -90,90 +90,75 @@ function ProfileScreen({ navigation }) {
                   padding: 16,
                 }}
               >
-                {posts ? (
-                  <Text
-                    style={{
-                      ...styles.title,
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                    }}
-                  >
-                    У Вас ще немає публікацій
-                  </Text>
-                ) : (
-                  posts.map((item) => {
-                    return (
+                {posts.map((item) => {
+                  return (
+                    <View
+                      key={item.id}
+                      style={{
+                        marginTop: 20,
+                        marginBottom: 30,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        source={{ uri: `${item.photo}` }}
+                        style={{ width: 380, height: 280, borderRadius: 15 }}
+                      />
+                      <Text style={styles.posText}>{item.title}</Text>
                       <View
-                        key={item.id}
                         style={{
-                          marginTop: 20,
-                          marginBottom: 30,
-                          justifyContent: "center",
-                          alignItems: "center",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          flexDirection: "row",
+                          width: "85%",
                         }}
                       >
-                        <Image
-                          source={{ uri: `${item.photo}` }}
-                          style={{ width: 380, height: 280, borderRadius: 15 }}
-                        />
-                        <Text style={styles.posText}>{item.title}</Text>
-                        <View
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexDirection: "row",
-                            width: "85%",
-                          }}
-                        >
-                          <View style={{ flexDirection: "row" }}>
-                            <TouchableOpacity
-                              style={styles.info}
-                              onPress={() =>
-                                navigation.navigate("CommentsNav", {
-                                  postId: item.id,
-                                  postImg: item.photo,
-                                })
-                              }
-                            >
-                              <Feather
-                                name="message-circle"
-                                size={18}
-                                color="gray"
-                              />
-                              <Text>{getCommentsCount(item.id)}</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                              style={styles.info}
-                              onPress={() => setLike((prev) => prev + 1)}
-                            >
-                              <Feather
-                                name="thumbs-up"
-                                size={18}
-                                color="gray"
-                              />
-                              <Text>{like}</Text>
-                            </TouchableOpacity>
-                          </View>
-
+                        <View style={{ flexDirection: "row" }}>
                           <TouchableOpacity
                             style={styles.info}
                             onPress={() =>
-                              navigation.navigate("Map", {
-                                location: item.location,
+                              navigation.navigate("CommentsNav", {
+                                postId: item.id,
+                                postImg: item.photo,
                               })
                             }
                           >
-                            <EvilIcons name="location" size={24} color="gray" />
-                            <Text style={styles.infolink}>
-                              {item.inputRegion}
-                            </Text>
+                            <Feather
+                              name="message-circle"
+                              size={18}
+                              color="gray"
+                            />
+                            <Text>{getCommentsCount(item.id)}</Text>
+                          </TouchableOpacity>
+
+                          <TouchableOpacity
+                            style={styles.info}
+                            onPress={() => setLike((prev) => prev + 1)}
+                          >
+                            <Feather name="thumbs-up" size={18} color="gray" />
+                            <Text>{like}</Text>
                           </TouchableOpacity>
                         </View>
+
+                        <TouchableOpacity
+                          style={styles.info}
+                          onPress={() =>
+                            navigation.navigate("MapNav", {
+                              location: item.location,
+                              component: "ProfileScreen",
+                            })
+                          }
+                        >
+                          <EvilIcons name="location" size={24} color="gray" />
+                          <Text style={styles.infolink}>
+                            {item.inputRegion}
+                          </Text>
+                        </TouchableOpacity>
                       </View>
-                    );
-                  })
-                )}
+                    </View>
+                  );
+                })}
               </View>
             </View>
           </View>
