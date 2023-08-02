@@ -22,12 +22,17 @@ import {
   selectCommentsById,
   selectComments,
 } from "../Redux/comments/commentsSelectors";
+import { selectUserId } from "../Redux/auth/authSelectors";
 const img = require("../Source/Rectangle23.png");
 
 const Comments = ({ navigation, route }) => {
   const { postId, postImg } = route.params;
   const allComments = useSelector(selectComments);
   const comments = allComments.filter((item) => item.postId === postId);
+
+  console.log(allComments);
+
+  const uid = useSelector(selectUserId);
 
   return (
     <View style={styles.postContainer}>
@@ -50,7 +55,7 @@ const Comments = ({ navigation, route }) => {
                   marginBottom: 30,
                 }}
               >
-                {comments.indexOf(item) % 2 == 0 ? (
+                {item.uid !== uid ? (
                   <>
                     <View style={{ borderRadius: 50 }}>
                       <Image

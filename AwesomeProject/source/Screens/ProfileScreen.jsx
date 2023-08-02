@@ -52,14 +52,24 @@ function ProfileScreen({ navigation }) {
       <ScrollView>
         <ImageBackground source={backImage} style={styles.backImg}>
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <View style={styles.container}>
               <View style={styles.photoContainer}>
                 <Image
-                  source={{ uri: `${photo}` }}
+                  source={{
+                    uri: `${
+                      photo === null
+                        ? "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
+                        : photo
+                    }`,
+                  }}
                   style={{ width: "100%", height: "100%", borderRadius: 15 }}
-                ></Image>
+                />
                 <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
                   <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
                 </TouchableOpacity>
@@ -73,76 +83,97 @@ function ProfileScreen({ navigation }) {
               </TouchableOpacity>
               <Text style={styles.title}>{name}</Text>
               <View
-                style={{ flex: 1, justifyContent: "center", width: "100%" }}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  width: "100%",
+                  padding: 16,
+                }}
               >
-                {posts.map((item) => {
-                  return (
-                    <View
-                      key={item.id}
-                      style={{
-                        marginTop: 20,
-                        marginBottom: 30,
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Image
-                        source={{ uri: `${item.photo}` }}
-                        style={{ width: 380, height: 280, borderRadius: 15 }}
-                      />
-                      <Text style={styles.posText}>{item.title}</Text>
+                {posts ? (
+                  <Text
+                    style={{
+                      ...styles.title,
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                  >
+                    У Вас ще немає публікацій
+                  </Text>
+                ) : (
+                  posts.map((item) => {
+                    return (
                       <View
+                        key={item.id}
                         style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          flexDirection: "row",
-                          width: "85%",
+                          marginTop: 20,
+                          marginBottom: 30,
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <View style={{ flexDirection: "row" }}>
+                        <Image
+                          source={{ uri: `${item.photo}` }}
+                          style={{ width: 380, height: 280, borderRadius: 15 }}
+                        />
+                        <Text style={styles.posText}>{item.title}</Text>
+                        <View
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "row",
+                            width: "85%",
+                          }}
+                        >
+                          <View style={{ flexDirection: "row" }}>
+                            <TouchableOpacity
+                              style={styles.info}
+                              onPress={() =>
+                                navigation.navigate("CommentsNav", {
+                                  postId: item.id,
+                                  postImg: item.photo,
+                                })
+                              }
+                            >
+                              <Feather
+                                name="message-circle"
+                                size={18}
+                                color="gray"
+                              />
+                              <Text>{getCommentsCount(item.id)}</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                              style={styles.info}
+                              onPress={() => setLike((prev) => prev + 1)}
+                            >
+                              <Feather
+                                name="thumbs-up"
+                                size={18}
+                                color="gray"
+                              />
+                              <Text>{like}</Text>
+                            </TouchableOpacity>
+                          </View>
+
                           <TouchableOpacity
                             style={styles.info}
                             onPress={() =>
-                              navigation.navigate("CommentsNav", {
-                                postId: item.id,
-                                postImg: item.photo,
+                              navigation.navigate("Map", {
+                                location: item.location,
                               })
                             }
                           >
-                            <Feather
-                              name="message-circle"
-                              size={18}
-                              color="gray"
-                            />
-                            <Text>{getCommentsCount(item.id)}</Text>
-                          </TouchableOpacity>
-
-                          <TouchableOpacity
-                            style={styles.info}
-                            onPress={() => setLike((prev) => prev + 1)}
-                          >
-                            <Feather name="thumbs-up" size={18} color="gray" />
-                            <Text>{like}</Text>
+                            <EvilIcons name="location" size={24} color="gray" />
+                            <Text style={styles.infolink}>
+                              {item.inputRegion}
+                            </Text>
                           </TouchableOpacity>
                         </View>
-
-                        <TouchableOpacity
-                          style={styles.info}
-                          onPress={() =>
-                            navigation.navigate("Map", {
-                              location: item.location,
-                            })
-                          }
-                        >
-                          <EvilIcons name="location" size={24} color="gray" />
-                          <Text style={styles.infolink}>
-                            {item.inputRegion}
-                          </Text>
-                        </TouchableOpacity>
                       </View>
-                    </View>
-                  );
-                })}
+                    );
+                  })
+                )}
               </View>
             </View>
           </View>
@@ -167,6 +198,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#FFFFFF",
+    minHeight: 550,
     alignItems: "center",
     width: "100%",
     borderTopRightRadius: 25,
