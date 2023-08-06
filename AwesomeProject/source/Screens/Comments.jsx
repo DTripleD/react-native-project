@@ -67,15 +67,37 @@ const Comments = ({ navigation, route }) => {
                         }}
                       />
                     </View>
-                    <View style={styles.commentBody}>
+                    <View
+                      style={{
+                        ...styles.commentBody,
+                        borderBottomLeftRadius: 6,
+                        borderBottomRightRadius: 6,
+                        borderTopLeftRadius: 0,
+                        borderTopRightRadius: 6,
+                      }}
+                    >
                       <Text>{item.postText}</Text>
-                      <Text>{item.dateConverted}</Text>
-                      <Text></Text>
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: "#BDBDBD",
+                        }}
+                      >
+                        {item.dateConverted}
+                      </Text>
                     </View>
                   </>
                 ) : (
                   <>
-                    <View style={styles.commentBody}>
+                    <View
+                      style={{
+                        ...styles.commentBody,
+                        borderBottomLeftRadius: 6,
+                        borderBottomRightRadius: 6,
+                        borderTopLeftRadius: 6,
+                        borderTopRightRadius: 0,
+                      }}
+                    >
                       <Text>{item.postText}</Text>
                       <Text
                         style={{
@@ -167,7 +189,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 50,
   },
 
   postImg: {
