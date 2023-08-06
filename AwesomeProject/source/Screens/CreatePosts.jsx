@@ -104,10 +104,12 @@ const CreatePost = ({ navigation }) => {
                 style={(styles.postImg, styles.conteiner_skeleton)}
                 ref={setCamera}
               >
-                <Image
-                  source={{ uri: photo }}
-                  style={{ height: "100%", width: "100%" }}
-                />
+                {photo && (
+                  <Image
+                    source={{ uri: photo }}
+                    style={{ height: "100%", width: "100%" }}
+                  />
+                )}
               </Camera>
             </View>
 
@@ -199,7 +201,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 50,
     padding: 3,
-    borderWidth: 2,
+
     alignItems: "center",
     justifyContent: "center",
   },
@@ -246,7 +248,7 @@ const styles = StyleSheet.create({
   },
 
   clear_conteiner: {
-    marginTop: 65,
+    marginTop: 100,
     justifyContent: "center",
     alignItems: "center",
     width: 70,

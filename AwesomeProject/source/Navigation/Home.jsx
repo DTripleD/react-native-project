@@ -2,15 +2,15 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign, SimpleLineIcons, Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostsNav from "../Navigation/PostsNav";
-import PostsScreen from "./PostsScreen";
-import ProfileScreen from "./ProfileScreen";
+import ProfileScreen from "../Screens/ProfileScreen";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchLogOutUser } from "../Redux/auth/authOperations";
 import { fetchGetAllPosts } from "../Redux/posts/postsOperations";
 import { fetchGetAllComments } from "../Redux/comments/commentsOperations";
 import { Ionicons } from "@expo/vector-icons";
+import CreatePost from "../Screens/CreatePosts";
+import PostList from "../Screens/PostList";
 
 const MainTabs = createBottomTabNavigator();
 
@@ -33,7 +33,6 @@ const Home = ({ navigation }) => {
 
   return (
     <MainTabs.Navigator
-      // initialRouteName="PostsScreen"
       screenOptions={({ navigation, route }) => ({
         headerShown: true,
         headerTitleAlign: "center",
@@ -75,34 +74,34 @@ const Home = ({ navigation }) => {
           ),
           title: "Публікації",
         }}
-        name="PostsScreen"
-        component={PostsScreen}
+        name="PostList"
+        component={PostList}
       />
 
       {/* ADD BUTTON */}
       <MainTabs.Screen
         options={{
-          headerLeft: () => (
-            <View
-              style={{
-                paddingLeft: 20,
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="arrow-back-outline" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-          ),
-          title: "Створити публікацію",
-          tabBarIcon: ({ color }) => {
-            return <Ionicons name="md-add-outline" size={23} color={color} />;
-          },
-          headerShown: false,
+          unmountOnBlur: true,
           tabBarStyle: { display: "none" },
+          tabBarIcon: ({ focused, size, color }) => {
+            return <AntDesign name="plus" size={24} color={color} />;
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() =>
+                navigation.navigate("Home", { screen: "PostList" })
+              }
+            >
+              <Ionicons name="arrow-back-sharp" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+          headerLeftContainerStyle: { paddingLeft: 10 },
           headerTitleAlign: "center",
+          headerTitleStyle: { paddingBottom: 5 },
         }}
-        name="PostsNav"
-        component={PostsNav}
+        name="Створити публікацію"
+        component={CreatePost}
       />
 
       {/* PROFILE BUTTON */}

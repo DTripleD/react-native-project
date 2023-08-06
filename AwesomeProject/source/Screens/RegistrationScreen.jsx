@@ -43,14 +43,21 @@ const RegistrationScreen = ({ navigation, route }) => {
       alert("Enter all data pleace!!!");
       return;
     }
-    dispatch(fetchRegisterUser({ mail, password, login, photo })).then(
-      (result) => {
+    dispatch(fetchRegisterUser({ mail, password, login, photo }))
+      .then((result) => {
+        if (password.length < 6) {
+          return alert("Пароль має бути не менше 6 символів");
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
+          return alert("Введіть почту у правильному форматі");
+        }
         result.type === "auth/fetchRegisterUser/fulfilled" &&
-          navigation.navigate("Home", { screen: "PostsScreen" });
+          navigation.navigate("Home", { screen: "PostList" });
         result.type !== "auth/fetchRegisterUser/fulfilled" &&
-          alert("Incorrect registration!!!");
-      }
-    );
+          alert("Така почта вже існує");
+      })
+      .catch((error) => console.log(error));
   };
 
   const takePhoto = () => {
@@ -181,6 +188,8 @@ const styles = StyleSheet.create({
     width: "100%",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   containerKeyB: {
     justifyContent: "flex-end",
@@ -220,7 +229,7 @@ const styles = StyleSheet.create({
   },
   inputLogin: {
     backgroundColor: "#F6F6F6",
-    width: 343,
+    width: "100%",
     height: 50,
     borderRadius: 8,
     marginTop: 33,
@@ -234,7 +243,7 @@ const styles = StyleSheet.create({
   },
   inputMailPassw: {
     backgroundColor: "#F6F6F6",
-    width: 343,
+    width: "100%",
     height: 50,
     borderRadius: 8,
     padding: 16,
@@ -264,7 +273,7 @@ const styles = StyleSheet.create({
   registerButton: {
     backgroundColor: "#FF6C00",
     height: 50,
-    width: 343,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,

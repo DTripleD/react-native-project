@@ -10,16 +10,14 @@ import AuthChack from "./source/Elements/AuthChack";
 export default function App() {
   return (
     <Provider store={store}>
-      <>
-        <LoadingScreen />
-        <AuthChack>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <NavigationContainer>
-              <Navigation />
-            </NavigationContainer>
-          </TouchableWithoutFeedback>
-        </AuthChack>
-      </>
+      <LoadingScreen />
+      <AuthChack>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <NavigationContainer>
+            <Navigation />
+          </NavigationContainer>
+        </TouchableWithoutFeedback>
+      </AuthChack>
     </Provider>
   );
 }

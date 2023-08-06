@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { Feather, EvilIcons } from "@expo/vector-icons";
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const backImage = require("../Source/Photo_BG.png");
 
 import { useDispatch, useSelector } from "react-redux";
@@ -21,8 +20,6 @@ import { selectComments } from "../Redux/comments/commentsSelectors";
 import { AntDesign } from "@expo/vector-icons";
 import { fetchLogOutUser } from "../Redux/auth/authOperations";
 import { useState } from "react";
-
-const BottomTabsProf = createBottomTabNavigator();
 
 function ProfileScreen({ navigation }) {
   const [like, setLike] = useState(0);

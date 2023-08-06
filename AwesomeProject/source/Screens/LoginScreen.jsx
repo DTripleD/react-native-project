@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (logedIn) {
-      navigation.navigate("Home", { screen: "PostsScreen" });
+      navigation.navigate("Home", { screen: "PostList" });
     }
   }, []);
 
@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
     }
     dispatch(fetchLoginUser({ mail, password })).then((result) => {
       if (result.type === "auth/fetchLoginUser/fulfilled") {
-        navigation.navigate("Home", { screen: "PostsScreen" });
+        navigation.navigate("Home", { screen: "PostList" });
         setMail("");
         setPassword("");
       } else {
@@ -157,6 +157,8 @@ const styles = StyleSheet.create({
     width: "100%",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   containerKeyB: {
     justifyContent: "flex-end",
@@ -184,7 +186,6 @@ const styles = StyleSheet.create({
   },
   inputLogin: {
     backgroundColor: "#F6F6F6",
-    width: 343,
     height: 50,
     borderRadius: 8,
     marginTop: 33,
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
   },
   inputMailPassw: {
     backgroundColor: "#F6F6F6",
-    width: 343,
+    width: "100%",
     height: 50,
     borderRadius: 8,
     padding: 16,
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
   registerButton: {
     backgroundColor: "#FF6C00",
     height: 50,
-    width: 343,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
