@@ -15,14 +15,18 @@ import { EvilIcons, Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchGetCommentsByUid } from "../Redux/comments/commentsOperations";
+import {
+  fetchAddComment,
+  fetchGetAllComments,
+  fetchGetCommentsByUid,
+} from "../Redux/comments/commentsOperations";
 import { db } from "../Api/firebase";
 import { useSelector } from "react-redux";
 import {
   selectCommentsById,
   selectComments,
 } from "../Redux/comments/commentsSelectors";
-import { selectUserId } from "../Redux/auth/authSelectors";
+import { selectUserId, selectUserPhoto } from "../Redux/auth/authSelectors";
 const img = require("../Source/Rectangle23.png");
 
 const Comments = ({ navigation, route }) => {
@@ -32,92 +36,77 @@ const Comments = ({ navigation, route }) => {
 
   const uid = useSelector(selectUserId);
 
+  const [postText, setPostText] = useState("");
+
+  const userPhoto = useSelector(selectUserPhoto);
+
+  const dispatch = useDispatch();
+
+  const timeElapsed = Date.now();
+  const date = new Date(timeElapsed);
+
+  const dateConverted = date.toUTCString();
+
+  const setComment = () => {
+    if (postText) {
+      dispatch(
+        fetchAddComment({ postId, postText, uid, userPhoto, dateConverted })
+      );
+      setPostText("");
+      return;
+    }
+    alert("Comment text is empty");
+  };
+
+  useEffect(() => {
+    dispatch(fetchGetAllComments());
+  }, [dispatch]);
+
   return (
     <View style={styles.postContainer}>
       <View style={styles.postBody}>
-        <Image
-          source={{ uri: `${postImg}` }}
-          style={{ width: 380, height: 280, borderRadius: 15, marginTop: 15 }}
-        />
+        <Image source={{ uri: `${postImg}` }} style={styles.mainImg} />
         <View style={styles.commentList}>
           <FlatList
             data={comments}
             keyExtractor={(item, indx) => indx.toString()}
             renderItem={({ item, id }) => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "flex-start",
-                  justifyContent: "space-around",
-                  marginBottom: 30,
-                }}
-              >
+              <View style={styles.commentsContainer}>
                 {item.uid !== uid ? (
                   <>
-                    <View style={{ borderRadius: 50 }}>
+                    <View style={styles.userPhotoWrapper}>
                       <Image
-                        source={{ uri: `${item.userPhoto}` }}
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 25,
-                          margin: 0,
-                          padding: 0,
+                        source={{
+                          uri: item.userPhoto
+                            ? `${item.userPhoto}`
+                            : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
                         }}
+                        style={styles.userPhotoComments}
                       />
                     </View>
-                    <View
-                      style={{
-                        ...styles.commentBody,
-                        borderBottomLeftRadius: 6,
-                        borderBottomRightRadius: 6,
-                        borderTopLeftRadius: 0,
-                        borderTopRightRadius: 6,
-                      }}
-                    >
+                    <View style={styles.commentBodyAn}>
                       <Text>{item.postText}</Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          color: "#BDBDBD",
-                        }}
-                      >
+                      <Text style={styles.commentText}>
                         {item.dateConverted}
                       </Text>
                     </View>
                   </>
                 ) : (
                   <>
-                    <View
-                      style={{
-                        ...styles.commentBody,
-                        borderBottomLeftRadius: 6,
-                        borderBottomRightRadius: 6,
-                        borderTopLeftRadius: 6,
-                        borderTopRightRadius: 0,
-                      }}
-                    >
+                    <View style={styles.commentBody}>
                       <Text>{item.postText}</Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          color: "#BDBDBD",
-                        }}
-                      >
+                      <Text style={styles.commentText}>
                         {item.dateConverted}
                       </Text>
                     </View>
-                    <View style={{ borderRadius: 50 }}>
+                    <View style={styles.userPhotoWrapper}>
                       <Image
-                        source={{ uri: `${item.userPhoto}` }}
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: 25,
-                          margin: 0,
-                          padding: 0,
+                        source={{
+                          uri: item.userPhoto
+                            ? `${item.userPhoto}`
+                            : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
                         }}
+                        style={styles.userPhotoComments}
                       />
                     </View>
                   </>
@@ -125,6 +114,23 @@ const Comments = ({ navigation, route }) => {
               </View>
             )}
           ></FlatList>
+          <View style={styles.barStyle}>
+            <TextInput
+              style={styles.inputMailPassw}
+              value={postText}
+              onChangeText={(text) => {
+                setPostText(text);
+              }}
+              placeholder="Коментувати..."
+            />
+            <TouchableOpacity
+              style={styles.addButton}
+              activeOpacity={0.5}
+              onPress={setComment}
+            >
+              <Ionicons name="arrow-up-sharp" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
         </View>
         {/* </ScrollView>  (comments.indexOf(item))? {<View style = {{ borderRadius: "50%" }}>
                  <Image source={{ uri: `${ item.userPhoto }`}} style={{ width: 40, height: 40, borderRadius: 25, margin: 0, padding: 0 }}/>
@@ -189,6 +195,22 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     justifyContent: "center",
     alignItems: "center",
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 0,
+  },
+  commentBodyAn: {
+    minHeight: 60,
+    backgroundColor: "#00000008",
+    width: "80%",
+    paddingBottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 6,
   },
 
   postImg: {
@@ -252,6 +274,52 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     borderBottomColor: "#E8E8E8",
     borderBottomWidth: 2,
+  },
+  mainImg: { width: 380, height: 280, borderRadius: 15, marginTop: 15 },
+  commentsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-around",
+    marginBottom: 30,
+  },
+  userPhotoComments: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    margin: 0,
+    padding: 0,
+  },
+  commentText: {
+    fontSize: 10,
+    color: "#BDBDBD",
+  },
+  userPhotoWrapper: { borderRadius: 50 },
+  addButton: {
+    backgroundColor: "#FF6C00",
+    height: 34,
+    width: 34,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    top: -43,
+    left: 150,
+  },
+  inputMailPassw: {
+    backgroundColor: "#F6F6F6",
+    width: "100%",
+    height: 50,
+    borderRadius: 100,
+    padding: 16,
+
+    fontStyle: "normal",
+    fontWeight: "400",
+    fontSize: 16,
+    position: "relative",
+  },
+  barStyle: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

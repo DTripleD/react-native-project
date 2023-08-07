@@ -43,7 +43,15 @@ const RegistrationScreen = ({ navigation, route }) => {
       alert("Enter all data pleace!!!");
       return;
     }
-    dispatch(fetchRegisterUser({ mail, password, login, photo }))
+    dispatch(
+      fetchRegisterUser({
+        mail,
+        password,
+        login,
+        photo:
+          "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
+      })
+    )
       .then((result) => {
         if (password.length < 6) {
           return alert("Пароль має бути не менше 6 символів");
@@ -94,6 +102,7 @@ const RegistrationScreen = ({ navigation, route }) => {
             <Text style={styles.title}>Реєстрація</Text>
 
             <TextInput
+              autoCapitalize="none"
               style={[
                 styles.inputLogin,
                 activeInput === "login" && styles.inputActive,
@@ -106,6 +115,7 @@ const RegistrationScreen = ({ navigation, route }) => {
               onBlur={() => setActiveInput(false)}
             />
             <TextInput
+              autoCapitalize="none"
               style={[
                 styles.inputMailPassw,
                 activeInput === "email" && styles.inputActive,
@@ -118,6 +128,7 @@ const RegistrationScreen = ({ navigation, route }) => {
               onBlur={() => setActiveInput(false)}
             />
             <TextInput
+              autoCapitalize="none"
               style={[
                 styles.inputMailPassw,
                 activeInput === "password" && styles.inputActive,

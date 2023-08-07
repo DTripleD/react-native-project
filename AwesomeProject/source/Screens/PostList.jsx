@@ -73,7 +73,7 @@ const PostList = ({ navigation }) => {
                   <TouchableOpacity
                     style={styles.info}
                     onPress={() =>
-                      navigation.navigate("MapNav", {
+                      navigation.navigate("Map", {
                         location: item.location,
                         component: "PostList",
                       })

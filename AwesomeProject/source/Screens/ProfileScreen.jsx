@@ -141,7 +141,7 @@ function ProfileScreen({ navigation }) {
                         <TouchableOpacity
                           style={styles.info}
                           onPress={() =>
-                            navigation.navigate("MapNav", {
+                            navigation.navigate("Map", {
                               location: item.location,
                               component: "ProfileScreen",
                             })
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#FFFFFF",
-    minHeight: 550,
+    minHeight: 530,
     alignItems: "center",
     width: "100%",
     borderTopRightRadius: 25,

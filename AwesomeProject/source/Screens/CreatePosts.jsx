@@ -92,7 +92,7 @@ const CreatePost = ({ navigation }) => {
         style={styles.kav}
       >
         <SafeAreaView style={styles.conteiner}>
-          <View>
+          <View style={styles.cameraWrapper}>
             <View
               style={{
                 borderRadius: 8,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   postImgAdd: {
     position: "absolute",
     top: "50%",
-    left: "50%",
+    left: "55%",
     transform: [{ translateY: -40 }, { translateX: -50 }],
 
     width: 60,
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
-    width: 343,
+
     height: 250,
     borderRadius: 8,
     overflow: "hidden",
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     color: "#BDBDBD",
   },
   kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  cameraWrapper: { width: "100%" },
 });
 
 export default CreatePost;

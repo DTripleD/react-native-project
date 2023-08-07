@@ -73,6 +73,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.title}>Увійти</Text>
 
             <TextInput
+              autoCapitalize="none"
               style={[
                 styles.inputMailPassw,
                 activeInput === "email" && styles.inputActive,
@@ -85,6 +86,7 @@ const LoginScreen = ({ navigation }) => {
               onBlur={() => setActiveInput(false)}
             />
             <TextInput
+              autoCapitalize="none"
               style={[
                 styles.inputMailPassw,
                 activeInput === "password" && styles.inputActive,
