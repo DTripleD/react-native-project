@@ -48,115 +48,97 @@ function ProfileScreen({ navigation }) {
     <SafeAreaView>
       <ScrollView>
         <ImageBackground source={backImage} style={styles.backImg}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <View style={styles.container}>
-              <View style={styles.photoContainer}>
-                <Image
-                  source={{
-                    uri: `${
-                      photo === null
-                        ? "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
-                        : photo
-                    }`,
-                  }}
-                  style={{ width: "100%", height: "100%", borderRadius: 15 }}
-                />
-                <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
-                  <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity
-                style={styles.logoutButton}
-                activeOpacity={0.5}
-                onPress={handleLogOut}
-              >
-                <Feather name="log-out" size={24} color="gray" />
-              </TouchableOpacity>
-              <Text style={styles.title}>{name}</Text>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  width: "100%",
-                  padding: 16,
+          <View style={styles.container}>
+            <View style={styles.photoContainer}>
+              <Image
+                source={{
+                  uri: `${
+                    photo === null
+                      ? "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
+                      : photo
+                  }`,
                 }}
-              >
-                {posts.map((item) => {
-                  return (
+                style={{ width: "100%", height: "100%", borderRadius: 15 }}
+              />
+              <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
+                <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.logoutButton}
+              activeOpacity={0.5}
+              onPress={handleLogOut}
+            >
+              <Feather name="log-out" size={24} color="gray" />
+            </TouchableOpacity>
+            <Text style={styles.title}>{name}</Text>
+            <View style={styles.mapWrapper}>
+              {posts.map((item) => {
+                return (
+                  <View
+                    key={item.id}
+                    style={{
+                      marginTop: 20,
+                      marginBottom: 30,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={{ uri: `${item.photo}` }}
+                      style={{ width: 380, height: 280, borderRadius: 15 }}
+                    />
+                    <Text style={styles.posText}>{item.title}</Text>
                     <View
-                      key={item.id}
                       style={{
-                        marginTop: 20,
-                        marginBottom: 30,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                        width: "85%",
                       }}
                     >
-                      <Image
-                        source={{ uri: `${item.photo}` }}
-                        style={{ width: 380, height: 280, borderRadius: 15 }}
-                      />
-                      <Text style={styles.posText}>{item.title}</Text>
-                      <View
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          flexDirection: "row",
-                          width: "85%",
-                        }}
-                      >
-                        <View style={{ flexDirection: "row" }}>
-                          <TouchableOpacity
-                            style={styles.info}
-                            onPress={() =>
-                              navigation.navigate("CommentsNav", {
-                                postId: item.id,
-                                postImg: item.photo,
-                              })
-                            }
-                          >
-                            <Feather
-                              name="message-circle"
-                              size={18}
-                              color="gray"
-                            />
-                            <Text>{getCommentsCount(item.id)}</Text>
-                          </TouchableOpacity>
-
-                          <TouchableOpacity
-                            style={styles.info}
-                            onPress={() => setLike((prev) => prev + 1)}
-                          >
-                            <Feather name="thumbs-up" size={18} color="gray" />
-                            <Text>{like}</Text>
-                          </TouchableOpacity>
-                        </View>
-
+                      <View style={{ flexDirection: "row" }}>
                         <TouchableOpacity
                           style={styles.info}
                           onPress={() =>
-                            navigation.navigate("Map", {
-                              location: item.location,
-                              component: "ProfileScreen",
+                            navigation.navigate("CommentsNav", {
+                              postId: item.id,
+                              postImg: item.photo,
                             })
                           }
                         >
-                          <EvilIcons name="location" size={24} color="gray" />
-                          <Text style={styles.infolink}>
-                            {item.inputRegion}
-                          </Text>
+                          <Feather
+                            name="message-circle"
+                            size={18}
+                            color="gray"
+                          />
+                          <Text>{getCommentsCount(item.id)}</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          style={styles.info}
+                          onPress={() => setLike((prev) => prev + 1)}
+                        >
+                          <Feather name="thumbs-up" size={18} color="gray" />
+                          <Text>{like}</Text>
                         </TouchableOpacity>
                       </View>
+
+                      <TouchableOpacity
+                        style={styles.info}
+                        onPress={() =>
+                          navigation.navigate("Map", {
+                            location: item.location,
+                            component: "ProfileScreen",
+                          })
+                        }
+                      >
+                        <EvilIcons name="location" size={24} color="gray" />
+                        <Text style={styles.infolink}>{item.inputRegion}</Text>
+                      </TouchableOpacity>
                     </View>
-                  );
-                })}
-              </View>
+                  </View>
+                );
+              })}
             </View>
           </View>
         </ImageBackground>
@@ -167,8 +149,6 @@ function ProfileScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    justifyContent: "flex-start",
-    alignItems: "center",
     width: "100%",
     backgroundColor: "#FFFFFF",
     borderTopRightRadius: 25,
@@ -187,9 +167,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     marginTop: 200,
   },
-  containerKeyB: {
-    justifyContent: "flex-end",
-  },
   photoContainer: {
     marginTop: -60,
     height: 120,
@@ -204,79 +181,15 @@ const styles = StyleSheet.create({
     left: "90%",
     height: 25,
     width: 25,
-    pointerEvents: "auto",
   },
-  addButton: {
-    backgroundColor: "#FF6C00",
-    height: 40,
-    width: 70,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-  },
+
   title: {
     fontWeight: "500",
     fontSize: 30,
     marginTop: 32,
     lineHeight: 35,
   },
-  inputLogin: {
-    backgroundColor: "#F6F6F6",
-    width: 343,
-    height: 50,
-    borderRadius: 8,
-    marginTop: 33,
-    padding: 16,
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 16,
-    lineHeight: 19,
-  },
-  inputMailPassw: {
-    backgroundColor: "#F6F6F6",
-    width: 343,
-    height: 50,
-    borderRadius: 8,
-    padding: 16,
-    marginTop: 16,
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 16,
-    position: "relative",
-  },
-  passwShowText: {
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 16,
-    lineHeight: 19,
-  },
-  passwShow: {
-    top: -34,
-    left: 130,
-  },
-  registerButton: {
-    backgroundColor: "#FF6C00",
-    height: 50,
-    width: 343,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 100,
-    marginTop: 44,
-  },
-  registerButtonText: {
-    color: "#fff",
-    fontWeight: "400",
-  },
-  loginLink: {
-    marginTop: 16,
-    marginBottom: 66,
-  },
-  loginLinkText: {
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 16,
-    lineHeight: 19,
-  },
+
   posText: {
     alignSelf: "flex-start",
     marginTop: 8,
@@ -293,6 +206,12 @@ const styles = StyleSheet.create({
   },
   infolink: {
     textDecorationLine: "underline",
+  },
+  mapWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    width: "100%",
+    padding: 16,
   },
 });
 
