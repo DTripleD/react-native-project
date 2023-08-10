@@ -15,7 +15,7 @@ import { selectAllPosts } from "../Redux/posts/postsSelectors";
 import { selectComments } from "../Redux/comments/commentsSelectors";
 
 const PostList = ({ navigation }) => {
-  const posts = useSelector(selectAllPosts);
+  const posts = useSelector(selectAllPosts) || [];
   const allComments = useSelector(selectComments);
 
   const getCommentsCount = (id) => {
