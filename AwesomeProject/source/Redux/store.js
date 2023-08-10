@@ -22,13 +22,12 @@ const persistedReducer = persistReducer(persistConfig, combineReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      immutableCheck: false,
       serializableCheck: false,
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+    });
+  },
 });
 
 export const persistor = persistStore(store);
