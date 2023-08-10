@@ -6,7 +6,7 @@ const Map = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <MapView
-        style={{ flex: 1 }}
+        style={styles.mapView}
         initialRegion={{
           ...route.params.location,
           latitudeDelta: 0.001,
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  mapView: { flex: 1 },
 });
 
 export default Map;

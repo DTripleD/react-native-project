@@ -37,10 +37,7 @@ const ProfilePhotoScreen = ({ navigation }) => {
   return (
     <View style={styles.postContainer}>
       <Camera style={styles.postImg} ref={setCamera}>
-        <Image
-          source={{ uri: photo }}
-          style={{ height: 220, width: 220, marginTop: -80 }}
-        />
+        <Image source={{ uri: photo }} style={styles.image} />
       </Camera>
 
       <TouchableOpacity
@@ -133,6 +130,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E8E8E8",
     borderBottomWidth: 2,
   },
+  image: { height: 220, width: 220, marginTop: -80 },
 });
 
 export default ProfilePhotoScreen;

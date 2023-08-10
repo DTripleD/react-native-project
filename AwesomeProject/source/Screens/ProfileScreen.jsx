@@ -46,8 +46,8 @@ function ProfileScreen({ navigation }) {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <ImageBackground source={backImage} style={styles.backImg}>
+      <ImageBackground source={backImage} style={styles.backImg}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.container}>
             <View style={styles.photoContainer}>
               <Image
@@ -58,7 +58,7 @@ function ProfileScreen({ navigation }) {
                       : photo
                   }`,
                 }}
-                style={{ width: "100%", height: "100%", borderRadius: 15 }}
+                style={styles.image}
               />
               <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
                 <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
@@ -75,28 +75,14 @@ function ProfileScreen({ navigation }) {
             <View style={styles.mapWrapper}>
               {posts.map((item) => {
                 return (
-                  <View
-                    key={item.id}
-                    style={{
-                      marginTop: 20,
-                      marginBottom: 30,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <View key={item.id} style={styles.elementWrapper}>
                     <Image
                       source={{ uri: `${item.photo}` }}
-                      style={{ width: 380, height: 280, borderRadius: 15 }}
+                      style={styles.elementImageWrapper}
                     />
                     <Text style={styles.posText}>{item.title}</Text>
-                    <View
-                      style={{
-                        justifyContent: "space-between",
-                        flexDirection: "row",
-                        width: "85%",
-                      }}
-                    >
-                      <View style={{ flexDirection: "row" }}>
+                    <View style={styles.buttonsWrapper}>
+                      <View style={styles.reactions}>
                         <TouchableOpacity
                           style={styles.info}
                           onPress={() =>
@@ -141,8 +127,8 @@ function ProfileScreen({ navigation }) {
               })}
             </View>
           </View>
-        </ImageBackground>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
@@ -213,6 +199,20 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 16,
   },
+  image: { width: "100%", height: "100%", borderRadius: 15 },
+  elementWrapper: {
+    marginTop: 20,
+    marginBottom: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  elementImageWrapper: { width: 380, height: 280, borderRadius: 15 },
+  buttonsWrapper: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    width: "85%",
+  },
+  reactions: { flexDirection: "row" },
 });
 
 export default ProfileScreen;

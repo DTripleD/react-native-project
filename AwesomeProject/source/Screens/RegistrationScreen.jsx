@@ -159,7 +159,7 @@ const RegistrationScreen = ({ navigation, route }) => {
               <Text style={styles.registerButtonText}>Зареєстуватися</Text>
             </TouchableOpacity>
 
-            <View style={{ alignItems: "center", marginTop: 10 }}>
+            <View style={styles.redirect}>
               <TouchableOpacity
                 style={styles.loginLink}
                 activeOpacity={0.5}
@@ -307,6 +307,7 @@ const styles = StyleSheet.create({
   },
   underlingText: { textDecorationLine: "underline" },
   kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
+  redirect: { alignItems: "center", marginTop: 10 },
 });
 
 export default RegistrationScreen;

@@ -12,7 +12,6 @@ import Comments from "../Screens/Comments";
 const MainStack = createStackNavigator();
 
 const Navigation = ({ route }) => {
-  console.log(route);
   const navigation = useNavigation();
   return (
     <MainStack.Navigator

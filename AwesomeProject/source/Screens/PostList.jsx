@@ -25,38 +25,16 @@ const PostList = ({ navigation }) => {
 
   return (
     <>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          backgroundColor: "#FFFFFF",
-        }}
-      >
-        <ScrollView>
+      <View style={styles.postListWrapper}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <ProfileElement />
+
           {posts.map((item) => {
             return (
-              <View
-                key={item.id}
-                style={{
-                  marginBottom: 30,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={{ uri: `${item.photo}` }}
-                  style={{ width: 380, height: 280, borderRadius: 15 }}
-                />
+              <View key={item.id} style={styles.postElementWrapper}>
+                <Image source={{ uri: `${item.photo}` }} style={styles.image} />
                 <Text style={styles.posText}>{item.title}</Text>
-                <View
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                    width: "85%",
-                  }}
-                >
+                <View style={styles.buttonsWrapper}>
                   <TouchableOpacity
                     style={styles.info}
                     onPress={() =>
@@ -176,6 +154,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-between",
+  },
+  postListWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+  },
+  postElementWrapper: {
+    marginBottom: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: { width: 380, height: 280, borderRadius: 15 },
+  buttonsWrapper: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    width: "85%",
   },
 });
 

@@ -69,6 +69,7 @@ const Comments = ({ navigation, route }) => {
         <View style={styles.commentList}>
           <FlatList
             data={comments}
+            showsVerticalScrollIndicator={false}
             keyExtractor={(item, indx) => indx.toString()}
             renderItem={({ item, id }) => (
               <View style={styles.commentsContainer}>

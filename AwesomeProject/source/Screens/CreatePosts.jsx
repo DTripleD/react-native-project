@@ -77,7 +77,13 @@ const CreatePost = ({ navigation }) => {
     }
     const { payload } = await dispatch(fetchUploadPhoto(photo));
     await dispatch(
-      fetchAddPost({ photo: payload, title, inputRegion, location, uid })
+      fetchAddPost({
+        photo: payload,
+        title,
+        inputRegion,
+        location,
+        uid,
+      })
     );
 
     clearData();
@@ -85,34 +91,20 @@ const CreatePost = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={-140}
-        style={styles.kav}
-      >
-        <SafeAreaView style={styles.conteiner}>
-          <View style={styles.cameraWrapper}>
-            <View
-              style={{
-                borderRadius: 8,
-                overflow: "hidden",
-                height: 240,
-              }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={-140}
+      style={styles.kav}
+    >
+      <View style={styles.conteiner}>
+        <View style={styles.cameraWrapper}>
+          <View style={styles.cameraView}>
+            <Camera
+              style={(styles.postImg, styles.conteiner_skeleton)}
+              ref={setCamera}
             >
-              <Camera
-                style={(styles.postImg, styles.conteiner_skeleton)}
-                ref={setCamera}
-              >
-                {photo && (
-                  <Image
-                    source={{ uri: photo }}
-                    style={{ height: "100%", width: "100%" }}
-                  />
-                )}
-              </Camera>
-            </View>
-
+              {photo && <Image source={{ uri: photo }} style={styles.image} />}
+            </Camera>
             <TouchableOpacity
               style={{
                 ...styles.postImgAdd,
@@ -127,43 +119,43 @@ const CreatePost = ({ navigation }) => {
                 color={photo ? "#FFFFFF" : "#BDBDBD"}
               />
             </TouchableOpacity>
-            <Text style={styles.photoText}>
-              {!photo ? "Завантажте фото" : "Редагувати фото"}
-            </Text>
           </View>
 
-          <View style={styles.postForm}>
-            <TextInput
-              style={styles.postName}
-              placeholder="Назва..."
-              inputMode="text"
-              onChangeText={setTitle}
-              value={title}
-            />
-            <TextInput
-              style={styles.postName}
-              placeholder="Місцевість..."
-              // inputMode="navigation"
-              value={inputRegion}
-              onChangeText={setInputRegion}
-            />
-            <TouchableOpacity
-              style={photo ? styles.postButtonActive : styles.postButton}
-              activeOpacity={0.5}
-              onPress={hendleCreate}
-            >
-              <Text style={styles.postButtonText}>Опубліковати</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.clear_conteiner}
-              onPress={clearData}
-            >
-              <FontAwesome name="trash-o" size={24} color="#BDBDBD" />
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
-    </ScrollView>
+          <Text style={styles.photoText}>
+            {!photo ? "Завантажте фото" : "Редагувати фото"}
+          </Text>
+        </View>
+
+        <View style={styles.postForm}>
+          <TextInput
+            style={styles.postName}
+            placeholder="Назва..."
+            inputMode="text"
+            onChangeText={setTitle}
+            value={title}
+          />
+          <TextInput
+            style={styles.postName}
+            placeholder="Місцевість..."
+            // inputMode="navigation"
+            value={inputRegion}
+            onChangeText={setInputRegion}
+          />
+          <TouchableOpacity
+            style={photo ? styles.postButtonActive : styles.postButton}
+            activeOpacity={0.5}
+            onPress={hendleCreate}
+          >
+            <Text style={styles.postButtonText}>Опубліковати</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.clearWrapper}>
+          <TouchableOpacity style={styles.clear_conteiner} onPress={clearData}>
+            <FontAwesome name="trash-o" size={24} color="#BDBDBD" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -172,10 +164,12 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     flex: 1,
+    flexGrow: 1,
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#fff",
     // paddingTop: 32,
+    justifyContent: "space-between",
   },
   postContainer: {
     flex: 1,
@@ -184,7 +178,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   postImg: {
-    // flex: 3,
     width: "100%",
     height: 600,
     color: "#F6F6F6",
@@ -194,9 +187,8 @@ const styles = StyleSheet.create({
   postImgAdd: {
     position: "absolute",
     top: "50%",
-    left: "55%",
-    transform: [{ translateY: -40 }, { translateX: -50 }],
-
+    left: "50%",
+    transform: [{ translateY: -30 }, { translateX: -30 }],
     width: 60,
     height: 60,
     borderRadius: 50,
@@ -211,7 +203,6 @@ const styles = StyleSheet.create({
   },
   postForm: {
     width: "100%",
-    flex: 3,
   },
   postButton: {
     backgroundColor: "#E8E8E8",
@@ -248,7 +239,6 @@ const styles = StyleSheet.create({
   },
 
   clear_conteiner: {
-    marginTop: 100,
     justifyContent: "center",
     alignItems: "center",
     width: 70,
@@ -276,6 +266,13 @@ const styles = StyleSheet.create({
   },
   kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
   cameraWrapper: { width: "100%" },
+  cameraView: {
+    borderRadius: 8,
+    overflow: "hidden",
+    height: 240,
+  },
+  image: { height: "100%", width: "100%" },
+  clearWrapper: { marginTop: "auto" },
 });
 
 export default CreatePost;
