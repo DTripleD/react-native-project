@@ -8,6 +8,9 @@ import {
   Image,
   FlatList,
   ScrollView,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -32,7 +35,7 @@ const img = require("../Source/Rectangle23.png");
 const Comments = ({ navigation, route }) => {
   const { postId, postImg } = route.params;
   const allComments = useSelector(selectComments);
-  const comments = allComments.filter((item) => item.postId === postId);
+  const comments = allComments.filter((item) => item.postId === postId) || [];
 
   const uid = useSelector(selectUserId);
 
@@ -63,77 +66,83 @@ const Comments = ({ navigation, route }) => {
   }, [dispatch]);
 
   return (
-    <View style={styles.postContainer}>
-      <View style={styles.postBody}>
-        <Image source={{ uri: `${postImg}` }} style={styles.mainImg} />
-        <View style={styles.commentList}>
-          <FlatList
-            data={comments}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, indx) => indx.toString()}
-            renderItem={({ item, id }) => (
-              <View style={styles.commentsContainer}>
-                {item.uid !== uid ? (
-                  <>
-                    <View style={styles.userPhotoWrapper}>
-                      <Image
-                        source={{
-                          uri: item.userPhoto
-                            ? `${item.userPhoto}`
-                            : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
-                        }}
-                        style={styles.userPhotoComments}
-                      />
-                    </View>
-                    <View style={styles.commentBodyAn}>
-                      <Text>{item.postText}</Text>
-                      <Text style={styles.commentText}>
-                        {item.dateConverted}
-                      </Text>
-                    </View>
-                  </>
-                ) : (
-                  <>
-                    <View style={styles.commentBody}>
-                      <Text>{item.postText}</Text>
-                      <Text style={styles.commentText}>
-                        {item.dateConverted}
-                      </Text>
-                    </View>
-                    <View style={styles.userPhotoWrapper}>
-                      <Image
-                        source={{
-                          uri: item.userPhoto
-                            ? `${item.userPhoto}`
-                            : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
-                        }}
-                        style={styles.userPhotoComments}
-                      />
-                    </View>
-                  </>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.kav}
+        keyboardVerticalOffset={90}
+      >
+        <View style={styles.postContainer}>
+          <View style={styles.postBody}>
+            <Image source={{ uri: `${postImg}` }} style={styles.mainImg} />
+            <View style={styles.commentList}>
+              <FlatList
+                data={comments}
+                // showsVerticalScrollIndicator={false}
+                keyExtractor={(item, indx) => indx.toString()}
+                renderItem={({ item, id }) => (
+                  <View style={styles.commentsContainer}>
+                    {item.uid !== uid ? (
+                      <>
+                        <View style={styles.userPhotoWrapper}>
+                          <Image
+                            source={{
+                              uri: item.userPhoto
+                                ? `${item.userPhoto}`
+                                : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
+                            }}
+                            style={styles.userPhotoComments}
+                          />
+                        </View>
+                        <View style={styles.commentBodyAn}>
+                          <Text>{item.postText}</Text>
+                          <Text style={styles.commentText}>
+                            {item.dateConverted}
+                          </Text>
+                        </View>
+                      </>
+                    ) : (
+                      <>
+                        <View style={styles.commentBody}>
+                          <Text>{item.postText}</Text>
+                          <Text style={styles.commentText}>
+                            {item.dateConverted}
+                          </Text>
+                        </View>
+                        <View style={styles.userPhotoWrapper}>
+                          <Image
+                            source={{
+                              uri: item.userPhoto
+                                ? `${item.userPhoto}`
+                                : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57",
+                            }}
+                            style={styles.userPhotoComments}
+                          />
+                        </View>
+                      </>
+                    )}
+                  </View>
                 )}
+              ></FlatList>
+              <View style={styles.barStyle}>
+                <TextInput
+                  style={styles.inputMailPassw}
+                  value={postText}
+                  onChangeText={(text) => {
+                    setPostText(text);
+                  }}
+                  placeholder="Коментувати..."
+                />
+                <TouchableOpacity
+                  style={styles.addButton}
+                  activeOpacity={0.5}
+                  onPress={setComment}
+                >
+                  <Ionicons name="arrow-up-sharp" size={24} color="white" />
+                </TouchableOpacity>
               </View>
-            )}
-          ></FlatList>
-          <View style={styles.barStyle}>
-            <TextInput
-              style={styles.inputMailPassw}
-              value={postText}
-              onChangeText={(text) => {
-                setPostText(text);
-              }}
-              placeholder="Коментувати..."
-            />
-            <TouchableOpacity
-              style={styles.addButton}
-              activeOpacity={0.5}
-              onPress={setComment}
-            >
-              <Ionicons name="arrow-up-sharp" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* </ScrollView>  (comments.indexOf(item))? {<View style = {{ borderRadius: "50%" }}>
+            </View>
+            {/* </ScrollView>  (comments.indexOf(item))? {<View style = {{ borderRadius: "50%" }}>
                  <Image source={{ uri: `${ item.userPhoto }`}} style={{ width: 40, height: 40, borderRadius: 25, margin: 0, padding: 0 }}/>
             </View>
 
@@ -144,8 +153,10 @@ const Comments = ({ navigation, route }) => {
             </View><View style = {{ borderRadius: "50%" }}>
                  <Image source={{ uri: `${ item.userPhoto }`}} style={{ width: 40, height: 40, borderRadius: 25, margin: 0, padding: 0 }}/>
             </View>*/}
-      </View>
-    </View>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -322,6 +333,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  kav: { flex: 1, width: "100%", justifyContent: "flex-end" },
 });
 
 export default Comments;
