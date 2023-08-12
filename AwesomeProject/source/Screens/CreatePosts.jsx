@@ -11,6 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as MediaLibrary from "expo-media-library";
 
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
@@ -21,6 +22,7 @@ import { fetchAddPost } from "../Redux/posts/postsOperations";
 import { selectUserId } from "../Redux/auth/authSelectors";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { tr } from "date-fns/locale";
 
 const CreatePost = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
@@ -29,6 +31,26 @@ const CreatePost = ({ navigation }) => {
   const [region, setRegion] = useState(null);
   const [inputRegion, setInputRegion] = useState("");
   const [title, setTitle] = useState("");
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!permission?.granted) {
+          await requestPermission();
+        }
+        if (permission?.status === "denied" && !permission?.canAskAgain) {
+          Alert.alert(
+            "Доступ заблоковано!",
+            "Надайте доступ до камери у налаштуваннях."
+          );
+          return;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [permission]);
 
   const dispatch = useDispatch();
 
@@ -36,33 +58,41 @@ const CreatePost = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Permission to access location was denied");
+        }
+      } catch (error) {
+        console.log(error);
       }
     })();
   }, []);
 
   const takePhoto = async () => {
-    const locationPos = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.Balanced,
-      maximumAge: 300000,
-    });
-    const coords = {
-      latitude: locationPos.coords.latitude,
-      longitude: locationPos.coords.longitude,
-    };
-    setLocation(coords);
+    try {
+      const locationPos = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+        maximumAge: 300000,
+      });
+      const coords = {
+        latitude: locationPos.coords.latitude,
+        longitude: locationPos.coords.longitude,
+      };
+      setLocation(coords);
 
-    const regionName = await Location.reverseGeocodeAsync(coords);
-    setRegion(regionName);
+      const regionName = await Location.reverseGeocodeAsync(coords);
+      setRegion(regionName);
 
-    const photo = await camera.takePictureAsync();
-    await setPhoto(photo.uri);
+      const photo = await camera.takePictureAsync();
+      await setPhoto(photo.uri);
 
-    await setInputRegion(
-      regionName[0]["country"] + ", " + regionName[0]["city"]
-    );
+      await setInputRegion(
+        regionName[0]["country"] + ", " + regionName[0]["city"]
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const clearData = () => {
@@ -72,23 +102,27 @@ const CreatePost = ({ navigation }) => {
   };
 
   const hendleCreate = async () => {
-    if (!photo) {
-      alert("Make photo");
-      return;
-    }
-    const { payload } = await dispatch(fetchUploadPhoto(photo));
-    await dispatch(
-      fetchAddPost({
-        photo: payload,
-        title,
-        inputRegion,
-        location,
-        uid,
-      })
-    );
+    try {
+      if (!photo) {
+        alert("Make photo");
+        return;
+      }
+      const { payload } = await dispatch(fetchUploadPhoto(photo));
+      await dispatch(
+        fetchAddPost({
+          photo: payload,
+          title,
+          inputRegion,
+          location,
+          uid,
+        })
+      );
 
-    clearData();
-    navigation.navigate("PostList");
+      clearData();
+      navigation.navigate("PostList");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -21,17 +21,25 @@ const ProfilePhotoScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState(null);
 
   const takePhoto = async () => {
-    const photo = await camera.takePictureAsync();
-    setPhoto(photo.uri);
+    try {
+      const photo = await camera.takePictureAsync();
+      setPhoto(photo.uri);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const hendleCreate = async () => {
-    if (!photo) {
-      alert("Take photo!!!");
-      return;
+    try {
+      if (!photo) {
+        alert("Take photo!!!");
+        return;
+      }
+      const { payload } = await dispatch(fetchUploadPhoto(photo));
+      navigation.navigate("Registratione", { photo });
+    } catch (error) {
+      console.log(error);
     }
-    const { payload } = await dispatch(fetchUploadPhoto(photo));
-    navigation.navigate("Registratione", { photo });
   };
 
   return (
