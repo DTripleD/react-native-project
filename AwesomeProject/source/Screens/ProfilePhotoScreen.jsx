@@ -15,10 +15,30 @@ import { fetchUploadPhoto } from "../Redux/storage/storageOperations";
 import { Camera } from "expo-camera";
 
 const ProfilePhotoScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!permission?.granted) {
+          await requestPermission();
+        }
+        if (permission?.status === "denied" && !permission?.canAskAgain) {
+          Alert.alert(
+            "Доступ заблоковано!",
+            "Надайте доступ до камери у налаштуваннях."
+          );
+          return;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const takePhoto = async () => {
     try {

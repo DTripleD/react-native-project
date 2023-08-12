@@ -50,7 +50,7 @@ const CreatePost = ({ navigation }) => {
         console.log(error);
       }
     })();
-  }, [permission]);
+  }, []);
 
   const dispatch = useDispatch();
 
