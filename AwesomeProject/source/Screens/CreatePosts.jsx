@@ -40,30 +40,29 @@ const CreatePost = ({ navigation }) => {
       if (status !== "granted") {
         console.log("Permission to access location was denied");
       }
-
-      Location.getCurrentPositionAsync({})
-        .then((locationPos) => {
-          const coords = {
-            latitude: locationPos.coords.latitude,
-            longitude: locationPos.coords.longitude,
-          };
-          setLocation(coords);
-          return coords;
-        })
-        .then((coords) => {
-          return Location.reverseGeocodeAsync(coords);
-        })
-        .then((regionName) => setRegion(regionName))
-        .catch((error) => console.log(error));
     })();
   }, []);
 
   const takePhoto = async () => {
+    const locationPos = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced,
+      maximumAge: 300000,
+    });
+    const coords = {
+      latitude: locationPos.coords.latitude,
+      longitude: locationPos.coords.longitude,
+    };
+    setLocation(coords);
+
+    const regionName = await Location.reverseGeocodeAsync(coords);
+    setRegion(regionName);
+
     const photo = await camera.takePictureAsync();
     await setPhoto(photo.uri);
-    if (region !== null) {
-      setInputRegion(region[0]["country"] + ", " + region[0]["city"]);
-    }
+
+    await setInputRegion(
+      regionName[0]["country"] + ", " + regionName[0]["city"]
+    );
   };
 
   const clearData = () => {
