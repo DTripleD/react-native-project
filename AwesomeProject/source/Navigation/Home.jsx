@@ -48,7 +48,7 @@ const Home = ({ navigation }) => {
           paddingBottom: 22,
           paddingHorizontal: 40,
           paddingTop: 10,
-          height: 60,
+          minHeight: 60,
         },
         tabBarItemStyle: { borderRadius: 50, height: 40 },
       })}
@@ -121,56 +121,6 @@ const Home = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  registerButton: {
-    backgroundColor: "#FF6C00",
-    height: 50,
-    width: 343,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 100,
-    marginTop: 44,
-  },
-  registerButtonText: {
-    color: "#fff",
-    fontWeight: "400",
-  },
-  loginLink: {
-    marginTop: 16,
-    marginBottom: 66,
-  },
-  loginLinkText: {
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: 16,
-    lineHeight: 19,
-  },
-  footer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    borderTopColor: "#999999",
-    borderTopWidth: 1,
-  },
-  addButton: {
-    backgroundColor: "#FF6C00",
-    height: 40,
-    width: 70,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-  },
-  addButtonText: {
-    color: "#ffffff",
-    fontSize: 18,
-  },
-  gridButton: {
-    marginRight: 40,
-  },
-  userButton: {
-    marginLeft: 40,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default Home;

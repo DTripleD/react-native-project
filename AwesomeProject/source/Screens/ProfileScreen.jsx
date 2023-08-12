@@ -45,91 +45,85 @@ function ProfileScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
-      <ImageBackground source={backImage} style={styles.backImg}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.container}>
-            <View style={styles.photoContainer}>
-              <Image
-                source={{
-                  uri: `${
-                    photo === null
-                      ? "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
-                      : photo
-                  }`,
-                }}
-                style={styles.image}
-              />
-              <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
-                <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity
-              style={styles.logoutButton}
-              activeOpacity={0.5}
-              onPress={handleLogOut}
-            >
-              <Feather name="log-out" size={24} color="gray" />
+    <ImageBackground source={backImage} style={styles.backImg}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <View style={styles.photoContainer}>
+            <Image
+              source={{
+                uri: `${
+                  photo === null
+                    ? "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
+                    : photo
+                }`,
+              }}
+              style={styles.image}
+            />
+            <TouchableOpacity style={styles.addbutton} activeOpacity={0.5}>
+              <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
             </TouchableOpacity>
-            <Text style={styles.title}>{name}</Text>
-            <View style={styles.mapWrapper}>
-              {posts.map((item) => {
-                return (
-                  <View key={item.id} style={styles.elementWrapper}>
-                    <Image
-                      source={{ uri: `${item.photo}` }}
-                      style={styles.elementImageWrapper}
-                    />
-                    <Text style={styles.posText}>{item.title}</Text>
-                    <View style={styles.buttonsWrapper}>
-                      <View style={styles.reactions}>
-                        <TouchableOpacity
-                          style={styles.info}
-                          onPress={() =>
-                            navigation.navigate("CommentsNav", {
-                              postId: item.id,
-                              postImg: item.photo,
-                            })
-                          }
-                        >
-                          <Feather
-                            name="message-circle"
-                            size={18}
-                            color="gray"
-                          />
-                          <Text>{getCommentsCount(item.id)}</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                          style={styles.info}
-                          onPress={() => setLike((prev) => prev + 1)}
-                        >
-                          <Feather name="thumbs-up" size={18} color="gray" />
-                          <Text>{like}</Text>
-                        </TouchableOpacity>
-                      </View>
-
+          </View>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            activeOpacity={0.5}
+            onPress={handleLogOut}
+          >
+            <Feather name="log-out" size={24} color="gray" />
+          </TouchableOpacity>
+          <Text style={styles.title}>{name}</Text>
+          <View style={styles.mapWrapper}>
+            {posts.map((item) => {
+              return (
+                <View key={item.id} style={styles.elementWrapper}>
+                  <Image
+                    source={{ uri: `${item.photo}` }}
+                    style={styles.elementImageWrapper}
+                  />
+                  <Text style={styles.posText}>{item.title}</Text>
+                  <View style={styles.buttonsWrapper}>
+                    <View style={styles.reactions}>
                       <TouchableOpacity
                         style={styles.info}
                         onPress={() =>
-                          navigation.navigate("Map", {
-                            location: item.location,
-                            component: "ProfileScreen",
+                          navigation.navigate("CommentsNav", {
+                            postId: item.id,
+                            postImg: item.photo,
                           })
                         }
                       >
-                        <EvilIcons name="location" size={24} color="gray" />
-                        <Text style={styles.infolink}>{item.inputRegion}</Text>
+                        <Feather name="message-circle" size={18} color="gray" />
+                        <Text>{getCommentsCount(item.id)}</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={styles.info}
+                        onPress={() => setLike((prev) => prev + 1)}
+                      >
+                        <Feather name="thumbs-up" size={18} color="gray" />
+                        <Text>{like}</Text>
                       </TouchableOpacity>
                     </View>
+
+                    <TouchableOpacity
+                      style={styles.info}
+                      onPress={() =>
+                        navigation.navigate("Map", {
+                          location: item.location,
+                          component: "ProfileScreen",
+                        })
+                      }
+                    >
+                      <EvilIcons name="location" size={24} color="gray" />
+                      <Text style={styles.infolink}>{item.inputRegion}</Text>
+                    </TouchableOpacity>
                   </View>
-                );
-              })}
-            </View>
+                </View>
+              );
+            })}
           </View>
-        </ScrollView>
-      </ImageBackground>
-    </SafeAreaView>
+        </View>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
@@ -141,8 +135,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
   },
   logoutButton: {
-    marginLeft: 350,
-    marginTop: -40,
+    left: "40%",
+    top: -40,
   },
   container: {
     backgroundColor: "#FFFFFF",
@@ -213,6 +207,12 @@ const styles = StyleSheet.create({
     width: "85%",
   },
   reactions: { flexDirection: "row" },
+  backImg: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+    paddingBottom: 0,
+  },
 });
 
 export default ProfileScreen;

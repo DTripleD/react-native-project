@@ -141,17 +141,6 @@ const Comments = ({ navigation, route }) => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* </ScrollView>  (comments.indexOf(item))? {<View style = {{ borderRadius: "50%" }}>
-                 <Image source={{ uri: `${ item.userPhoto }`}} style={{ width: 40, height: 40, borderRadius: 25, margin: 0, padding: 0 }}/>
-            </View>
-
-            <View style={styles.commentBody}>
-                 <Text >{ item.postText }</Text>
-            </View>} : <View style={styles.commentBody}>
-                 <Text >{ item.postText }</Text>
-            </View><View style = {{ borderRadius: "50%" }}>
-                 <Image source={{ uri: `${ item.userPhoto }`}} style={{ width: 40, height: 40, borderRadius: 25, margin: 0, padding: 0 }}/>
-            </View>*/}
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -184,11 +173,6 @@ const styles = StyleSheet.create({
     width: "100%",
     borderBottomColor: "#E8E8E8",
     borderBottomWidth: 1,
-  },
-  postHeaderText: {
-    fontSize: 22,
-    fontWeight: "500",
-    marginTop: 20,
   },
   postBody: {
     width: "100%",

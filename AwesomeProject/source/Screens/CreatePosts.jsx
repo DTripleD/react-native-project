@@ -54,20 +54,22 @@ const CreatePost = ({ navigation }) => {
           return Location.reverseGeocodeAsync(coords);
         })
         .then((regionName) => setRegion(regionName))
-        .catch();
+        .catch((error) => console.log(error));
     })();
   }, []);
 
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     await setPhoto(photo.uri);
-    setInputRegion(region[0]["country"] + ", " + region[0]["city"]);
+    if (region !== null) {
+      setInputRegion(region[0]["country"] + ", " + region[0]["city"]);
+    }
   };
 
   const clearData = () => {
     setTitle("");
     setPhoto(null);
-    setInputRegion("");
+    setInputRegion(null);
   };
 
   const hendleCreate = async () => {
