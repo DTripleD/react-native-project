@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -20,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "softwareKeyboardLayoutMode": "pan"
-      }
+      },
+      "package": "com.tripled.AwesomeProject"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "209f41e4-5af9-4f5c-88e3-90863498a98e"
+      }
     }
   }
 }
